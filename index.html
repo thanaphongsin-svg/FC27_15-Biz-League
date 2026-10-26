@@ -98,7 +98,7 @@
               <h1 class="text-lg sm:text-xl font-extrabold tracking-tight text-white">FC27 SUPER LEAGUE</h1>
               <span class="px-2 py-0.5 text-[11px] font-bold rounded bg-amber-500/20 text-amber-300 border border-amber-500/30">SEASON 1</span>
             </div>
-            <p class="text-xs text-slate-400">Official Broadcast News, Standings, Squads &amp; Match Center • แข่งแล้ว 3 / 56 นัด</p>
+            <p class="text-xs text-slate-400">Official Broadcast News, Standings, Squads &amp; Match Center • แข่งแล้ว 6 / 56 นัด</p>
           </div>
         </div>
         <span class="md:hidden text-xs px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 text-slate-300 font-medium">
@@ -142,18 +142,18 @@
         <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/65 to-transparent"></div>
         <div class="absolute bottom-0 inset-x-0 p-5 sm:p-8 flex flex-col justify-end">
           <div class="flex flex-wrap items-center gap-2 mb-2.5">
-            <span class="px-2.5 py-1 rounded-md text-xs font-extrabold uppercase bg-rose-600 text-white tracking-wider">MATCHWEEK 1 HIGHLIGHTS</span>
-            <span class="px-2.5 py-1 rounded-md text-xs font-semibold bg-slate-900/80 text-emerald-300 border border-emerald-500/30">FC27 Season 1 • 3 Match Reports &amp; 8 Team Profiles</span>
+            <span class="px-2.5 py-1 rounded-md text-xs font-extrabold uppercase bg-rose-600 text-white tracking-wider">MATCHES 4–6 HIGHLIGHTS</span>
+            <span class="px-2.5 py-1 rounded-md text-xs font-semibold bg-slate-900/80 text-emerald-300 border border-emerald-500/30">FC27 Season 1 • 6 Match Reports &amp; 8 Team Profiles</span>
           </div>
           <h2 class="text-xl sm:text-3xl md:text-4xl font-black text-white leading-tight max-w-4xl">
-            Dembélé กดแฮตทริกพา Parma (น็อต) อัด Bournemouth 4-2! Bellingham เบิ้ลส่ง Real Madrid (ก้อง) ถล่มหงส์ 3-0 ยึดจ่าฝูง
+            Nico Williams กดแฮตทริกพาราชันชุดขาวบุกถล่มม้าลาย 4-1! Isak เหมาเบิ้ล 2 นัดติดส่ง Galatasaray ชนะรวดไล่จี้จ่าฝูง
           </h2>
           <p class="text-xs sm:text-sm text-slate-300 mt-2 max-w-3xl line-clamp-2">
-            อัปเดตผลแข่งขันครบทั้ง 3 นัดแรก พร้อมสกู๊ปเจาะลึกขุมกำลัง ผังการยืนตำแหน่งนักเตะตามแผนจริงในเกม มูลค่าทีม Transfermarkt และนักเตะน่าจับตามองครบทั้ง 8 สโมสร
+            อัปเดตผลการแข่งขันล่าสุดนัดที่ 4–6: Real Madrid CF (ก้อง) และ Galatasaray (นัท) เก็บ 6 แต้มเต็มจาก 2 นัด ขณะที่ Alexander Isak ขึ้นนำดาวซัลโวเดี่ยวที่ 4 ประตู
           </p>
           <div class="mt-4 flex flex-wrap items-center gap-3">
             <button type="button" id="heroReadArticleBtn" class="px-4 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs sm:text-sm transition shadow-lg shadow-emerald-500/25">
-              อ่านรายงานนัดที่ 3 (Dembélé แฮตทริก) →
+              อ่านรายงานนัดที่ 5 (Williams แฮตทริก) →
             </button>
             <button type="button" id="heroJumpStandingsBtn" class="px-4 py-2 rounded-xl bg-slate-900/90 hover:bg-slate-800 text-white font-semibold text-xs sm:text-sm border border-slate-700 transition">
               ดูตารางคะแนนล่าสุด
@@ -172,12 +172,12 @@
                 <span class="w-2 h-5 rounded bg-emerald-400"></span>
                 ศูนย์ข่าวผลการแข่งขัน &amp; เจาะลึกขุมกำลังทั้ง 8 สโมสร
               </h3>
-              <p class="text-xs text-slate-400">แสดงเฉพาะข่าวผลการแข่งขันแต่ละนัด (3 นัด) และข่าวข้อมูลนักเตะ/แผนการเล่นแยกเป็นรายทีม (8 ทีม)</p>
+              <p class="text-xs text-slate-400">แสดงเฉพาะข่าวผลการแข่งขันแต่ละนัด (6 นัด) และข่าวข้อมูลนักเตะ/แผนการเล่นแยกเป็นรายทีม (8 ทีม)</p>
             </div>
             <!-- Category Filter -->
             <div class="flex items-center gap-1.5 flex-wrap" id="newsFilterBar">
-              <button type="button" data-news-filter="all" class="news-filter-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-emerald-500 text-slate-950">ทั้งหมด (11)</button>
-              <button type="button" data-news-filter="Match Report" class="news-filter-btn px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-900 text-slate-300 hover:bg-slate-800 border border-slate-800">ข่าวผลการแข่งขัน (3)</button>
+              <button type="button" data-news-filter="all" class="news-filter-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-emerald-500 text-slate-950">ทั้งหมด (14)</button>
+              <button type="button" data-news-filter="Match Report" class="news-filter-btn px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-900 text-slate-300 hover:bg-slate-800 border border-slate-800">ข่าวผลการแข่งขัน (6)</button>
               <button type="button" data-news-filter="Team & Tactics" class="news-filter-btn px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-900 text-slate-300 hover:bg-slate-800 border border-slate-800">ข่าวข้อมูลนักเตะ 8 ทีม (8)</button>
             </div>
           </div>
@@ -195,7 +195,7 @@
                 <h4 class="text-sm font-extrabold text-white uppercase tracking-wider flex items-center gap-1.5">
                   🏆 ตารางคะแนน FC27 S1
                 </h4>
-                <p class="text-[11px] text-slate-400">อัปเดตหลังจบ 3 นัดแรก</p>
+                <p class="text-[11px] text-slate-400">อัปเดตหลังจบ 6 นัดแรก</p>
               </div>
               <button type="button" id="miniTableFullBtn" class="text-xs font-bold text-emerald-400 hover:text-emerald-300">
                 ตารางเต็ม →
@@ -222,7 +222,7 @@
             <div class="flex items-center justify-between">
               <div>
                 <h4 class="text-sm font-extrabold text-white uppercase tracking-wider">⏭️ โปรแกรมคู่ถัดไป</h4>
-                <p class="text-[11px] text-slate-400">4 นัดถัดไปที่กำลังจะลงสนาม (นัดที่ 4 – 7)</p>
+                <p class="text-[11px] text-slate-400">4 นัดถัดไปที่กำลังจะลงสนาม (นัดที่ 7 – 10)</p>
               </div>
               <button type="button" id="miniFixturesFullBtn" class="text-xs font-bold text-emerald-400 hover:text-emerald-300">
                 ดูครบ 56 นัด →
@@ -253,8 +253,8 @@
           <p class="text-xs sm:text-sm text-slate-400">จัดอันดับตาม คะแนนสุทธิ (Final Pts) → ผลต่างประตูได้เสีย (GD) → ประตูได้ (GF)</p>
         </div>
         <div class="flex items-center gap-2 text-xs">
-          <span class="px-3 py-1.5 rounded-lg bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 font-semibold">แข่งแล้ว 3 / 56 นัด</span>
-          <span class="px-3 py-1.5 rounded-lg bg-slate-900 border border-slate-800 text-slate-300">ยิงรวม 13 ประตู (เฉลี่ย 4.33 ลูก/นัด)</span>
+          <span class="px-3 py-1.5 rounded-lg bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 font-semibold">แข่งแล้ว 6 / 56 นัด</span>
+          <span class="px-3 py-1.5 rounded-lg bg-slate-900 border border-slate-800 text-slate-300">ยิงรวม 27 ประตู (เฉลี่ย 4.50 ลูก/นัด)</span>
         </div>
       </div>
 
@@ -314,8 +314,8 @@
           </select>
           <div class="inline-flex rounded-xl bg-slate-900 p-1 border border-slate-800">
             <button type="button" data-fix-status="all" class="fix-status-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-emerald-500 text-slate-950">ทั้งหมด (56)</button>
-            <button type="button" data-fix-status="played" class="fix-status-btn px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-300 hover:text-white">จบแล้ว (3)</button>
-            <button type="button" data-fix-status="upcoming" class="fix-status-btn px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-300 hover:text-white">รอแข่ง (53)</button>
+            <button type="button" data-fix-status="played" class="fix-status-btn px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-300 hover:text-white">จบแล้ว (6)</button>
+            <button type="button" data-fix-status="upcoming" class="fix-status-btn px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-300 hover:text-white">รอแข่ง (50)</button>
           </div>
         </div>
       </div>
@@ -353,9 +353,9 @@
           <div class="flex items-center justify-between border-b border-slate-800 pb-3">
             <div>
               <h3 class="text-base font-extrabold text-white">👟 อันดับดาวซัลโว (Top Scorers)</h3>
-              <p class="text-xs text-slate-400">ผู้ทำประตูสูงสุดหลังจบ 3 นัดแรก</p>
+              <p class="text-xs text-slate-400">ผู้ทำประตูสูงสุดหลังจบ 6 นัดแรก</p>
             </div>
-            <span class="px-2.5 py-1 rounded-lg bg-emerald-500/15 text-emerald-300 text-xs font-bold">13 ประตูรวม</span>
+            <span class="px-2.5 py-1 rounded-lg bg-emerald-500/15 text-emerald-300 text-xs font-bold">27 ประตูรวม</span>
           </div>
           <div id="topScorersList" class="space-y-2.5"></div>
         </div>
@@ -367,7 +367,7 @@
               <h3 class="text-base font-extrabold text-white">🟨🟥 สถิติใบเหลือง &amp; ใบแดง</h3>
               <p class="text-xs text-slate-400">บันทึกนักเตะที่ได้รับใบเหลือง/ใบแดงรายนัด</p>
             </div>
-            <span class="px-2.5 py-1 rounded-lg bg-amber-500/15 text-amber-300 text-xs font-bold">6 ใบเหลือง</span>
+            <span class="px-2.5 py-1 rounded-lg bg-amber-500/15 text-amber-300 text-xs font-bold">16 ใบเหลือง • 1 ใบแดง</span>
           </div>
           <div id="cardsStatsList" class="space-y-2.5"></div>
         </div>
@@ -4205,9 +4205,58 @@
         headline: "Dembélé แฮตทริก! Parma (น็อต) เปิดรังอัด Bournemouth (มอส) สุดมันส์ 4-2",
         report: "Parma ของกุนซือน็อตระเบิดฟอร์มเกมรุกสุดจัดจ้าน ได้ Ousmane Dembélé กดแฮตทริก 3 ประตู บวกกับ Khvicha Kvaratskhelia อีก 1 ลูก เอาชนะ Bournemouth ของกุนซือมอสที่ยิงคืนได้จาก Karim Adeyemi และ Jérémy Doku คนละ 1 ลูก (โดยฝั่ง Bournemouth มีใบเหลือง 3 ใบจาก Alphonso Davies, Maxence Lacroix และ Federico Valverde) จบเกม Parma คว้า 3 แต้มใหญ่"
       },
-      { match: 4, home: "Juventus (ฟัยรูซ)", away: "Galatasaray (นัท)", hs: null, as: null },
-      { match: 5, home: "Juventus (ฟัยรูซ)", away: "Real Madrid CF (ก้อง)", hs: null, as: null },
-      { match: 6, home: "Galatasaray (นัท)", away: "Parma (น็อต)", hs: null, as: null },
+      {
+        match: 4, home: "Juventus (ฟัยรูซ)", away: "Galatasaray (นัท)", hs: 2, as: 3,
+        goals: [
+          { player: "Alexander Isak", team: "Galatasaray (นัท)", count: 2, label: "2 ลูก", note: "เหมา 2 ประตูพาทัพสิงโตเติร์กบุกคว้าชัย" },
+          { player: "Désiré Doué", team: "Galatasaray (นัท)", count: 1, label: "1 ลูก", note: "ยิงเบิกร่องให้ Galatasaray" },
+          { player: "Bremer", team: "Juventus (ฟัยรูซ)", count: 1, label: "1 ลูก", note: "เติมขึ้นมาทำประตูให้ทัพม้าลาย" },
+          { player: "Lionel Messi", team: "Juventus (ฟัยรูซ)", count: 1, label: "1 ลูก", note: "ยิงประตูให้ Juventus" }
+        ],
+        yellowCards: [
+          { player: "Achraf Hakimi", team: "Juventus (ฟัยรูซ)", count: 1, label: "1 ใบ", note: "ใบเหลือง (Juventus)" },
+          { player: "Hakan Çalhanoğlu", team: "Juventus (ฟัยรูซ)", count: 1, label: "1 ใบ", note: "ใบเหลือง (Juventus)" },
+          { player: "Nuno Mendes", team: "Galatasaray (นัท)", count: 1, label: "1 ใบ", note: "ใบเหลือง (Galatasaray)" },
+          { player: "Sandro Tonali", team: "Galatasaray (นัท)", count: 1, label: "1 ใบ", note: "ใบเหลือง (Galatasaray)" },
+          { player: "Marquinhos", team: "Galatasaray (นัท)", count: 1, label: "1 ใบ", note: "ใบเหลือง (Galatasaray)" }
+        ],
+        redCards: [],
+        headline: "สิงโตเติร์กบุกเชือดม้าลาย! Galatasaray (นัท) บุกเฉือนชนะ Juventus (ฟัยรูซ) สุดเดือด 3-2",
+        report: "เกมบิ๊กแมตช์นัดที่ 4 เต็มไปด้วยความดุเดือด Galatasaray ของกุนซือนัทบุกมาเฉือนชนะ Juventus ของกุนซือฟัยรูซ 3-2 โดยทีมเยือนได้ประตูจาก Désiré Doué 1 ลูก และ Alexander Isak เหมาคนเดียว 2 ประตู ขณะที่ทัพม้าลายได้ประตูจาก Bremer และ Lionel Messi คนละ 1 ลูก (ใบเหลืองรวม 5 ใบ: Achraf Hakimi, Hakan Çalhanoğlu ฝั่งเจ้าบ้าน และ Nuno Mendes, Sandro Tonali, Marquinhos ฝั่งทีมเยือน)"
+      },
+      {
+        match: 5, home: "Juventus (ฟัยรูซ)", away: "Real Madrid CF (ก้อง)", hs: 1, as: 4,
+        goals: [
+          { player: "Nico Williams", team: "Real Madrid CF (ก้อง)", count: 3, label: "3 ลูก (Hat-trick)", note: "ระเบิดฟอร์มกดแฮตทริก 3 ประตูในเกมเดียว" },
+          { player: "Kylian Mbappé", team: "Real Madrid CF (ก้อง)", count: 1, label: "1 ลูก", note: "ซัดประตูปิดกล่อง 4-1" },
+          { player: "Kenan Yıldız", team: "Juventus (ฟัยรูซ)", count: 1, label: "1 ลูก", note: "ยิงประตูให้ทัพม้าลาย" }
+        ],
+        yellowCards: [
+          { player: "Hakan Çalhanoğlu", team: "Juventus (ฟัยรูซ)", count: 1, label: "1 ใบ", note: "ใบเหลืองที่ 2 ของทัวร์นาเมนต์ (Juventus)" },
+          { player: "Federico Dimarco", team: "Real Madrid CF (ก้อง)", count: 1, label: "1 ใบ", note: "ใบเหลือง (Real Madrid CF)" }
+        ],
+        redCards: [
+          { player: "Vitinha", team: "Juventus (ฟัยรูซ)", count: 1, label: "1 ใบ (Red Card)", note: "ใบแดงแรกของซีซั่น (Juventus เหลือ 10 คน)" }
+        ],
+        headline: "Williams กดแฮตทริก! Real Madrid CF (ก้อง) บุกถล่ม Juventus (ฟัยรูซ) 10 คน ขาดลอย 4-1",
+        report: "Real Madrid CF ของกุนซือก้องโชว์ฟอร์มสมราคาเต็งแชมป์ บุกถล่ม Juventus (ฟัยรูซ) ถึงถิ่น 4-1 โดยปีกจรวด Nico Williams กดแฮตทริกเหมาคนเดียว 3 ประตู บวกกับ Kylian Mbappé อีก 1 ลูก ส่วนเจ้าบ้านได้ประตูจาก Kenan Yıldız และต้องเหลือผู้เล่น 10 คนหลัง Vitinha โดนใบแดงไล่ออก (ส่วนใบเหลืองเป็นของ Hakan Çalhanoğlu และ Federico Dimarco คนละ 1 ใบ) ส่งให้ราชันชุดขาวเก็บ 6 แต้มเต็มยึดจ่าฝูงเหนียวแน่น"
+      },
+      {
+        match: 6, home: "Galatasaray (นัท)", away: "Parma (น็อต)", hs: 4, as: 0,
+        goals: [
+          { player: "Alexander Isak", team: "Galatasaray (นัท)", count: 2, label: "2 ลูก", note: "เหมา 2 ลูกเป็นนัดที่สองติดต่อกัน (รวม 4 ประตู)" },
+          { player: "Nuno Mendes", team: "Galatasaray (นัท)", count: 1, label: "1 ลูก", note: "แบ็กซ้ายเติมเกมรุกยิงประตูเบิกร่อง" },
+          { player: "Rafael Leão", team: "Galatasaray (นัท)", count: 1, label: "1 ลูก", note: "ซัดประตูปิดท้าย 4-0" }
+        ],
+        yellowCards: [
+          { player: "Sandro Tonali", team: "Galatasaray (นัท)", count: 1, label: "1 ใบ", note: "ใบเหลืองที่ 2 ของทัวร์นาเมนต์ (Galatasaray)" },
+          { player: "Raphinha", team: "Parma (น็อต)", count: 1, label: "1 ใบ", note: "ใบเหลือง (Parma)" },
+          { player: "Moisés Caicedo", team: "Parma (น็อต)", count: 1, label: "1 ใบ", note: "ใบเหลือง (Parma)" }
+        ],
+        redCards: [],
+        headline: "ฟอร์มโหดต่อเนื่อง! Galatasaray (นัท) เปิดรังถล่ม Parma (น็อต) คลีนชีต 4-0",
+        report: "Galatasaray ของกุนซือนัทเดินหน้าคว้าชัย 2 นัดรวด หลังเปิดบ้านถล่ม Parma (น็อต) ไปอย่างขาดลอย 4-0 ได้ประตูจาก Nuno Mendes, Rafael Leão และหัวหอกฟอร์มฮอต Alexander Isak ที่เหมาอีก 2 ประตู ขยับขึ้นนำเดี่ยวดาวซัลโวที่ 4 ประตู (ใบเหลืองในเกมนี้เป็นของ Sandro Tonali ฝั่งเจ้าบ้าน และ Raphinha กับ Moisés Caicedo ฝั่ง Parma)"
+      },
       { match: 7, home: "ฺBournemouth (มอส)", away: "Werder Bremen (แชมป์)", hs: null, as: null },
       { match: 8, home: "Manchester United (เอฟ)", away: "Liverpool (แดงค์)", hs: null, as: null },
       { match: 9, home: "Real Madrid CF (ก้อง)", away: "Manchester United (เอฟ)", hs: null, as: null },
@@ -4260,16 +4309,46 @@
       { match: 56, home: "Werder Bremen (แชมป์)", away: "Liverpool (แดงค์)", hs: null, as: null }
     ];
 
-    // 11 News Items synced with Sheet `News Feed`: 3 Match Reports + 8 Team Profiles
+    // 14 News Items synced with Sheet `News Feed`: 6 Match Reports + 8 Team Profiles
     const NEWS_ARTICLES = [
       {
-        id: "news-match-1",
+        id: "news-match-6",
         category: "Match Report",
-        badge: "MATCH 1 REPORT",
-        time: "ผลการแข่งขันนัดที่ 1",
-        title: "ราชันชุดขาวออกตัวแรง! Real Madrid CF (ก้อง) เปิดบ้านถล่ม Liverpool (แดงค์) 3-0",
-        summary: "Jude Bellingham เหมาคนเดียว 2 ประตู บวกกับ Christian Pulisic อีก 1 ลูก พา Real Madrid CF ของกุนซือก้องเก็บคลีนชีตเหนือ Liverpool (แดงค์) ที่มีใบเหลืองของ Alejandro Balde และ Pedri",
-        matchId: 1,
+        badge: "MATCH 6 REPORT • LATEST",
+        time: "ผลการแข่งขันนัดที่ 6",
+        title: "ฟอร์มโหดต่อเนื่อง! Galatasaray (นัท) เปิดรังถล่ม Parma (น็อต) คลีนชีต 4-0",
+        summary: "Alexander Isak เหมาอีก 2 ประตู (นำเดี่ยวดาวซัลโว 4 ลูก) บวกกับ Nuno Mendes และ Rafael Leão พา Galatasaray ชนะ 2 นัดรวดเก็บ 6 แต้มเต็ม (ใบเหลือง: Sandro Tonali | Parma: Raphinha, Moisés Caicedo)",
+        matchId: 6,
+        clubId: null
+      },
+      {
+        id: "news-match-5",
+        category: "Match Report",
+        badge: "MATCH 5 REPORT • LATEST",
+        time: "ผลการแข่งขันนัดที่ 5",
+        title: "Williams กดแฮตทริก! Real Madrid CF (ก้อง) บุกถล่ม Juventus (ฟัยรูซ) 10 คน ขาดลอย 4-1",
+        summary: "Nico Williams ระเบิดแฮตทริก 3 ลูก บวกกับ Kylian Mbappé 1 ประตู พา Real Madrid CF บุกอัด Juventus ที่ได้ประตูจาก Kenan Yıldız และต้องเหลือ 10 คนหลัง Vitinha โดนใบแดง (ใบเหลือง: Çalhanoğlu, Dimarco)",
+        matchId: 5,
+        clubId: null
+      },
+      {
+        id: "news-match-4",
+        category: "Match Report",
+        badge: "MATCH 4 REPORT • LATEST",
+        time: "ผลการแข่งขันนัดที่ 4",
+        title: "สิงโตเติร์กบุกเชือดม้าลาย! Galatasaray (นัท) บุกเฉือนชนะ Juventus (ฟัยรูซ) สุดเดือด 3-2",
+        summary: "Alexander Isak เหมา 2 ลูก และ Désiré Doué ยิง 1 ลูก พา Galatasaray บุกเฉือน Juventus ที่ได้ประตูจาก Bremer และ Lionel Messi (ใบเหลือง: Hakimi, Çalhanoğlu | Mendes, Tonali, Marquinhos)",
+        matchId: 4,
+        clubId: null
+      },
+      {
+        id: "news-match-3",
+        category: "Match Report",
+        badge: "MATCH 3 REPORT",
+        time: "ผลการแข่งขันนัดที่ 3",
+        title: "Dembélé แฮตทริก! Parma (น็อต) เปิดรังอัด Bournemouth (มอส) สุดมันส์ 4-2",
+        summary: "Ousmane Dembélé ระเบิดฟอร์มกดแฮตทริก 3 ลูก บวกกับ Khvicha Kvaratskhelia 1 ลูก พา Parma ชนะ Bournemouth ที่ยิงคืนจาก Karim Adeyemi และ Jérémy Doku (ใบเหลือง Bournemouth: Davies, Lacroix, Valverde)",
+        matchId: 3,
         clubId: null
       },
       {
@@ -4283,13 +4362,13 @@
         clubId: null
       },
       {
-        id: "news-match-3",
+        id: "news-match-1",
         category: "Match Report",
-        badge: "MATCH 3 REPORT",
-        time: "ผลการแข่งขันนัดที่ 3",
-        title: "Dembélé แฮตทริก! Parma (น็อต) เปิดรังอัด Bournemouth (มอส) สุดมันส์ 4-2",
-        summary: "Ousmane Dembélé ระเบิดฟอร์มกดแฮตทริก 3 ลูก บวกกับ Khvicha Kvaratskhelia 1 ลูก พา Parma ชนะ Bournemouth ที่ยิงคืนจาก Karim Adeyemi และ Jérémy Doku (ใบเหลือง Bournemouth: Davies, Lacroix, Valverde)",
-        matchId: 3,
+        badge: "MATCH 1 REPORT",
+        time: "ผลการแข่งขันนัดที่ 1",
+        title: "ราชันชุดขาวออกตัวแรง! Real Madrid CF (ก้อง) เปิดบ้านถล่ม Liverpool (แดงค์) 3-0",
+        summary: "Jude Bellingham เหมาคนเดียว 2 ประตู บวกกับ Christian Pulisic อีก 1 ลูก พา Real Madrid CF ของกุนซือก้องเก็บคลีนชีตเหนือ Liverpool (แดงค์) ที่มีใบเหลืองของ Alejandro Balde และ Pedri",
+        matchId: 1,
         clubId: null
       },
       {
@@ -4532,9 +4611,12 @@
         const totalYellowInMatch = matchObj && matchObj.yellowCards
           ? matchObj.yellowCards.reduce((acc, c) => acc + (c.count || 1), 0)
           : 0;
+        const totalRedInMatch = matchObj && matchObj.redCards
+          ? matchObj.redCards.reduce((acc, c) => acc + (c.count || 1), 0)
+          : 0;
 
         const footerMeta = matchObj
-          ? `⚽ ${totalGoalsInMatch} ประตู • 🟨 ${totalYellowInMatch} ใบเหลือง`
+          ? `⚽ ${totalGoalsInMatch} ประตู • 🟨 ${totalYellowInMatch} ใบเหลือง${totalRedInMatch > 0 ? ` • 🟥 ${totalRedInMatch} ใบแดง` : ""}`
           : clubObj
             ? `📐 ${clubObj.formation} • 💰 ${clubObj.budget}`
             : "📋 ข้อมูลสโมสร";
@@ -4924,41 +5006,56 @@
         </div>
       `).join("");
 
+      // Aggregate cards by player so multi-card players (e.g. Çalhanoğlu, Tonali) and Red cards show clearly
+      const playerCardMap = {};
+      cardList.forEach(c => {
+        const key = `${c.player}||${c.team}`;
+        if (!playerCardMap[key]) {
+          playerCardMap[key] = { player: c.player, team: c.team, yellow: 0, red: 0, matches: [] };
+        }
+        if (c.cardType === "RED") {
+          playerCardMap[key].red += (c.count || 1);
+          playerCardMap[key].matches.push(`#${c.match} (🟥)`);
+        } else {
+          playerCardMap[key].yellow += (c.count || 1);
+          playerCardMap[key].matches.push(`#${c.match} (🟨)`);
+        }
+      });
+      const aggregatedCards = Object.values(playerCardMap).sort((a, b) => {
+        if (b.red !== a.red) return b.red - a.red;
+        return b.yellow - a.yellow;
+      });
+
       const cardsEl = document.getElementById("cardsStatsList");
-      cardsEl.innerHTML = cardList.map(c => `
+      cardsEl.innerHTML = aggregatedCards.map(c => `
         <div class="p-3 rounded-xl bg-slate-900/80 border border-slate-800 flex items-center justify-between gap-3">
           <div>
             <div class="text-xs sm:text-sm font-bold text-white">${c.player}</div>
-            <div class="text-[11px] text-slate-400">${formatTeamDisplay(c.team)} • นัดที่ #${c.match}</div>
+            <div class="text-[11px] text-slate-400">${formatTeamDisplay(c.team)} • นัดที่ ${c.matches.join(", ")}</div>
           </div>
-          <span class="px-2.5 py-1 rounded-lg text-xs font-bold shrink-0 ${
-            c.cardType === "RED" ? "bg-rose-500/20 text-rose-300" : "bg-amber-500/20 text-amber-300"
-          }">
-            ${c.cardType === "RED" ? `🟥 ${c.label}` : `🟨 ${c.label}`}
-          </span>
+          <div class="flex items-center gap-1.5 shrink-0">
+            ${c.yellow > 0 ? `<span class="px-2.5 py-1 rounded-lg text-xs font-bold bg-amber-500/20 text-amber-300">🟨 ${c.yellow} ใบ</span>` : ""}
+            ${c.red > 0 ? `<span class="px-2.5 py-1 rounded-lg text-xs font-bold bg-rose-500/20 text-rose-300">🟥 ${c.red} ใบ</span>` : ""}
+          </div>
         </div>
-      `).join("") + `
-        <div class="p-3 rounded-xl bg-slate-900/40 border border-slate-800/60 text-xs text-slate-400">
-          🟥 ใบแดงสะสมปัจจุบัน: <span class="text-white font-bold">0 ใบ</span> (ยังไม่มีผู้เล่นถูกไล่ออกใน 3 นัดแรก)
-        </div>
-      `;
+      `).join("");
 
       const teamHighlightsEl = document.getElementById("teamHighlightsStats");
       teamHighlightsEl.innerHTML = `
         <div class="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800 space-y-1">
-          <span class="text-[11px] text-emerald-400 font-bold uppercase">⚡ ดาวซัลโวสูงสุดประจำสัปดาห์</span>
-          <div class="text-sm font-extrabold text-white">Ousmane Dembélé (Parma) — 3 ลูก</div>
-          <p class="text-xs text-slate-400">ประเดิมแฮตทริกแรกของซีซั่นในนัดชนะ Bournemouth 4-2</p>
+          <span class="text-[11px] text-emerald-400 font-bold uppercase">⚡ ผู้นำดาวซัลโวสูงสุด (Golden Boot)</span>
+          <div class="text-sm font-extrabold text-white">Alexander Isak (Galatasaray) — 4 ลูก</div>
+          <p class="text-xs text-slate-400">เหมาเบิ้ล 2 นัดติด (ชนะ Juventus 3-2, ชนะ Parma 4-0) ตามด้วย Dembélé และ Nico Williams (3 ลูก)</p>
         </div>
         <div class="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800 space-y-1">
-          <span class="text-[11px] text-sky-400 font-bold uppercase">🧤 เกมรับคลีนชีต &amp; จ่าฝูง</span>
-          <div class="text-sm font-extrabold text-white">Real Madrid CF (ก้อง) — ชนะ 3-0 (+3)</div>
-          <p class="text-xs text-slate-400">Jude Bellingham เหมา 2 ลูก + Christian Pulisic 1 ลูก</p>
+          <span class="text-[11px] text-sky-400 font-bold uppercase">🏆 คู่จ่าฝูงชนะรวด 6 แต้มเต็ม</span>
+          <div class="text-sm font-extrabold text-white">Real Madrid CF (+6) &amp; Galatasaray (+5)</div>
+          <p class="text-xs text-slate-400">ราชันชุดขาว (ก้อง) ยิงรวม 7 เสีย 1 นำจ่าฝูงด้วยลูกได้เสียเหนือ กาลาตาซาราย (นัท) ที่ยิง 7 เสีย 2</p>
         </div>
         <div class="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800 space-y-1">
-          <span class="text-[11px] text-amber-400 font-bold uppercase">💰 มูลค่าขุมกำลังสูงสุด (Transfermarkt)</span>
-          <div class="text-sm font-extrabold text-white">Juventus (ฟัยรูซ) — €1,211M</div>
-          <p class="text-xs text-slate-400">ตามมาด้วย Liverpool (€1,199M) และ Real Madrid CF (€1,197M)</p>
+          <span class="text-[11px] text-rose-400 font-bold uppercase">🎩 แฮตทริกฮีโร่ประจำซีซั่น</span>
+          <div class="text-sm font-extrabold text-white">Ousmane Dembélé &amp; Nico Williams (3 ลูก)</div>
+          <p class="text-xs text-slate-400">Dembélé กดแฮตทริกในนัด #3 และ Nico Williams กดแฮตทริกพา Real Madrid ถล่ม Juventus 4-1 ในนัด #5</p>
         </div>
       `;
 
@@ -5254,7 +5351,7 @@
       });
 
       // Quick jump buttons
-      document.getElementById("heroReadArticleBtn").addEventListener("click", () => showMatchModal(3));
+      document.getElementById("heroReadArticleBtn").addEventListener("click", () => showMatchModal(5));
       document.getElementById("heroJumpStandingsBtn").addEventListener("click", () => switchTab("standings"));
       document.getElementById("miniTableFullBtn").addEventListener("click", () => switchTab("standings"));
       document.getElementById("miniFixturesFullBtn").addEventListener("click", () => switchTab("fixtures"));
