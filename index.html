@@ -262,7 +262,7 @@
         <div class="overflow-x-auto">
           <table class="w-full text-xs sm:text-sm">
             <thead>
-              <tr class="bg-slate-900/90 text-slate-400 border-b border-slate-800 text-left uppercase text-[11px] tracking-wider">
+              <tr class="bg-slate-900/90 text-slate-400 border-b border-slate-800 text-left uppercase text-[11px] tracking-wider whitespace-nowrap">
                 <th class="py-3.5 px-4">อันดับ</th>
                 <th class="py-3.5 px-4">สโมสร &amp; ผู้จัดการทีม</th>
                 <th class="py-3.5 px-3 text-center">แข่ง (P)</th>
@@ -274,7 +274,7 @@
                 <th class="py-3.5 px-3 text-center">ต่าง (GD)</th>
                 <th class="py-3.5 px-3 text-center">โทษแบน (Pen)</th>
                 <th class="py-3.5 px-4 text-center font-extrabold text-white">แต้ม (Pts)</th>
-                <th class="py-3.5 px-4 text-center">ฟอร์มล่าสุด</th>
+                <th class="py-3.5 px-4 text-center">ฟอร์ม 5 นัดล่าสุด</th>
               </tr>
             </thead>
             <tbody id="fullStandingsBody" class="divide-y divide-slate-800/70"></tbody>
@@ -5155,39 +5155,42 @@
         else if (rank <= 4) zoneBadge = "bg-sky-500/20 text-sky-300 border border-sky-500/40 font-bold";
         else if (rank >= 7) zoneBadge = "bg-rose-500/20 text-rose-300 border border-rose-500/40 font-bold";
 
-        const formHtml = row.form.length > 0
-          ? row.form.map(f => {
+        const recentForm = row.form.slice(-5);
+        const formHtml = recentForm.length > 0
+          ? `<div class="inline-flex items-center justify-center gap-1 whitespace-nowrap">` + recentForm.map((f, fIdx) => {
               const c = f === "W" ? "bg-emerald-500 text-slate-950" : f === "D" ? "bg-amber-400 text-slate-950" : "bg-rose-500 text-white";
-              return `<span class="inline-flex items-center justify-center w-6 h-6 rounded-md text-xs font-black ${c}">${f}</span>`;
-            }).join(" ")
+              const isLatest = fIdx === recentForm.length - 1;
+              const ringCls = isLatest ? "ring-2 ring-white/80 shadow-sm" : "opacity-90";
+              return `<span class="inline-flex items-center justify-center w-6 h-6 rounded-md text-xs font-black shrink-0 ${c} ${ringCls}" title="${isLatest ? 'นัดล่าสุด' : 'ฟอร์มย้อนหลัง'}">${f}</span>`;
+            }).join("") + `</div>`
           : `<span class="text-xs text-slate-500">รอลงสนาม</span>`;
 
         return `
           <tr class="hover:bg-slate-800/40 transition">
-            <td class="py-3.5 px-4">
+            <td class="py-3.5 px-4 whitespace-nowrap">
               <span class="inline-flex items-center justify-center w-7 h-7 rounded-lg text-xs ${zoneBadge}">${rank}</span>
             </td>
-            <td class="py-3.5 px-4">
+            <td class="py-3.5 px-4 whitespace-nowrap">
               <div class="flex items-center gap-3">
                 ${renderClubLogoBadge(row.team, "w-10 h-10")}
                 <div>
-                  <div class="font-bold text-white">${formatTeamDisplay(row.team)}</div>
-                  <div class="text-[11px] text-slate-400">กุนซือ: ${row.manager}</div>
+                  <div class="font-bold text-white whitespace-nowrap">${formatTeamDisplay(row.team)}</div>
+                  <div class="text-[11px] text-slate-400 whitespace-nowrap">กุนซือ: ${row.manager}</div>
                 </div>
               </div>
             </td>
-            <td class="py-3.5 px-3 text-center font-semibold text-slate-200">${row.P}</td>
-            <td class="py-3.5 px-3 text-center text-emerald-400 font-semibold">${row.W}</td>
-            <td class="py-3.5 px-3 text-center text-amber-300 font-semibold">${row.D}</td>
-            <td class="py-3.5 px-3 text-center text-rose-400 font-semibold">${row.L}</td>
-            <td class="py-3.5 px-3 text-center text-slate-200">${row.GF}</td>
-            <td class="py-3.5 px-3 text-center text-slate-200">${row.GA}</td>
-            <td class="py-3.5 px-3 text-center font-bold ${row.GD > 0 ? "text-emerald-400" : row.GD < 0 ? "text-rose-400" : "text-slate-300"}">${gdStr}</td>
-            <td class="py-3.5 px-3 text-center text-slate-400">${row.penalty}</td>
-            <td class="py-3.5 px-4 text-center">
+            <td class="py-3.5 px-3 text-center font-semibold text-slate-200 whitespace-nowrap">${row.P}</td>
+            <td class="py-3.5 px-3 text-center text-emerald-400 font-semibold whitespace-nowrap">${row.W}</td>
+            <td class="py-3.5 px-3 text-center text-amber-300 font-semibold whitespace-nowrap">${row.D}</td>
+            <td class="py-3.5 px-3 text-center text-rose-400 font-semibold whitespace-nowrap">${row.L}</td>
+            <td class="py-3.5 px-3 text-center text-slate-200 whitespace-nowrap">${row.GF}</td>
+            <td class="py-3.5 px-3 text-center text-slate-200 whitespace-nowrap">${row.GA}</td>
+            <td class="py-3.5 px-3 text-center font-bold whitespace-nowrap ${row.GD > 0 ? "text-emerald-400" : row.GD < 0 ? "text-rose-400" : "text-slate-300"}">${gdStr}</td>
+            <td class="py-3.5 px-3 text-center text-slate-400 whitespace-nowrap">${row.penalty}</td>
+            <td class="py-3.5 px-4 text-center whitespace-nowrap">
               <span class="px-3 py-1 rounded-lg bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 font-black text-sm">${row.finalPts}</span>
             </td>
-            <td class="py-3.5 px-4 text-center">${formHtml}</td>
+            <td class="py-3.5 px-4 text-center whitespace-nowrap">${formHtml}</td>
           </tr>
         `;
       }).join("");
