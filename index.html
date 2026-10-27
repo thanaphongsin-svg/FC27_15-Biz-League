@@ -98,7 +98,7 @@
               <h1 class="text-lg sm:text-xl font-extrabold tracking-tight text-white">FC27 SUPER LEAGUE</h1>
               <span class="px-2 py-0.5 text-[11px] font-bold rounded bg-amber-500/20 text-amber-300 border border-amber-500/30">SEASON 1</span>
             </div>
-            <p class="text-xs text-slate-400">Official Broadcast News, Standings, Squads &amp; Match Center • แข่งแล้ว 21 / 56 นัด</p>
+            <p class="text-xs text-slate-400">Official Broadcast News, Standings, Squads &amp; Match Center • แข่งแล้ว 23 / 56 นัด</p>
           </div>
         </div>
         <span class="md:hidden text-xs px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 text-slate-300 font-medium">
@@ -142,18 +142,18 @@
         <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/65 to-transparent"></div>
         <div class="absolute bottom-0 inset-x-0 p-5 sm:p-8 flex flex-col justify-end">
           <div class="flex flex-wrap items-center gap-2 mb-2.5">
-            <span class="px-2.5 py-1 rounded-md text-xs font-extrabold uppercase bg-rose-600 text-white tracking-wider">MATCHES 15–21 HIGHLIGHTS</span>
-            <span class="px-2.5 py-1 rounded-md text-xs font-semibold bg-slate-900/80 text-emerald-300 border border-emerald-500/30">FC27 Season 1 • 21 Match Reports &amp; 8 Team Profiles</span>
+            <span class="px-2.5 py-1 rounded-md text-xs font-extrabold uppercase bg-rose-600 text-white tracking-wider">MATCHES 22–23 • LIVE TIMELINE</span>
+            <span class="px-2.5 py-1 rounded-md text-xs font-semibold bg-slate-900/80 text-emerald-300 border border-emerald-500/30">FC27 Season 1 • 23 Match Reports &amp; Full Match Timeline</span>
           </div>
           <h2 class="text-xl sm:text-3xl md:text-4xl font-black text-white leading-tight max-w-4xl">
-            Dembélé กด 5 เม็ดพา Parma ถล่มเบรเมน 7-2 ทะยานนำดาวซัลโว 11 ลูก! Pulisic แฮตทริกส่งราชันชุดขาวยึดจ่าฝูง 15 แต้ม
+            Torres กดประตูชัยนาที 85' พาหงส์บุกเฉือน Parma 3-2 ทาบจ่าฝูง 15 แต้ม! Yıldız-Marmoush-Messi ซัดคนละตุงพาม้าลายอัดผี 3-1
           </h2>
           <p class="text-xs sm:text-sm text-slate-300 mt-2 max-w-3xl line-clamp-2">
-            อัปเดตผลการแข่งขันครบ 21 นัด: Real Madrid CF (ก้อง) นำจ่าฝูงที่ 15 แต้ม (+18) ตามด้วย Liverpool (แดงค์) 12 แต้ม ขณะที่ Bournemouth (มอส) สร้างเซอร์ไพรส์บุกโค่นราชัน 4-2 และ Ferran Torres เหมา 4 ลูกพาหงส์บุกอัดกาลาฯ 4-2
+            อัปเดตผลการแข่งขันนัดที่ 22–23 พร้อมระบบ Match Timeline รายนาที: Liverpool (แดงค์) เก็บ 15 แต้มเท่ากับจ่าฝูง Real Madrid CF (ก้อง) ขณะที่ Ousmane Dembélé ยิงเพิ่ม 2 ลูกนำโด่งดาวซัลโว 13 ประตู และ Juventus (ฟัยรูซ) ขยับขึ้นอันดับ 6
           </p>
           <div class="mt-4 flex flex-wrap items-center gap-3">
             <button type="button" id="heroReadArticleBtn" class="px-4 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs sm:text-sm transition shadow-lg shadow-emerald-500/25">
-              อ่านรายงานนัดที่ 20 (Dembélé เหมา 5 ลูก) →
+              ดูไทม์ไลน์นัดที่ 22 (Parma 2-3 Liverpool) →
             </button>
             <button type="button" id="heroJumpStandingsBtn" class="px-4 py-2 rounded-xl bg-slate-900/90 hover:bg-slate-800 text-white font-semibold text-xs sm:text-sm border border-slate-700 transition">
               ดูตารางคะแนนล่าสุด
@@ -172,12 +172,12 @@
                 <span class="w-2 h-5 rounded bg-emerald-400"></span>
                 ศูนย์ข่าวผลการแข่งขัน &amp; เจาะลึกขุมกำลังทั้ง 8 สโมสร
               </h3>
-              <p class="text-xs text-slate-400">แสดงเฉพาะข่าวผลการแข่งขันแต่ละนัด (21 นัด) และข่าวข้อมูลนักเตะ/แผนการเล่นแยกเป็นรายทีม (8 ทีม)</p>
+              <p class="text-xs text-slate-400">แสดงเฉพาะข่าวผลการแข่งขันแต่ละนัด (23 นัด) และข่าวข้อมูลนักเตะ/แผนการเล่นแยกเป็นรายทีม (8 ทีม)</p>
             </div>
             <!-- Category Filter -->
             <div class="flex items-center gap-1.5 flex-wrap" id="newsFilterBar">
-              <button type="button" data-news-filter="all" class="news-filter-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-emerald-500 text-slate-950">ทั้งหมด (29)</button>
-              <button type="button" data-news-filter="Match Report" class="news-filter-btn px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-900 text-slate-300 hover:bg-slate-800 border border-slate-800">ข่าวผลการแข่งขัน (21)</button>
+              <button type="button" data-news-filter="all" class="news-filter-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-emerald-500 text-slate-950">ทั้งหมด (31)</button>
+              <button type="button" data-news-filter="Match Report" class="news-filter-btn px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-900 text-slate-300 hover:bg-slate-800 border border-slate-800">ข่าวผลการแข่งขัน (23)</button>
               <button type="button" data-news-filter="Team & Tactics" class="news-filter-btn px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-900 text-slate-300 hover:bg-slate-800 border border-slate-800">ข่าวข้อมูลนักเตะ 8 ทีม (8)</button>
             </div>
           </div>
@@ -195,7 +195,7 @@
                 <h4 class="text-sm font-extrabold text-white uppercase tracking-wider flex items-center gap-1.5">
                   🏆 ตารางคะแนน FC27 S1
                 </h4>
-                <p class="text-[11px] text-slate-400">อัปเดตหลังจบ 21 นัดแรก</p>
+                <p class="text-[11px] text-slate-400">อัปเดตหลังจบ 23 นัดแรก</p>
               </div>
               <button type="button" id="miniTableFullBtn" class="text-xs font-bold text-emerald-400 hover:text-emerald-300">
                 ตารางเต็ม →
@@ -222,7 +222,7 @@
             <div class="flex items-center justify-between">
               <div>
                 <h4 class="text-sm font-extrabold text-white uppercase tracking-wider">⏭️ โปรแกรมคู่ถัดไป</h4>
-                <p class="text-[11px] text-slate-400">4 นัดถัดไปที่กำลังจะลงสนาม (นัดที่ 22 – 25)</p>
+                <p class="text-[11px] text-slate-400">4 นัดถัดไปที่กำลังจะลงสนาม (นัดที่ 24 – 27)</p>
               </div>
               <button type="button" id="miniFixturesFullBtn" class="text-xs font-bold text-emerald-400 hover:text-emerald-300">
                 ดูครบ 56 นัด →
@@ -253,8 +253,8 @@
           <p class="text-xs sm:text-sm text-slate-400">จัดอันดับตาม คะแนนสุทธิ (Final Pts) → ผลต่างประตูได้เสีย (GD) → ประตูได้ (GF)</p>
         </div>
         <div class="flex items-center gap-2 text-xs">
-          <span class="px-3 py-1.5 rounded-lg bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 font-semibold">แข่งแล้ว 21 / 56 นัด</span>
-          <span class="px-3 py-1.5 rounded-lg bg-slate-900 border border-slate-800 text-slate-300">ยิงรวม 114 ประตู (เฉลี่ย 5.43 ลูก/นัด)</span>
+          <span class="px-3 py-1.5 rounded-lg bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 font-semibold">แข่งแล้ว 23 / 56 นัด</span>
+          <span class="px-3 py-1.5 rounded-lg bg-slate-900 border border-slate-800 text-slate-300">ยิงรวม 123 ประตู (เฉลี่ย 5.35 ลูก/นัด)</span>
         </div>
       </div>
 
@@ -314,8 +314,8 @@
           </select>
           <div class="inline-flex rounded-xl bg-slate-900 p-1 border border-slate-800">
             <button type="button" data-fix-status="all" class="fix-status-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-emerald-500 text-slate-950">ทั้งหมด (56)</button>
-            <button type="button" data-fix-status="played" class="fix-status-btn px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-300 hover:text-white">จบแล้ว (21)</button>
-            <button type="button" data-fix-status="upcoming" class="fix-status-btn px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-300 hover:text-white">รอแข่ง (35)</button>
+            <button type="button" data-fix-status="played" class="fix-status-btn px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-300 hover:text-white">จบแล้ว (23)</button>
+            <button type="button" data-fix-status="upcoming" class="fix-status-btn px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-300 hover:text-white">รอแข่ง (33)</button>
           </div>
         </div>
       </div>
@@ -353,9 +353,9 @@
           <div class="flex items-center justify-between border-b border-slate-800 pb-3">
             <div>
               <h3 class="text-base font-extrabold text-white">👟 อันดับดาวซัลโว (Top Scorers)</h3>
-              <p class="text-xs text-slate-400">ผู้ทำประตูสูงสุดหลังจบ 21 นัดแรก</p>
+              <p class="text-xs text-slate-400">ผู้ทำประตูสูงสุดหลังจบ 23 นัดแรก</p>
             </div>
-            <span class="px-2.5 py-1 rounded-lg bg-emerald-500/15 text-emerald-300 text-xs font-bold">114 ประตูรวม</span>
+            <span class="px-2.5 py-1 rounded-lg bg-emerald-500/15 text-emerald-300 text-xs font-bold">123 ประตูรวม</span>
           </div>
           <div id="topScorersList" class="space-y-2.5"></div>
         </div>
@@ -367,7 +367,7 @@
               <h3 class="text-base font-extrabold text-white">🟨🟥 สถิติใบเหลือง &amp; ใบแดง</h3>
               <p class="text-xs text-slate-400">บันทึกนักเตะที่ได้รับใบเหลือง/ใบแดงรายนัด</p>
             </div>
-            <span class="px-2.5 py-1 rounded-lg bg-amber-500/15 text-amber-300 text-xs font-bold">41 ใบเหลือง • 1 ใบแดง</span>
+            <span class="px-2.5 py-1 rounded-lg bg-amber-500/15 text-amber-300 text-xs font-bold">44 ใบเหลือง • 1 ใบแดง</span>
           </div>
           <div id="cardsStatsList" class="space-y-2.5"></div>
         </div>
@@ -4490,8 +4490,58 @@
         headline: "Pulisic แฮตทริก! Real Madrid CF (ก้อง) คืนฟอร์มดุบุกถล่ม Werder Bremen (แชมป์) 7-2",
         report: "Real Madrid CF ของกุนซือก้องคัมแบ็กอย่างยิ่งใหญ่หลังเพิ่งสะดุดในนัดก่อน บุกถล่ม Werder Bremen (แชมป์) ขาดลอย 7-2 โดยได้ Christian Pulisic ระเบิดแฮตทริก 3 ประตู บวกกับ Kylian Mbappé, Nico Williams, Jude Bellingham และซูเปอร์ซับ Ollie Watkins คนละ 1 ลูก ส่วนเบรเมนได้จาก Vinicius Junior และ Erling Haaland ส่งให้ราชันชุดขาวเก็บเพิ่มเป็น 15 แต้ม (+18) นำจ่าฝูงต่อไป"
       },
-      { match: 22, home: "Parma (น็อต)", away: "Liverpool (แดงค์)", hs: null, as: null },
-      { match: 23, home: "Juventus (ฟัยรูซ)", away: "Manchester United (เอฟ)", hs: null, as: null },
+      {
+        match: 22, home: "Parma (น็อต)", away: "Liverpool (แดงค์)", hs: 2, as: 3,
+        goals: [
+          { player: "Ferran Torres", team: "Liverpool (แดงค์)", count: 2, label: "2 ลูก (58', 85')", note: "เหมา 2 ประตูพร้อมซัดประตูชัยนาที 85' (รวม 7 ลูก)" },
+          { player: "Dominik Szoboszlai", team: "Liverpool (แดงค์)", count: 1, label: "1 ลูก (53')", note: "ยิงเบิกร่อง 0-1 นาทีที่ 53'" },
+          { player: "Ousmane Dembélé", team: "Parma (น็อต)", count: 2, label: "2 ลูก (60', 72')", note: "เหมา 2 ประตูไล่ตีเสมอ 2-2 (นำดาวซัลโว 13 ลูก)" }
+        ],
+        yellowCards: [
+          { player: "Pedri", team: "Liverpool (แดงค์)", count: 1, label: "1 ใบ (79')", note: "ใบเหลืองนาทีที่ 79' (ใบที่ 3 ของทัวร์นาเมนต์)" }
+        ],
+        redCards: [],
+        timeline: [
+          { minute: "53'", half: "2H", type: "goal", side: "away", team: "Liverpool (แดงค์)", player: "Dominik Szoboszlai", detail: "ยิงประตูเบิกร่องให้ทีมเยือนขึ้นนำ", scoreAfter: "0 - 1" },
+          { minute: "58'", half: "2H", type: "sub", side: "home", team: "Parma (น็อต)", player: "Mikel Merino", subOut: "Khvicha Kvaratskhelia", detail: "เปลี่ยนตัวสำรอง (Parma)" },
+          { minute: "58'", half: "2H", type: "goal", side: "away", team: "Liverpool (แดงค์)", player: "Ferran Torres", detail: "ซัดประตูหนีห่างให้ทัพหงส์แดง", scoreAfter: "0 - 2" },
+          { minute: "60'", half: "2H", type: "goal", side: "home", team: "Parma (น็อต)", player: "Ousmane Dembélé", detail: "ยิงตีไข่แตกไล่มาทันควัน", scoreAfter: "1 - 2" },
+          { minute: "68'", half: "2H", type: "injury", side: "home", team: "Parma (น็อต)", player: "Josko Gvardiol", detail: "บาดเจ็บระหว่างการแข่งขัน (Injury)" },
+          { minute: "72'", half: "2H", type: "goal", side: "home", team: "Parma (น็อต)", player: "Ousmane Dembélé", detail: "ซัดประตูที่ 2 ของตัวเองตีเสมอสุดเดือด", scoreAfter: "2 - 2" },
+          { minute: "79'", half: "2H", type: "yellow", side: "away", team: "Liverpool (แดงค์)", player: "Pedri", detail: "ได้รับใบเหลือง" },
+          { minute: "85'", half: "2H", type: "goal", side: "away", team: "Liverpool (แดงค์)", player: "Ferran Torres", detail: "ยิงประตูชัยท้ายเกมพา Liverpool คว้า 3 แต้ม", scoreAfter: "2 - 3" }
+        ],
+        headline: "Torres เหมาสองซัดชัยนาที 85'! Liverpool (แดงค์) บุกเฉือน Parma (น็อต) สุดเดือด 3-2",
+        report: "ครึ่งแรกยังทำอะไรกันไม่ได้ 0-0 ก่อนที่ครึ่งหลังจะเดือดระอุถึง 5 ประตู! Liverpool (แดงค์) บุกนำก่อน 0-2 จาก Dominik Szoboszlai (53') และ Ferran Torres (58') แม้ Parma (น็อต) จะแก้เกมส่ง Mikel Merino ลงแทน Kvaratskhelia (58') และได้ Ousmane Dembélé เหมา 2 ลูกรวด (60', 72') ตีเสมอ 2-2 ทั้งที่ Josko Gvardiol บาดเจ็บในนาที 68' แต่ท้ายเกมนาที 85' Ferran Torres ซัดประตูชัยพาหงส์แดงบุกชนะ 3-2 เก็บเพิ่มเป็น 15 แต้มทาบจ่าฝูง (ใบเหลือง: Pedri 79')"
+      },
+      {
+        match: 23, home: "Juventus (ฟัยรูซ)", away: "Manchester United (เอฟ)", hs: 3, as: 1,
+        goals: [
+          { player: "Kenan Yıldız", team: "Juventus (ฟัยรูซ)", count: 1, label: "1 ลูก (11')", note: "ยิงเบิกร่อง 1-0 นาทีที่ 11' (รวม 3 ลูก)" },
+          { player: "Omar Marmoush", team: "Juventus (ฟัยรูซ)", count: 1, label: "1 ลูก (51')", note: "ยิงหนีห่าง 2-0 นาทีที่ 51' (รวม 2 ลูก)" },
+          { player: "Lionel Messi", team: "Juventus (ฟัยรูซ)", count: 1, label: "1 ลูก (71')", note: "ยิงประตูปิดกล่อง 3-1 นาทีที่ 71' (รวม 4 ลูก)" },
+          { player: "Bernardo Silva", team: "Manchester United (เอฟ)", count: 1, label: "1 ลูก (64')", note: "ยิงตีไข่แตก 2-1 นาทีที่ 64'" }
+        ],
+        yellowCards: [
+          { player: "Vitinha", team: "Juventus (ฟัยรูซ)", count: 1, label: "1 ใบ (47')", note: "ใบเหลืองนาทีที่ 47' (Juventus)" },
+          { player: "Felix Nmecha", team: "Manchester United (เอฟ)", count: 1, label: "1 ใบ (55')", note: "ใบเหลืองนาทีที่ 55' (ใบที่ 2 ของทัวร์นาเมนต์)" }
+        ],
+        redCards: [],
+        timeline: [
+          { minute: "11'", half: "1H", type: "goal", side: "home", team: "Juventus (ฟัยรูซ)", player: "Kenan Yıldız", detail: "ยิงประตูเบิกร่องให้ทัพม้าลายขึ้นนำตั้งแต่ต้นเกม", scoreAfter: "1 - 0" },
+          { minute: "47'", half: "2H", type: "yellow", side: "home", team: "Juventus (ฟัยรูซ)", player: "Vitinha", detail: "ได้รับใบเหลืองต้นครึ่งหลัง" },
+          { minute: "51'", half: "2H", type: "goal", side: "home", team: "Juventus (ฟัยรูซ)", player: "Omar Marmoush", detail: "ซัดประตูหนีห่างให้เจ้าถิ่น", scoreAfter: "2 - 0" },
+          { minute: "55'", half: "2H", type: "yellow", side: "away", team: "Manchester United (เอฟ)", player: "Felix Nmecha", detail: "ได้รับใบเหลือง" },
+          { minute: "55'", half: "2H", type: "sub", side: "away", team: "Manchester United (เอฟ)", player: "Julián Alvarez", subOut: "Phil Foden", detail: "เปลี่ยนตัวสำรองเสริมเกมรุก (Man Utd)" },
+          { minute: "60'", half: "2H", type: "sub", side: "home", team: "Juventus (ฟัยรูซ)", player: "Bryan Mbeumo", subOut: "Omar Marmoush", detail: "เปลี่ยนตัวสำรอง (Juventus)" },
+          { minute: "60'", half: "2H", type: "sub", side: "home", team: "Juventus (ฟัยรูซ)", player: "Manuel Locatelli", subOut: "Vitinha", detail: "เปลี่ยนตัวสำรองแพ็กแดนกลาง (Juventus)" },
+          { minute: "64'", half: "2H", type: "goal", side: "away", team: "Manchester United (เอฟ)", player: "Bernardo Silva", detail: "ยิงประตูตีไข่แตกให้ปีศาจแดงไล่มา", scoreAfter: "2 - 1" },
+          { minute: "71'", half: "2H", type: "goal", side: "home", team: "Juventus (ฟัยรูซ)", player: "Lionel Messi", detail: "ซัดประตูปิดกล่องการันตี 3 แต้ม", scoreAfter: "3 - 1" },
+          { minute: "90'", half: "2H", type: "sub", side: "away", team: "Manchester United (เอฟ)", player: "Alexis Mac Allister", subOut: "Bernardo Silva", detail: "เปลี่ยนตัวสำรองท้ายเกม (Man Utd)" }
+        ],
+        headline: "ม้าลายเปิดรังอัดผีแดง! Juventus (ฟัยรูซ) ชนะ Manchester United (เอฟ) 3-1 ขยับขึ้นที่ 6",
+        report: "Juventus ของกุนซือฟัยรูซโชว์ฟอร์มเฉียบขาดในบ้าน ออกนำเร็วตั้งแต่นาทีที่ 11' จาก Kenan Yıldız ก่อนที่ครึ่งหลัง Omar Marmoush จะซัดหนีห่าง 2-0 ในนาทีที่ 51' แม้ Manchester United (เอฟ) จะแก้เกมส่ง Julián Alvarez ลงมาและได้ประตูตีไข่แตกจาก Bernardo Silva ในนาทีที่ 64' แต่ Lionel Messi ก็มายิงประตูปิดกล่องในนาทีที่ 71' พาทัพม้าลายคว้าชัย 3-1 เก็บเพิ่มเป็น 6 คะแนนแซงขึ้นอันดับ 6 (ใบเหลือง: Vitinha 47', Felix Nmecha 55')"
+      },
       { match: 24, home: "Galatasaray (นัท)", away: "ฺBournemouth (มอส)", hs: null, as: null },
       { match: 25, home: "Real Madrid CF (ก้อง)", away: "Galatasaray (นัท)", hs: null, as: null },
       { match: 26, home: "ฺBournemouth (มอส)", away: "Juventus (ฟัยรูซ)", hs: null, as: null },
@@ -4527,12 +4577,32 @@
       { match: 56, home: "Werder Bremen (แชมป์)", away: "Liverpool (แดงค์)", hs: null, as: null }
     ];
 
-    // 29 News Items synced with Sheet `News Feed`: 21 Match Reports + 8 Team Profiles
+    // 31 News Items synced with Sheet `News Feed`: 23 Match Reports + 8 Team Profiles
     const NEWS_ARTICLES = [
+      {
+        id: "news-match-23",
+        category: "Match Report",
+        badge: "MATCH 23 REPORT • TIMELINE",
+        time: "ผลการแข่งขันนัดที่ 23 • มีไทม์ไลน์รายนาที",
+        title: "ม้าลายเปิดรังอัดผีแดง! Juventus (ฟัยรูซ) ชนะ Manchester United (เอฟ) 3-1 ขยับขึ้นที่ 6",
+        summary: "Kenan Yıldız (11'), Omar Marmoush (51') และ Lionel Messi (71') ซัดคนละประตูพา Juventus เปิดบ้านเอาชนะ Manchester United ที่ยิงคืนจาก Bernardo Silva (64') 3-1 พร้อมบันทึกไทม์ไลน์เปลี่ยนตัวและใบเหลืองครบทุกนาที",
+        matchId: 23,
+        clubId: null
+      },
+      {
+        id: "news-match-22",
+        category: "Match Report",
+        badge: "MATCH 22 REPORT • TIMELINE",
+        time: "ผลการแข่งขันนัดที่ 22 • มีไทม์ไลน์รายนาที",
+        title: "Torres เหมาสองซัดชัยนาที 85'! Liverpool (แดงค์) บุกเฉือน Parma (น็อต) สุดเดือด 3-2",
+        summary: "Dominik Szoboszlai (53') และ Ferran Torres (58', 85') ช่วยกันยิงพา Liverpool บุกเฉือนชนะ Parma ที่ได้ Ousmane Dembélé เหมา 2 ลูก (60', 72' นำดาวซัลโว 13 ประตู) ส่งหงส์แดงเก็บ 15 แต้มทาบจ่าฝูง Real Madrid CF",
+        matchId: 22,
+        clubId: null
+      },
       {
         id: "news-match-21",
         category: "Match Report",
-        badge: "MATCH 21 REPORT • LATEST",
+        badge: "MATCH 21 REPORT",
         time: "ผลการแข่งขันนัดที่ 21",
         title: "Pulisic แฮตทริก! Real Madrid CF (ก้อง) คืนฟอร์มดุบุกถล่ม Werder Bremen (แชมป์) 7-2",
         summary: "Christian Pulisic กดแฮตทริก 3 ประตู บวกกับ Kylian Mbappé, Nico Williams, Jude Bellingham และ Ollie Watkins พา Real Madrid CF บุกถล่ม Werder Bremen ที่ได้ประตูจาก Vinicius Jr และ Haaland 7-2 (ใบเหลือง: Dani Vivian, Adrien Rabiot)",
@@ -4552,7 +4622,7 @@
       {
         id: "news-match-19",
         category: "Match Report",
-        badge: "MATCH 19 REPORT • LATEST",
+        badge: "MATCH 19 REPORT",
         time: "ผลการแข่งขันนัดที่ 19",
         title: "หงส์แดงแรงต่อเนื่อง! Liverpool (แดงค์) เปิดบ้านอัด Juventus (ฟัยรูซ) คลีนชีต 2-0",
         summary: "Dominik Szoboszlai และ Ferran Torres ยิงคนละประตูพา Liverpool เปิดบ้านเอาชนะ Juventus คลีนชีต 2-0 เก็บเพิ่มเป็น 12 แต้มขึ้นรั้งรองจ่าฝูง (ใบเหลือง: Pedri, Manuel Locatelli)",
@@ -4562,7 +4632,7 @@
       {
         id: "news-match-18",
         category: "Match Report",
-        badge: "MATCH 18 REPORT • LATEST",
+        badge: "MATCH 18 REPORT",
         time: "ผลการแข่งขันนัดที่ 18",
         title: "ผีแดงปลดล็อกชัย! Manchester United (เอฟ) เปิดรังอัด Galatasaray (นัท) 3-1",
         summary: "Marcus Thuram เหมา 2 ประตู บวกกับ Kevin De Bruyne 1 ลูก พา Manchester United เปิดบ้านเอาชนะ Galatasaray ที่ยิงคืนจาก Alexander Isak 3-1 ประเดิมชัยชนะนัดแรก (ใบเหลือง: Enzo Fernández, Cucurella, Tonali)",
@@ -5184,11 +5254,12 @@
 
             <div class="pt-2.5 border-t border-slate-800/80 flex items-center justify-between gap-2 text-[11px] text-slate-400">
               <div class="truncate">
+                ${m.timeline && m.timeline.length ? `<span class="px-1.5 py-0.5 mr-1 rounded bg-sky-500/15 text-sky-300 border border-sky-500/30 font-bold text-[10px]">⏱️ Timeline</span>` : ""}
                 ${goalsSummary ? `⚽ ${goalsSummary}` : "ยังไม่มีบันทึกผู้ทำประตู"}
                 ${cardsCount > 0 ? ` • 🟨 ${cardsCount} ใบ` : ""}
               </div>
               <button type="button" data-match-modal="${m.match}" class="text-emerald-400 hover:text-emerald-300 font-bold shrink-0">
-                ${isPlayed ? "Match Center →" : "ดูข้อมูลคู่แข่ง →"}
+                ${isPlayed ? (m.timeline && m.timeline.length ? "Timeline &amp; Match Center →" : "Match Center →") : "ดูข้อมูลคู่แข่ง →"}
               </button>
             </div>
           </div>
@@ -5353,6 +5424,32 @@
             note: c.note || "-"
           });
         });
+
+        (m.timeline || []).forEach(t => {
+          if (t.type === "sub") {
+            allEvents.push({
+              match: m.match,
+              pair: `${formatTeamDisplay(m.home)} ${m.hs}-${m.as} ${formatTeamDisplay(m.away)}`,
+              type: `🔄 เปลี่ยนตัว (${t.minute})`,
+              badgeClass: "bg-sky-500/20 text-sky-300 border-sky-500/30",
+              player: `${t.player} 🔼 (แทน ${t.subOut} 🔽)`,
+              team: t.team,
+              countLabel: t.minute,
+              note: t.detail || "เปลี่ยนตัวสำรอง"
+            });
+          } else if (t.type === "injury") {
+            allEvents.push({
+              match: m.match,
+              pair: `${formatTeamDisplay(m.home)} ${m.hs}-${m.as} ${formatTeamDisplay(m.away)}`,
+              type: `🩹 บาดเจ็บ (${t.minute})`,
+              badgeClass: "bg-purple-500/20 text-purple-300 border-purple-500/30",
+              player: t.player,
+              team: t.team,
+              countLabel: t.minute,
+              note: t.detail || "นักเตะบาดเจ็บ"
+            });
+          }
+        });
       });
 
       const scorers = Object.values(scorerMap).sort((a, b) => b.goals - a.goals);
@@ -5412,18 +5509,18 @@
       teamHighlightsEl.innerHTML = `
         <div class="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800 space-y-1">
           <span class="text-[11px] text-emerald-400 font-bold uppercase">⚡ ผู้นำดาวซัลโวสูงสุด (Golden Boot)</span>
-          <div class="text-sm font-extrabold text-white">Ousmane Dembélé (Parma) — 11 ลูก</div>
-          <p class="text-xs text-slate-400">ระเบิด 5 ลูกในนัด #20 แซงขึ้นนำเดี่ยว ตามมาด้วย Kylian Mbappé (9 ลูก) และ Erling Haaland (8 ลูก)</p>
+          <div class="text-sm font-extrabold text-white">Ousmane Dembélé (Parma) — 13 ลูก</div>
+          <p class="text-xs text-slate-400">บวกเพิ่มอีก 2 ลูกในนัด #22 นำโด่งดาวซัลโว ตามมาด้วย Kylian Mbappé (9 ลูก), Erling Haaland (8 ลูก) และ Ferran Torres (7 ลูก)</p>
         </div>
         <div class="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800 space-y-1">
-          <span class="text-[11px] text-sky-400 font-bold uppercase">🏆 จ่าฝูง &amp; เกมรุกโหดสุดในลีก</span>
-          <div class="text-sm font-extrabold text-white">Real Madrid CF (ก้อง) — 15 แต้ม (ยิง 27 ลูก, GD +18)</div>
-          <p class="text-xs text-slate-400">ชนะ 5 จาก 6 นัด นำอันดับ 2 Liverpool (12 แต้ม) อยู่ 3 คะแนน พร้อม 4 แนวรุกติดท็อป 10 ดาวซัลโว</p>
+          <span class="text-[11px] text-sky-400 font-bold uppercase">🏆 ลุ้นแชมป์เดือด! คู่จ่าฝูง 15 แต้มเท่ากัน</span>
+          <div class="text-sm font-extrabold text-white">Real Madrid CF (+18) &amp; Liverpool (+6) — 15 แต้ม</div>
+          <p class="text-xs text-slate-400">ทั้งสองทีมชนะ 5 จาก 6 นัดแรก มี 15 คะแนนเท่ากัน โดยราชันชุดขาวนำด้วยผลต่างประตูได้เสีย</p>
         </div>
         <div class="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800 space-y-1">
-          <span class="text-[11px] text-rose-400 font-bold uppercase">🔥 สถิติยิงเยอะสุดใน 1 เกม (5 ประตู)</span>
-          <div class="text-sm font-extrabold text-white">Ousmane Dembélé &amp; Hugo Ekitiké (5 ลูก/นัด)</div>
-          <p class="text-xs text-slate-400">Dembélé เหมา 5 ลูกในนัดบุกถล่มเบรเมน 7-2 (#20) เทียบเท่าสถิติ Ekitiké ในนัดเฉือนบอร์นมัธ 5-4 (#10)</p>
+          <span class="text-[11px] text-rose-400 font-bold uppercase">⏱️ อัปเดตระบบใหม่: Match Timeline รายนาที</span>
+          <div class="text-sm font-extrabold text-white">บันทึกครบทุกนาที: ประตู • ใบเหลือง/แดง • เปลี่ยนตัว • บาดเจ็บ</div>
+          <p class="text-xs text-slate-400">กดดู Match Center ตั้งแต่นัดที่ #22 เป็นต้นไป เพื่อดูไทม์ไลน์เหตุการณ์จริงแบบนาทีต่อนาที</p>
         </div>
       `;
 
@@ -5537,6 +5634,105 @@
             คู่นี้อยู่ระหว่างรอลงสนาม เมื่อแข่งจบแล้วสามารถแจ้งผลสกอร์ คนทำประตู และใบเหลือง/ใบแดง เพื่ออัปเดตลง Google Sheets และขึ้นข่าวหน้าเว็บได้ทันที
           </div>
         `}
+
+        ${m.timeline && m.timeline.length ? (() => {
+          const firstHalf = m.timeline.filter(e => e.half === "1H");
+          const secondHalf = m.timeline.filter(e => e.half !== "1H");
+
+          function renderTimelineRow(ev) {
+            const isHome = ev.side === "home";
+            let iconBadge = "";
+            let titleText = "";
+            let subText = "";
+
+            if (ev.type === "goal") {
+              iconBadge = `<span class="px-2 py-0.5 rounded-md bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 font-black text-[11px]">⚽ GOAL ${ev.scoreAfter ? `(${ev.scoreAfter})` : ""}</span>`;
+              titleText = `<span class="font-extrabold text-white text-xs sm:text-sm">${ev.player}</span>`;
+              subText = `<span class="text-[11px] text-slate-400 block">${ev.detail || ""}</span>`;
+            } else if (ev.type === "yellow") {
+              iconBadge = `<span class="px-2 py-0.5 rounded-md bg-amber-500/20 border border-amber-500/40 text-amber-300 font-black text-[11px]">🟨 ใบเหลือง</span>`;
+              titleText = `<span class="font-bold text-white text-xs sm:text-sm">${ev.player}</span>`;
+              subText = `<span class="text-[11px] text-slate-400 block">${ev.detail || ""}</span>`;
+            } else if (ev.type === "red") {
+              iconBadge = `<span class="px-2 py-0.5 rounded-md bg-rose-500/20 border border-rose-500/40 text-rose-300 font-black text-[11px]">🟥 ใบแดง</span>`;
+              titleText = `<span class="font-bold text-white text-xs sm:text-sm">${ev.player}</span>`;
+              subText = `<span class="text-[11px] text-slate-400 block">${ev.detail || ""}</span>`;
+            } else if (ev.type === "sub") {
+              iconBadge = `<span class="px-2 py-0.5 rounded-md bg-sky-500/20 border border-sky-500/40 text-sky-300 font-black text-[11px]">🔄 เปลี่ยนตัว</span>`;
+              titleText = `<span class="font-bold text-emerald-300 text-xs sm:text-sm">🔼 ${ev.player}</span>`;
+              subText = `<span class="text-[11px] text-rose-300/90 block">🔽 แทน ${ev.subOut}</span>`;
+            } else if (ev.type === "injury") {
+              iconBadge = `<span class="px-2 py-0.5 rounded-md bg-purple-500/20 border border-purple-500/40 text-purple-300 font-black text-[11px]">🩹 บาดเจ็บ</span>`;
+              titleText = `<span class="font-bold text-white text-xs sm:text-sm">${ev.player}</span>`;
+              subText = `<span class="text-[11px] text-slate-400 block">${ev.detail || "นักเตะบาดเจ็บ"}</span>`;
+            }
+
+            const cardContent = `
+              <div class="p-2.5 rounded-xl bg-slate-900/95 border border-slate-800 inline-block max-w-full ${isHome ? "text-right" : "text-left"} space-y-1 shadow">
+                <div class="flex items-center gap-1.5 flex-wrap ${isHome ? "justify-end" : "justify-start"}">
+                  ${isHome ? `${titleText} ${iconBadge}` : `${iconBadge} ${titleText}`}
+                </div>
+                ${subText}
+              </div>
+            `;
+
+            return `
+              <div class="grid grid-cols-9 items-center gap-2 py-1.5 relative">
+                <div class="col-span-4 flex justify-end">
+                  ${isHome ? cardContent : ""}
+                </div>
+                <div class="col-span-1 flex justify-center z-10">
+                  <div class="w-9 h-9 rounded-full bg-slate-950 border-2 border-emerald-500/60 flex items-center justify-center text-xs font-black text-emerald-300 shadow-lg">
+                    ${ev.minute}
+                  </div>
+                </div>
+                <div class="col-span-4 flex justify-start">
+                  ${!isHome ? cardContent : ""}
+                </div>
+              </div>
+            `;
+          }
+
+          return `
+            <div class="space-y-3 p-4 rounded-2xl bg-slate-950/70 border border-slate-800">
+              <div class="flex items-center justify-between border-b border-slate-800 pb-2.5">
+                <h5 class="text-xs sm:text-sm font-extrabold uppercase tracking-wider text-sky-400 flex items-center gap-2">
+                  ⏱️ ไทม์ไลน์เหตุการณ์สำคัญตามเวลาจริง (EA FC27 Match Events Timeline)
+                </h5>
+                <span class="px-2 py-0.5 rounded bg-sky-500/15 text-sky-300 text-[11px] font-bold">${m.timeline.length} เหตุการณ์</span>
+              </div>
+
+              <div class="relative">
+                <!-- Vertical Center Line -->
+                <div class="absolute left-1/2 top-2 bottom-2 -translate-x-1/2 w-0.5 bg-slate-800"></div>
+
+                <!-- 1st Half -->
+                ${firstHalf.length ? firstHalf.map(renderTimelineRow).join("") : `
+                  <div class="py-2 text-center relative z-10">
+                    <span class="px-3 py-1 rounded-full bg-slate-900 border border-slate-800 text-[11px] font-bold text-slate-400">ครึ่งแรก: NO EVENTS (0 - 0)</span>
+                  </div>
+                `}
+
+                <!-- HT Divider -->
+                <div class="py-2.5 flex justify-center relative z-10">
+                  <span class="px-3.5 py-1 rounded-full bg-slate-900 border-2 border-slate-700 text-xs font-black text-amber-300 shadow">
+                    HT • พักครึ่งเวลา
+                  </span>
+                </div>
+
+                <!-- 2nd Half -->
+                ${secondHalf.map(renderTimelineRow).join("")}
+
+                <!-- FT Divider -->
+                <div class="pt-2 flex justify-center relative z-10">
+                  <span class="px-3.5 py-1 rounded-full bg-emerald-500/20 border border-emerald-500/40 text-xs font-black text-emerald-300 shadow">
+                    FT • จบการแข่งขัน (${m.hs} - ${m.as})
+                  </span>
+                </div>
+              </div>
+            </div>
+          `;
+        })() : ""}
 
         <div class="space-y-2">
           <h5 class="text-xs font-extrabold uppercase tracking-wider text-emerald-400">⚽ รายชื่อผู้ทำประตู</h5>
@@ -5719,7 +5915,7 @@
       });
 
       // Quick jump buttons
-      document.getElementById("heroReadArticleBtn").addEventListener("click", () => showMatchModal(20));
+      document.getElementById("heroReadArticleBtn").addEventListener("click", () => showMatchModal(22));
       document.getElementById("heroJumpStandingsBtn").addEventListener("click", () => switchTab("standings"));
       document.getElementById("miniTableFullBtn").addEventListener("click", () => switchTab("standings"));
       document.getElementById("miniFixturesFullBtn").addEventListener("click", () => switchTab("fixtures"));
