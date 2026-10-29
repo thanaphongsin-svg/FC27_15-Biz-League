@@ -155,6 +155,9 @@
             <button type="button" id="heroReadArticleBtn" class="px-4 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs sm:text-sm transition shadow-lg shadow-emerald-500/25">
               ดูไทม์ไลน์นัดที่ 39 (Liverpool 3-3 Galatasaray) →
             </button>
+            <button type="button" id="heroBestXIBtn" class="px-4 py-2 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-extrabold text-xs sm:text-sm transition shadow-lg shadow-amber-400/25">
+              🌟 สกู๊ปพิเศษ Best XI ครึ่งซีซั่น (นัด 1–28)
+            </button>
             <button type="button" id="heroJumpStandingsBtn" class="px-4 py-2 rounded-xl bg-slate-900/90 hover:bg-slate-800 text-white font-semibold text-xs sm:text-sm border border-slate-700 transition">
               ดูตารางคะแนนล่าสุด
             </button>
@@ -176,7 +179,8 @@
             </div>
             <!-- Category Filter -->
             <div class="flex items-center gap-1.5 flex-wrap" id="newsFilterBar">
-              <button type="button" data-news-filter="all" class="news-filter-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-emerald-500 text-slate-950">ทั้งหมด (47)</button>
+              <button type="button" data-news-filter="all" class="news-filter-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-emerald-500 text-slate-950">ทั้งหมด (48)</button>
+              <button type="button" data-news-filter="Special Scoop" class="news-filter-btn px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-900 text-amber-300 hover:bg-slate-800 border border-amber-500/40">🌟 สกู๊ปพิเศษ Best XI (1)</button>
               <button type="button" data-news-filter="Match Report" class="news-filter-btn px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-900 text-slate-300 hover:bg-slate-800 border border-slate-800">ข่าวผลการแข่งขัน (39)</button>
               <button type="button" data-news-filter="Team & Tactics" class="news-filter-btn px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-900 text-slate-300 hover:bg-slate-800 border border-slate-800">ข่าวข้อมูลนักเตะ 8 ทีม (8)</button>
             </div>
@@ -4577,8 +4581,9 @@
       { match: 56, home: "Werder Bremen (แชมป์)", away: "Liverpool (แดงค์)", hs: null, as: null }
     ];
 
-    // 47 News Items synced with Sheet `News Feed`: 39 Match Reports + 8 Team Profiles
+    // 48 News Items synced with Sheet `News Feed`: 1 Special Scoop (Best XI) + 39 Match Reports + 8 Team Profiles
     const NEWS_ARTICLES = [
+      {"id": "news-best-xi-half-season", "category": "Special Scoop", "badge": "🌟 SPECIAL SCOOP • MID-SEASON BEST XI (นัดที่ 1–28)", "time": "สกู๊ปพิเศษครึ่งฤดูกาลแรก • ครบ 1 รอบพบกันหมด (ทีมละ 7 นัด)", "title": "ประกาศผัง 11 ผู้เล่นยอดเยี่ยมครึ่งซีซั่นแรก (Best XI นัดที่ 1–28): Dembélé คว้า MVP 14 ตุง ผนึกกำลัง Mbappé-Bellingham-Williams!", "summary": "เปิดโผทีมยอดเยี่ยมครึ่งฤดูกาลแรก FC27 Super League (ระบบ 4-2-3-1 Wide) จากสถิติจริงนัดที่ 1–28: Ousmane Dembélé (14 ประตู) คว้า MVP ยืนหน้าเป้า ขนาบข้างด้วย Kylian Mbappé (12 ประตู), Nico Williams (7 ประตู) และ Jude Bellingham (5 ประตู) พร้อมเกมรับเหล็กของ Courtois & Schlotterbeck ที่เก็บ 2 คลีนชีต", "matchId": null, "clubId": null, "isBestXI": true},
       {"id": "news-match-39", "category": "Match Report", "badge": "MATCH 39 REPORT • 6-GOAL THRILLER", "time": "ผลการแข่งขันนัดที่ 39 • มีไทม์ไลน์รายนาที", "title": "Torres ซูเปอร์ซับเหมาสองช่วยชีวิต! Liverpool (แดงค์) เปิดรังไล่เจ๊าเดือด Galatasaray (นัท) 3-3", "summary": "Galatasaray บุกมานำถึง 3 ครั้งจาก Alexander Isak (22') และ Désiré Doué เหมา 2 ลูก (44', 82') แต่ Liverpool ตายยากไล่ตีเสมอได้ทุกครั้งจาก Dominik Szoboszlai (32') และซูเปอร์ซับ Ferran Torres ที่เหมา 2 ลูก (69', 88') จบเกม 3-3", "matchId": 39, "clubId": null},
       {"id": "news-match-38", "category": "Match Report", "badge": "MATCH 38 REPORT • YILDIZ BRACE", "time": "ผลการแข่งขันนัดที่ 38 • มีไทม์ไลน์รายนาที", "title": "Yıldız เบิ้ล + Messi-Cherki คนละตุง! Juventus (ฟัยรูซ) บุกถล่ม Werder Bremen (แชมป์) 4-1", "summary": "Juventus ระเบิดฟอร์มรัว 3 ลูกรวดในครึ่งแรกจาก Lionel Messi (18'), Rayan Cherki (31') และ Kenan Yıldız (34') ก่อนที่ Erling Haaland จะยิงตีไข่แตกนาที 56' และ Yıldız ซัดลูกที่สองของตัวเองนาที 77' พาม้าลายบุกชนะ 4-1", "matchId": 38, "clubId": null},
       {"id": "news-match-37", "category": "Match Report", "badge": "MATCH 37 REPORT • LEADER DOMINANCE", "time": "ผลการแข่งขันนัดที่ 37 • มีไทม์ไลน์รายนาที", "title": "ชุดขาวติดเครื่อง! Real Madrid CF (ก้อง) เปิดรังถล่ม Parma (น็อต) 4-1 นำจ่าฝูง 24 แต้ม", "summary": "Kylian Mbappé (12'), Christian Pulisic (23'), Jude Bellingham (34') และตัวสำรอง Mattia Zaccagni (88') ดาหน้ายิงคนละลูกพา Real Madrid CF เปิดบ้านอัด Parma ที่ตีไข่แตกจาก Khvicha Kvaratskhelia (85') 4-1 (Mbappé ทาบดาวซัลโว 15 ประตู)", "matchId": 37, "clubId": null},
@@ -5071,14 +5076,20 @@
           ? matchObj.redCards.reduce((acc, c) => acc + (c.count || 1), 0)
           : 0;
 
-        const footerMeta = matchObj
-          ? `⚽ ${totalGoalsInMatch} ประตู • 🟨 ${totalYellowInMatch} ใบเหลือง${totalRedInMatch > 0 ? ` • 🟥 ${totalRedInMatch} ใบแดง` : ""}`
-          : clubObj
-            ? `📐 ${clubObj.formation} • 💰 ${clubObj.budget}`
-            : "📋 ข้อมูลสโมสร";
+        const footerMeta = article.isBestXI
+          ? `📐 แผน 4-2-3-1 Wide • ⭐ MVP: Ousmane Dembélé (14⚽)`
+          : matchObj
+            ? `⚽ ${totalGoalsInMatch} ประตู • 🟨 ${totalYellowInMatch} ใบเหลือง${totalRedInMatch > 0 ? ` • 🟥 ${totalRedInMatch} ใบแดง` : ""}`
+            : clubObj
+              ? `📐 ${clubObj.formation} • 💰 ${clubObj.budget}`
+              : "📋 ข้อมูลสโมสร";
+
+        const cardBorderCls = article.isBestXI
+          ? "border-amber-400/50 bg-gradient-to-br from-slate-900/95 via-slate-900/90 to-amber-950/25 md:col-span-2"
+          : "hover:border-emerald-500/50";
 
         return `
-          <article class="glass-card rounded-2xl p-5 flex flex-col justify-between hover:border-emerald-500/50 transition group">
+          <article class="glass-card rounded-2xl p-5 flex flex-col justify-between transition group ${cardBorderCls}">
             <div class="space-y-3">
               <div class="flex items-center justify-between gap-2 flex-wrap">
                 ${scorePill}
@@ -5784,9 +5795,137 @@
       openModal(`MATCH CENTER • นัดที่ #${m.match}`, html);
     }
 
+    const BEST_XI_DATA = {
+      formation: "4-2-3-1 Wide",
+      subtitle: "คัดเลือกจากสถิติจริงครึ่งฤดูกาลแรก นัดที่ 1–28 (ครบ 1 รอบพบกันหมด ทีมละ 7 นัด • ยิงรวม 153 ประตู)",
+      pitchCoords: [
+        { pos: "GK", rolePos: "GK", name: "Thibaut Courtois", shortName: "Courtois (2 CS)", club: "Real Madrid CF (ก้อง)", x: 50, y: 88, stat: "เสีย 13 ลูก • 2 คลีนชีต" },
+        { pos: "DF", rolePos: "LB", name: "Nuno Mendes", shortName: "N. Mendes (1⚽)", club: "Galatasaray (นัท)", x: 14, y: 68, stat: "1 ประตู • 1 คลีนชีต" },
+        { pos: "DF", rolePos: "CB", name: "Nico Schlotterbeck", shortName: "Schlotterbeck ★", club: "Real Madrid CF (ก้อง)", x: 37, y: 71, stat: "2 คลีนชีต • 0 ใบเหลือง" },
+        { pos: "DF", rolePos: "CB", name: "Bremer", shortName: "Bremer (1⚽)", club: "Juventus (ฟัยรูซ)", x: 63, y: 71, stat: "1 ประตู • 0 ใบเหลือง" },
+        { pos: "DF", rolePos: "RB", name: "Trent Alexander-Arnold", shortName: "Alexander-Arnold (1⚽)", club: "Manchester United (เอฟ)", x: 86, y: 68, stat: "1 ประตู • 0 ใบเหลือง" },
+        { pos: "MF", rolePos: "CM", name: "Dani Olmo", shortName: "Dani Olmo (3⚽)", club: "ฺBournemouth (มอส)", x: 34, y: 49, stat: "3 ประตู • พาทีมที่ 3" },
+        { pos: "MF", rolePos: "CM", name: "Dominik Szoboszlai", shortName: "Szoboszlai ★ (2⚽)", club: "Liverpool (แดงค์)", x: 66, y: 49, stat: "2 ประตู • รองจ่าฝูง 15 แต้ม" },
+        { pos: "FW", rolePos: "LW", name: "Nico Williams", shortName: "N. Williams (7⚽)", club: "Real Madrid CF (ก้อง)", x: 16, y: 28, stat: "7 ประตู • 1 แฮตทริก" },
+        { pos: "MF", rolePos: "CAM", name: "Jude Bellingham", shortName: "Bellingham ★ (5⚽)", club: "Real Madrid CF (ก้อง)", x: 50, y: 31, stat: "5 ประตู • กลางยิงสูงสุด" },
+        { pos: "FW", rolePos: "RW", name: "Kylian Mbappé", shortName: "Mbappé ★ (12⚽)", club: "Real Madrid CF (ก้อง)", x: 84, y: 28, stat: "12 ประตู • รองดาวซัลโว" },
+        { pos: "FW", rolePos: "ST", name: "Ousmane Dembélé", shortName: "Dembélé ⭐ MVP (14⚽)", club: "Parma (น็อต)", x: 50, y: 12, stat: "14 ประตู • MVP ครึ่งซีซั่น" }
+      ],
+      starters: [
+        { pos: "GK", name: "Thibaut Courtois", club: "Real Madrid CF (ก้อง)", val: "€15M", statBadge: "2 คลีนชีต • เสีย 13 ลูก", reason: "เฝ้าเสาให้จ่าฝูงครึ่งทาง (18 แต้ม) เสียประตูน้อยที่สุดในลีกเพียง 13 ลูกจาก 7 นัด และเก็บ 2 คลีนชีต (สูงสุดในลีก: นัด #1 ชนะ Liverpool 3-0, นัด #9 ชนะ Man Utd 7-0)" },
+        { pos: "LB", name: "Nuno Mendes", club: "Galatasaray (นัท)", val: "€80M", statBadge: "1 ประตู • 1 คลีนชีต", reason: "แบ็กซ้ายตัวจริงที่เติมเกมรุกยิงได้ 1 ประตู (นัด #6 ถล่ม Parma 4-0) และช่วยเกมรับ Galatasaray เสียประตูน้อยเป็นอันดับ 2 ของลีก (16 ประตู)" },
+        { pos: "CB", name: "Nico Schlotterbeck ★", club: "Real Madrid CF (ก้อง)", val: "€55M", statBadge: "2 คลีนชีต • 0 ใบเหลือง", reason: "หัวใจแนวรับ (Key Player ★) ของจ่าฝูงชุดขาว คุมหลังบ้านเสียเพียง 13 ประตู เก็บ 2 คลีนชีต และเล่นขาวสะอาด 0 ใบเหลือง 0 ใบแดงตลอด 7 นัด" },
+        { pos: "CB", name: "Bremer", club: "Juventus (ฟัยรูซ)", val: "€35M", statBadge: "1 ประตู • 0 ใบเหลือง", reason: "เซ็นเตอร์แบ็กเพียงคนเดียวในลีกที่ทำประตูได้ในครึ่งซีซั่นแรก (1 ประตู ในนัด #4 พบ Galatasaray) และไม่เสียใบเหลืองเลยตลอด 7 นัดแรก" },
+        { pos: "RB", name: "Trent Alexander-Arnold", club: "Manchester United (เอฟ)", val: "€60M", statBadge: "1 ประตู • 0 ใบเหลือง", reason: "แบ็กขวาตัวจริงเพียงคนเดียวที่ยิงประตูได้ในช่วงครึ่งซีซั่นแรก (1 ประตู ในนัด #16) พร้อมสถิติไร้ใบเหลืองตลอด 7 นัด" },
+        { pos: "CM", name: "Dani Olmo", club: "ฺBournemouth (มอส)", val: "€60M", statBadge: "3 ประตู • 0 ใบเหลือง", reason: "มิดฟิลด์ห้องเครื่องที่ยิงไป 3 ประตู (เหมา 2 ลูกนัด #16 และยิง 1 ลูกในนัด #17 ที่บุกโค่นจ่าฝูง Real Madrid CF 4-2) พาทีมยึดอันดับ 3 ครึ่งทาง (12 แต้ม)" },
+        { pos: "CM", name: "Dominik Szoboszlai ★", club: "Liverpool (แดงค์)", val: "€100M", statBadge: "2 ประตู • รองจ่าฝูง 15 แต้ม", reason: "จอมทัพตัวจริงของรองจ่าฝูง Liverpool (ชนะ 5 จาก 7 นัด) ยิงประตูเบิกร่องสำคัญ 2 นัดติดในเกมชนะ Juventus 2-0 (นัด #19) และบุกเฉือน Parma 3-2 (นัด #22)" },
+        { pos: "CAM", name: "Jude Bellingham ★", club: "Real Madrid CF (ก้อง)", val: "€160M", statBadge: "5 ประตู • 0 ใบเหลือง", reason: "กองกลางที่ทำประตูสูงสุดของลีกในครึ่งซีซั่นแรก (5 ประตู จากนัด #1 [2 ลูก], #13, #17, #21) และไม่เสียใบเหลืองเลย" },
+        { pos: "LW", name: "Nico Williams", club: "Real Madrid CF (ก้อง)", val: "€40M", statBadge: "7 ประตู • 1 แฮตทริก", reason: "ปีกซ้ายจอมถล่มประตู ยิงไป 7 ประตูจาก 7 นัด (กดแฮตทริก 3 ลูกในนัด #5, ยิงนัด #9, #21 และเหมา 2 ลูกในนัด #25 ชนะ Galatasaray 5-4)" },
+        { pos: "RW", name: "Kylian Mbappé ★", club: "Real Madrid CF (ก้อง)", val: "€200M", statBadge: "12 ประตู • 2 แฮตทริก + 1 โป๊กเกอร์", reason: "รองดาวซัลโวครึ่งซีซั่นแรกด้วยผลงาน 12 ประตูจาก 7 นัด (กด 4 ลูกนัด #9, แฮตทริกนัด #13 และแฮตทริกนัด #25) พาชุดขาวชนะ 6 จาก 7 นัด" },
+        { pos: "ST", name: "Ousmane Dembélé ★ (MVP)", club: "Parma (น็อต)", val: "€100M", statBadge: "14 ประตู • MVP ครึ่งซีซั่น", reason: "ดาวซัลโวสูงสุดและผู้เล่นยอดเยี่ยมครึ่งซีซั่นแรก ยิงคนเดียว 14 ประตูจาก 7 นัด (เฉลี่ย 2.0 ลูก/นัด: กด 5 ลูกนัด #20, แฮตทริกนัด #3, เบิ้ลนัด #13 และ #22, ยิงประตูชัยนัด #27) คิดเป็น 70% ของประตูทั้งทีม Parma" }
+      ],
+      bench: [
+        { name: "Erling Haaland", club: "Werder Bremen (แชมป์)", stat: "9 ประตู (ยิงได้ 6 จาก 7 นัดแรก แบกเกมรุก 64% ของทีม)" },
+        { name: "Alexander Isak", club: "Galatasaray (นัท)", stat: "9 ประตู (ยิงได้ 6 จาก 7 นัดแรก • เหมา 2 ลูกในนัด #4, #6, #25)" },
+        { name: "Ademola Lookman", club: "ฺBournemouth (มอส)", stat: "8 ประตู (ซูเปอร์ซับโหด! กดแฮตทริกนัด #26 ชนะ Juventus 5-3)" },
+        { name: "Ferran Torres", club: "Liverpool (แดงค์)", stat: "7 ประตู (ซูเปอร์ซับทีเด็ด! กด 4 ลูกนัด #15 และเหมา 2 ลูกพร้อมประตูชัยนัด #22)" },
+        { name: "Rafael Leão", club: "Galatasaray (นัท)", stat: "7 ประตู (กดแฮตทริกนัด #24 ถล่ม Bournemouth 4-1)" },
+        { name: "Hugo Ekitiké & Christian Pulisic", club: "Liverpool / Real Madrid CF", stat: "Ekitiké 6 ประตู (กด 5 ลูกนัด #10) • Pulisic 5 ประตู (แฮตทริกนัด #21)" },
+        { name: "Rúben Dias / Virgil van Dijk & Aleix García", club: "Liverpool / Bournemouth", stat: "คู่ CB รองจ่าฝูงไร้ใบเหลือง • Aleix García ซูเปอร์ซับแดนกลางยิง 2 ประตู" }
+      ]
+    };
+
+    function showBestXIModal() {
+      const pitchDots = BEST_XI_DATA.pitchCoords.map(p => {
+        const badgeColor = p.pos === "GK"
+          ? "border-amber-400 bg-slate-950 text-amber-300"
+          : p.pos === "DF"
+            ? "border-sky-400 bg-slate-950 text-sky-200"
+            : p.pos === "MF"
+              ? "border-emerald-400 bg-slate-950 text-emerald-200"
+              : "border-rose-400 bg-slate-950 text-rose-200";
+        return `
+          <div style="left: ${p.x}%; top: ${p.y}%;" class="absolute -translate-x-1/2 -translate-y-1/2 flex flex-col items-center group cursor-pointer z-10">
+            <div class="px-2 py-0.5 rounded-md border-2 ${badgeColor} text-[10px] font-black shadow-lg tracking-tight flex items-center gap-1 whitespace-nowrap">
+              <img src="${getTeamLogo(p.club)}" alt="" class="w-3.5 h-3.5 object-contain" />
+              <span>${p.rolePos}</span>
+            </div>
+            <span class="mt-0.5 px-1.5 py-0.5 rounded bg-slate-950/90 text-white text-[10px] font-bold whitespace-nowrap border border-slate-700/80 shadow">
+              ${p.shortName}
+            </span>
+          </div>
+        `;
+      }).join("");
+
+      const startersHtml = BEST_XI_DATA.starters.map(s => `
+        <div class="p-3 rounded-xl bg-slate-900/90 border border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
+          <div class="flex items-start sm:items-center gap-3">
+            <span class="px-2.5 py-1 rounded-lg bg-amber-500/20 text-amber-300 border border-amber-500/40 font-black text-xs shrink-0 w-12 text-center">${s.pos}</span>
+            ${renderClubLogoBadge(s.club, "w-9 h-9")}
+            <div>
+              <div class="flex items-center gap-2 flex-wrap">
+                <span class="font-extrabold text-white text-sm">${s.name}</span>
+                <span class="text-xs text-slate-400">(${formatTeamDisplay(s.club)} • ${s.val})</span>
+                <span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-[11px] font-bold">${s.statBadge}</span>
+              </div>
+              <p class="text-xs text-slate-300 mt-1 leading-relaxed">${s.reason}</p>
+            </div>
+          </div>
+        </div>
+      `).join("");
+
+      const benchHtml = BEST_XI_DATA.bench.map(b => `
+        <div class="p-2.5 rounded-xl bg-slate-900/70 border border-slate-800/80 flex items-center justify-between gap-2 text-xs">
+          <div class="font-bold text-white">${b.name} <span class="text-slate-400 font-normal">(${formatTeamDisplay(b.club)})</span></div>
+          <span class="text-amber-300 font-semibold text-right">${b.stat}</span>
+        </div>
+      `).join("");
+
+      const html = `
+        <div class="p-4 sm:p-5 rounded-2xl bg-gradient-to-br from-amber-500/15 via-slate-900 to-slate-950 border border-amber-500/40 space-y-2">
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <span class="px-2.5 py-1 rounded-md bg-amber-400 text-slate-950 font-black text-xs uppercase tracking-wider">🌟 SPECIAL SCOOP • MID-SEASON BEST XI</span>
+            <span class="text-xs text-amber-300 font-semibold">ระบบ ${BEST_XI_DATA.formation} • มูลค่ารวม 11 ตัวจริง €955M</span>
+          </div>
+          <h3 class="text-lg sm:text-xl font-black text-white">ทีมยอดเยี่ยมครึ่งฤดูกาลแรก FC27 Super League (นัดที่ 1–28)</h3>
+          <p class="text-xs text-slate-300">${BEST_XI_DATA.subtitle}</p>
+        </div>
+
+        <div class="space-y-2">
+          <div class="flex items-center justify-between text-xs">
+            <span class="font-extrabold text-amber-300 uppercase">📋 ผังการยืนตำแหน่ง Best XI (${BEST_XI_DATA.formation})</span>
+            <span class="text-slate-400">⭐ MVP ครึ่งซีซั่น: Ousmane Dembélé (14 ประตู)</span>
+          </div>
+          <div class="pitch-bg pitch-lines h-96 w-full rounded-2xl border border-emerald-500/30 overflow-hidden select-none shadow-inner relative">
+            <div class="absolute inset-x-6 top-3 h-14 border-b border-x border-white/15 rounded-b-lg"></div>
+            <div class="absolute inset-x-6 bottom-3 h-14 border-t border-x border-white/15 rounded-t-lg"></div>
+            <div class="absolute inset-x-0 top-1/2 border-t border-white/15"></div>
+            <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-20 h-20 rounded-full border border-white/15"></div>
+            ${pitchDots}
+          </div>
+        </div>
+
+        <div class="space-y-2.5">
+          <h4 class="text-xs font-extrabold uppercase tracking-wider text-emerald-400">🏆 รายละเอียดผู้เล่นทั้ง 11 ตำแหน่ง (เรียงตามตำแหน่ง)</h4>
+          <div class="space-y-2">${startersHtml}</div>
+        </div>
+
+        <div class="space-y-2.5">
+          <h4 class="text-xs font-extrabold uppercase tracking-wider text-amber-400">🔥 ซูเปอร์ซับ &amp; ตัวสำรองยอดเยี่ยม (Best Bench นัดที่ 1–28)</h4>
+          <div class="grid grid-cols-1 gap-2">${benchHtml}</div>
+        </div>
+      `;
+
+      openModal("🌟 SPECIAL SCOOP • MID-SEASON BEST XI (MATCHES 1–28)", html);
+    }
+
     function showNewsModal(newsId) {
       const article = NEWS_ARTICLES.find(n => n.id === newsId);
       if (!article) return;
+      if (article.isBestXI) {
+        showBestXIModal();
+        return;
+      }
       if (article.clubId) {
         showClubModal(article.clubId);
         return;
@@ -5952,6 +6091,7 @@
 
       // Quick jump buttons
       document.getElementById("heroReadArticleBtn").addEventListener("click", () => showMatchModal(39));
+      document.getElementById("heroBestXIBtn").addEventListener("click", () => showBestXIModal());
       document.getElementById("heroJumpStandingsBtn").addEventListener("click", () => switchTab("standings"));
       document.getElementById("miniTableFullBtn").addEventListener("click", () => switchTab("standings"));
       document.getElementById("miniFixturesFullBtn").addEventListener("click", () => switchTab("fixtures"));
