@@ -68,12 +68,62 @@
     .ticker-Viewport:active .ticker-Track {
       animation-play-state: paused;
     }
+    /* Championship Celebration Background Animations */
+    @keyframes floatCrestDrift {
+      0% {
+        transform: translate3d(0, 105vh, 0) rotate(-8deg) scale(0.9);
+        opacity: 0;
+      }
+      12% {
+        opacity: var(--crest-opacity, 0.09);
+      }
+      88% {
+        opacity: var(--crest-opacity, 0.09);
+      }
+      100% {
+        transform: translate3d(var(--crest-drift-x, 40px), -22vh, 0) rotate(12deg) scale(1.08);
+        opacity: 0;
+      }
+    }
+    @keyframes royalSpotlightPulse {
+      0%, 100% {
+        opacity: 0.75;
+        transform: scale(1);
+      }
+      50% {
+        opacity: 1;
+        transform: scale(1.08);
+      }
+    }
+    .champ-crest-item {
+      position: absolute;
+      bottom: 0;
+      will-change: transform, opacity;
+      animation: floatCrestDrift var(--crest-dur, 24s) linear infinite;
+      animation-delay: var(--crest-delay, 0s);
+      filter: drop-shadow(0 0 18px rgba(251, 191, 36, 0.28));
+      user-select: none;
+      pointer-events: none;
+    }
+    .champ-spotlight {
+      animation: royalSpotlightPulse 8s ease-in-out infinite;
+    }
   </style>
 </head>
-<body class="min-h-screen flex flex-col selection:bg-emerald-500 selection:text-slate-950">
+<body class="min-h-screen flex flex-col selection:bg-emerald-500 selection:text-slate-950 relative">
+
+  <!-- CHAMPIONSHIP CELEBRATION BACKGROUND LAYERS (POINTER-EVENTS-NONE) -->
+  <div id="champBgRoot" class="fixed inset-0 pointer-events-none z-0 overflow-hidden" aria-hidden="true">
+    <!-- Layer 1: Royal Gold & Blue Stadium Spotlights -->
+    <div id="champAmbientLayer" class="absolute inset-0 champ-spotlight" style="background: radial-gradient(circle at 18% 12%, rgba(251, 191, 36, 0.14) 0%, transparent 42%), radial-gradient(circle at 82% 16%, rgba(56, 189, 248, 0.11) 0%, transparent 40%), radial-gradient(circle at 50% 92%, rgba(245, 158, 11, 0.09) 0%, transparent 48%);"></div>
+    <!-- Layer 2: Floating Real Madrid CF Crests & Championship Crowns -->
+    <div id="champEmblemsLayer" class="absolute inset-0 overflow-hidden"></div>
+    <!-- Layer 3: Interactive 60fps Fireworks & Golden Confetti Canvas -->
+    <canvas id="champFireworksCanvas" class="absolute inset-0 w-full h-full"></canvas>
+  </div>
 
   <!-- TOP LIVE SCORE TICKER (FIXED BADGE + RIGHT-TO-LEFT LOOPING MARQUEE: 4 LATEST RESULTS -> 4 NEXT MATCHES) -->
-  <div class="bg-slate-950 border-b border-slate-800/80 text-xs">
+  <div class="relative z-20 bg-slate-950/90 backdrop-blur-sm border-b border-slate-800/80 text-xs">
     <div class="max-w-7xl mx-auto px-3 sm:px-6 py-2 flex items-center gap-3 overflow-hidden">
       <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/15 text-emerald-400 font-bold tracking-wide uppercase shrink-0 border border-emerald-500/30 z-10 shadow-sm">
         <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
@@ -98,7 +148,7 @@
               <h1 class="text-lg sm:text-xl font-extrabold tracking-tight text-white">FC27 SUPER LEAGUE</h1>
               <span class="px-2 py-0.5 text-[11px] font-bold rounded bg-amber-500/20 text-amber-300 border border-amber-500/30">SEASON 1</span>
             </div>
-            <p class="text-xs text-slate-400">Official Broadcast News, Standings, Squads &amp; Match Center • แข่งแล้ว 39 / 56 นัด</p>
+            <p class="text-xs text-slate-400">Official Broadcast News, Standings, Squads &amp; Match Center • แข่งแล้ว 49 / 56 นัด</p>
           </div>
         </div>
         <span class="md:hidden text-xs px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 text-slate-300 font-medium">
@@ -128,7 +178,7 @@
   </header>
 
   <!-- MAIN CONTENT -->
-  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-6 space-y-8">
+  <main class="relative z-10 flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-6 space-y-8">
 
     <!-- TAB 1: NEWS HUB (DEFAULT READER VIEW) -->
     <section id="view-news" class="tab-view space-y-6">
@@ -142,18 +192,18 @@
         <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/65 to-transparent"></div>
         <div class="absolute bottom-0 inset-x-0 p-5 sm:p-8 flex flex-col justify-end">
           <div class="flex flex-wrap items-center gap-2 mb-2.5">
-            <span class="px-2.5 py-1 rounded-md text-xs font-extrabold uppercase bg-rose-600 text-white tracking-wider">MATCHES 34–39 • LIVE TIMELINE</span>
-            <span class="px-2.5 py-1 rounded-md text-xs font-semibold bg-slate-900/80 text-emerald-300 border border-emerald-500/30">FC27 Season 1 • 39 Match Reports &amp; Full Match Timeline</span>
+            <span class="px-2.5 py-1 rounded-md text-xs font-extrabold uppercase bg-rose-600 text-white tracking-wider">👑 REAL MADRID CF — SEASON 1 CHAMPIONS!</span>
+            <span class="px-2.5 py-1 rounded-md text-xs font-semibold bg-slate-900/80 text-emerald-300 border border-emerald-500/30">การันตีแชมป์หลังจบนัดที่ 48 (Liverpool 5-6 Man Utd) &amp; บุกย้ำชัย 3-1 นัดที่ 49</span>
           </div>
           <h2 class="text-xl sm:text-3xl md:text-4xl font-black text-white leading-tight max-w-4xl">
-            ชุดขาวอัด Parma 4-1 นำจ่าฝูง 24 แต้ม! Torres เหมาสองช่วยหงส์ไล่เจ๊า Galatasaray สุดเดือด 3-3 &amp; Thuram กดแฮตทริกพาผีบุกถล่ม 4-1
+            🏆 แชมป์แล้ว! Real Madrid CF (ก้อง) ผงาดคว้าแชมป์ FC27 Season 1 หลังผีแดงบุกเชือดหงส์ 6-5 นัดที่ 48 ก่อนชุดขาวบุกตอกย้ำชัยคาแอนฟิลด์ 3-1 นัดที่ 49!
           </h2>
           <p class="text-xs sm:text-sm text-slate-300 mt-2 max-w-3xl line-clamp-2">
-            อัปเดตผลการแข่งขันครบถึงนัดที่ 39 พร้อมระบบ Match Timeline รายนาที: Real Madrid CF (ก้อง) นำจ่าฝูง 24 แต้ม ตามด้วย Liverpool (แดงค์) 22 แต้ม และ Parma (น็อต) ขยับขึ้นที่ 3 มี 15 แต้ม ขณะที่ Mbappé ทาบดาวซัลโวร่วมกับ Dembélé ที่ 15 ประตู
+            ดราม่าตัดสินแชมป์นัดที่ 48! Liverpool พลาดท่าพ่าย Manchester United 5-6 ทำให้แต้มหยุดที่ 23 คะแนน (เหลือ 2 นัด) ไล่ Real Madrid CF (30 แต้ม) ไม่ทัน ส่งราชันชุดขาวคว้าแชมป์ทันที ก่อนบุกถล่มหงส์แดง 3-1 ในนัดที่ 49 ทะยานแตะ 33 แต้ม พร้อม Mbappé นำโด่งดาวซัลโว 21 ประตู!
           </p>
           <div class="mt-4 flex flex-wrap items-center gap-3">
             <button type="button" id="heroReadArticleBtn" class="px-4 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs sm:text-sm transition shadow-lg shadow-emerald-500/25">
-              ดูไทม์ไลน์นัดที่ 39 (Liverpool 3-3 Galatasaray) →
+              👑 ดูสรุปการคว้าแชมป์นัดที่ #48 &amp; ชัยชนะนัดที่ #49 →
             </button>
             <button type="button" id="heroBestXIBtn" class="px-4 py-2 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-extrabold text-xs sm:text-sm transition shadow-lg shadow-amber-400/25">
               🌟 สกู๊ปพิเศษ Best XI ครึ่งซีซั่น (นัด 1–28)
@@ -175,13 +225,13 @@
                 <span class="w-2 h-5 rounded bg-emerald-400"></span>
                 ศูนย์ข่าวผลการแข่งขัน &amp; เจาะลึกขุมกำลังทั้ง 8 สโมสร
               </h3>
-              <p class="text-xs text-slate-400">แสดงเฉพาะข่าวผลการแข่งขันแต่ละนัด (39 นัด) และข่าวข้อมูลนักเตะ/แผนการเล่นแยกเป็นรายทีม (8 ทีม)</p>
+              <p class="text-xs text-slate-400">แสดงเฉพาะข่าวผลการแข่งขันแต่ละนัด (49 นัด), สกู๊ปพิเศษฉลองแชมป์ &amp; Best XI (2) และข้อมูลนักเตะรายทีม (8 ทีม)</p>
             </div>
             <!-- Category Filter -->
             <div class="flex items-center gap-1.5 flex-wrap" id="newsFilterBar">
-              <button type="button" data-news-filter="all" class="news-filter-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-emerald-500 text-slate-950">ทั้งหมด (48)</button>
-              <button type="button" data-news-filter="Special Scoop" class="news-filter-btn px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-900 text-amber-300 hover:bg-slate-800 border border-amber-500/40">🌟 สกู๊ปพิเศษ Best XI (1)</button>
-              <button type="button" data-news-filter="Match Report" class="news-filter-btn px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-900 text-slate-300 hover:bg-slate-800 border border-slate-800">ข่าวผลการแข่งขัน (39)</button>
+              <button type="button" data-news-filter="all" class="news-filter-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-emerald-500 text-slate-950">ทั้งหมด (59)</button>
+              <button type="button" data-news-filter="Special Scoop" class="news-filter-btn px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-900 text-amber-300 hover:bg-slate-800 border border-amber-500/40">🌟 สกู๊ปพิเศษ &amp; แชมป์ (2)</button>
+              <button type="button" data-news-filter="Match Report" class="news-filter-btn px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-900 text-slate-300 hover:bg-slate-800 border border-slate-800">ข่าวผลการแข่งขัน (49)</button>
               <button type="button" data-news-filter="Team & Tactics" class="news-filter-btn px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-900 text-slate-300 hover:bg-slate-800 border border-slate-800">ข่าวข้อมูลนักเตะ 8 ทีม (8)</button>
             </div>
           </div>
@@ -199,7 +249,7 @@
                 <h4 class="text-sm font-extrabold text-white uppercase tracking-wider flex items-center gap-1.5">
                   🏆 ตารางคะแนน FC27 S1
                 </h4>
-                <p class="text-[11px] text-slate-400">อัปเดตหลังจบ 39 นัดแรก</p>
+                <p class="text-[11px] text-slate-400">อัปเดตหลังจบ 49 นัด (ได้แชมป์แล้ว 👑)</p>
               </div>
               <button type="button" id="miniTableFullBtn" class="text-xs font-bold text-emerald-400 hover:text-emerald-300">
                 ตารางเต็ม →
@@ -226,7 +276,7 @@
             <div class="flex items-center justify-between">
               <div>
                 <h4 class="text-sm font-extrabold text-white uppercase tracking-wider">⏭️ โปรแกรมคู่ถัดไป</h4>
-                <p class="text-[11px] text-slate-400">4 นัดถัดไปที่กำลังจะลงสนาม (นัดที่ 40 – 43)</p>
+                <p class="text-[11px] text-slate-400">4 นัดถัดไปที่กำลังจะลงสนาม (นัดที่ 50 – 53)</p>
               </div>
               <button type="button" id="miniFixturesFullBtn" class="text-xs font-bold text-emerald-400 hover:text-emerald-300">
                 ดูครบ 56 นัด →
@@ -257,8 +307,8 @@
           <p class="text-xs sm:text-sm text-slate-400">จัดอันดับตาม คะแนนสุทธิ (Final Pts) → ผลต่างประตูได้เสีย (GD) → ประตูได้ (GF)</p>
         </div>
         <div class="flex items-center gap-2 text-xs">
-          <span class="px-3 py-1.5 rounded-lg bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 font-semibold">แข่งแล้ว 39 / 56 นัด</span>
-          <span class="px-3 py-1.5 rounded-lg bg-slate-900 border border-slate-800 text-slate-300">ยิงรวม 201 ประตู (เฉลี่ย 5.15 ลูก/นัด)</span>
+          <span class="px-3 py-1.5 rounded-lg bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 font-semibold">แข่งแล้ว 49 / 56 นัด</span>
+          <span class="px-3 py-1.5 rounded-lg bg-slate-900 border border-slate-800 text-slate-300">ยิงรวม 248 ประตู (เฉลี่ย 5.06 ลูก/นัด)</span>
         </div>
       </div>
 
@@ -290,7 +340,7 @@
       <div class="flex flex-wrap items-center gap-4 text-xs text-slate-400 px-1">
         <div class="flex items-center gap-2">
           <span class="w-3 h-3 rounded-full bg-emerald-400"></span>
-          <span>อันดับ 1–2: โซนลุ้นแชมป์ (Title Contenders)</span>
+          <span>อันดับ 1: 👑 แชมป์ลีก (Real Madrid CF การันตีแชมป์แล้ว) • อันดับ 2: รองแชมป์</span>
         </div>
         <div class="flex items-center gap-2">
           <span class="w-3 h-3 rounded-full bg-sky-400"></span>
@@ -318,8 +368,8 @@
           </select>
           <div class="inline-flex rounded-xl bg-slate-900 p-1 border border-slate-800">
             <button type="button" data-fix-status="all" class="fix-status-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-emerald-500 text-slate-950">ทั้งหมด (56)</button>
-            <button type="button" data-fix-status="played" class="fix-status-btn px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-300 hover:text-white">จบแล้ว (39)</button>
-            <button type="button" data-fix-status="upcoming" class="fix-status-btn px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-300 hover:text-white">รอแข่ง (17)</button>
+            <button type="button" data-fix-status="played" class="fix-status-btn px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-300 hover:text-white">จบแล้ว (49)</button>
+            <button type="button" data-fix-status="upcoming" class="fix-status-btn px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-300 hover:text-white">รอแข่ง (7)</button>
           </div>
         </div>
       </div>
@@ -357,9 +407,9 @@
           <div class="flex items-center justify-between border-b border-slate-800 pb-3">
             <div>
               <h3 class="text-base font-extrabold text-white">👟 อันดับดาวซัลโว (Top Scorers)</h3>
-              <p class="text-xs text-slate-400">ผู้ทำประตูสูงสุดหลังจบ 39 นัดแรก</p>
+              <p class="text-xs text-slate-400">ผู้ทำประตูสูงสุดหลังจบ 49 นัดแรก</p>
             </div>
-            <span class="px-2.5 py-1 rounded-lg bg-emerald-500/15 text-emerald-300 text-xs font-bold">201 ประตูรวม</span>
+            <span class="px-2.5 py-1 rounded-lg bg-emerald-500/15 text-emerald-300 text-xs font-bold">248 ประตูรวม</span>
           </div>
           <div id="topScorersList" class="space-y-2.5"></div>
         </div>
@@ -371,7 +421,7 @@
               <h3 class="text-base font-extrabold text-white">🟨🟥 สถิติใบเหลือง &amp; ใบแดง</h3>
               <p class="text-xs text-slate-400">บันทึกนักเตะที่ได้รับใบเหลือง/ใบแดงรายนัด</p>
             </div>
-            <span class="px-2.5 py-1 rounded-lg bg-amber-500/15 text-amber-300 text-xs font-bold">77 ใบเหลือง • 2 ใบแดง</span>
+            <span class="px-2.5 py-1 rounded-lg bg-amber-500/15 text-amber-300 text-xs font-bold">105 ใบเหลือง • 2 ใบแดง</span>
           </div>
           <div id="cardsStatsList" class="space-y-2.5"></div>
         </div>
@@ -4562,16 +4612,16 @@
       {"match": 37, "home": "Real Madrid CF (ก้อง)", "away": "Parma (น็อต)", "hs": 4, "as": 1, "goals": [{"player": "Kylian Mbappé", "team": "Real Madrid CF (ก้อง)", "count": 1, "label": "1 ลูก (12')", "note": "ยิงประตูนาทีที่ 12'"}, {"player": "Christian Pulisic", "team": "Real Madrid CF (ก้อง)", "count": 1, "label": "1 ลูก (23')", "note": "ยิงประตูนาทีที่ 23'"}, {"player": "Jude Bellingham", "team": "Real Madrid CF (ก้อง)", "count": 1, "label": "1 ลูก (34')", "note": "ยิงประตูนาทีที่ 34'"}, {"player": "Khvicha Kvaratskhelia", "team": "Parma (น็อต)", "count": 1, "label": "1 ลูก (85')", "note": "ยิงประตูนาทีที่ 85'"}, {"player": "Mattia Zaccagni", "team": "Real Madrid CF (ก้อง)", "count": 1, "label": "1 ลูก (88')", "note": "ยิงประตูนาทีที่ 88'"}], "yellowCards": [{"player": "Declan Rice", "team": "Real Madrid CF (ก้อง)", "count": 1, "label": "1 ใบ (10')", "note": "ใบเหลืองนาทีที่ 10'"}, {"player": "Moisés Caicedo", "team": "Parma (น็อต)", "count": 1, "label": "1 ใบ (32')", "note": "ใบเหลืองนาทีที่ 32'"}, {"player": "Antonio Rüdiger", "team": "Real Madrid CF (ก้อง)", "count": 1, "label": "1 ใบ (57')", "note": "ใบเหลืองนาทีที่ 57'"}, {"player": "Josko Gvardiol", "team": "Parma (น็อต)", "count": 1, "label": "1 ใบ (67')", "note": "ใบเหลืองนาทีที่ 67'"}], "redCards": [], "timeline": [{"minute": "10'", "half": "1H", "type": "yellow", "side": "home", "team": "Real Madrid CF (ก้อง)", "player": "Declan Rice", "detail": "ได้รับใบเหลือง"}, {"minute": "12'", "half": "1H", "type": "goal", "side": "home", "team": "Real Madrid CF (ก้อง)", "player": "Kylian Mbappé", "detail": "ยิงประตูให้ Real Madrid CF (ก้อง) (1 - 0)", "scoreAfter": "1 - 0"}, {"minute": "23'", "half": "1H", "type": "goal", "side": "home", "team": "Real Madrid CF (ก้อง)", "player": "Christian Pulisic", "detail": "ยิงประตูให้ Real Madrid CF (ก้อง) (2 - 0)", "scoreAfter": "2 - 0"}, {"minute": "32'", "half": "1H", "type": "yellow", "side": "away", "team": "Parma (น็อต)", "player": "Moisés Caicedo", "detail": "ได้รับใบเหลือง"}, {"minute": "34'", "half": "1H", "type": "goal", "side": "home", "team": "Real Madrid CF (ก้อง)", "player": "Jude Bellingham", "detail": "ยิงประตูให้ Real Madrid CF (ก้อง) (3 - 0)", "scoreAfter": "3 - 0"}, {"minute": "54'", "half": "2H", "type": "sub", "side": "away", "team": "Parma (น็อต)", "player": "Matty Cash", "subOut": "Pedro Porro", "detail": "เปลี่ยนตัวสำรอง (Parma (น็อต))"}, {"minute": "57'", "half": "2H", "type": "yellow", "side": "home", "team": "Real Madrid CF (ก้อง)", "player": "Antonio Rüdiger", "detail": "ได้รับใบเหลือง"}, {"minute": "61'", "half": "2H", "type": "sub", "side": "home", "team": "Real Madrid CF (ก้อง)", "player": "Antony", "subOut": "Christian Pulisic", "detail": "เปลี่ยนตัวสำรอง (Real Madrid CF (ก้อง))"}, {"minute": "61'", "half": "2H", "type": "sub", "side": "home", "team": "Real Madrid CF (ก้อง)", "player": "Dani Vivian", "subOut": "Antonio Rüdiger", "detail": "เปลี่ยนตัวสำรอง (Real Madrid CF (ก้อง))"}, {"minute": "61'", "half": "2H", "type": "sub", "side": "home", "team": "Real Madrid CF (ก้อง)", "player": "Giovanni Di Lorenzo", "subOut": "Jurriën Timber", "detail": "เปลี่ยนตัวสำรอง (Real Madrid CF (ก้อง))"}, {"minute": "67'", "half": "2H", "type": "injury", "side": "home", "team": "Real Madrid CF (ก้อง)", "player": "Giovanni Di Lorenzo", "detail": "บาดเจ็บระหว่างการแข่งขัน (Injury)"}, {"minute": "67'", "half": "2H", "type": "yellow", "side": "away", "team": "Parma (น็อต)", "player": "Josko Gvardiol", "detail": "ได้รับใบเหลือง"}, {"minute": "80'", "half": "2H", "type": "sub", "side": "home", "team": "Real Madrid CF (ก้อง)", "player": "Mattia Zaccagni", "subOut": "Nico Williams", "detail": "เปลี่ยนตัวสำรอง (Real Madrid CF (ก้อง))"}, {"minute": "80'", "half": "2H", "type": "sub", "side": "home", "team": "Real Madrid CF (ก้อง)", "player": "Maximilian Mittelstädt", "subOut": "Federico Dimarco", "detail": "เปลี่ยนตัวสำรอง (Real Madrid CF (ก้อง))"}, {"minute": "80'", "half": "2H", "type": "sub", "side": "away", "team": "Parma (น็อต)", "player": "Min-jae Kim", "subOut": "Piero Hincapié", "detail": "เปลี่ยนตัวสำรอง (Parma (น็อต))"}, {"minute": "85'", "half": "2H", "type": "goal", "side": "away", "team": "Parma (น็อต)", "player": "Khvicha Kvaratskhelia", "detail": "ยิงประตูให้ Parma (น็อต) (3 - 1)", "scoreAfter": "3 - 1"}, {"minute": "88'", "half": "2H", "type": "goal", "side": "home", "team": "Real Madrid CF (ก้อง)", "player": "Mattia Zaccagni", "detail": "ยิงประตูให้ Real Madrid CF (ก้อง) (4 - 1)", "scoreAfter": "4 - 1"}], "headline": "ชุดขาวติดเครื่อง! Real Madrid CF (ก้อง) เปิดรังถล่ม Parma (น็อต) 4-1 นำจ่าฝูง 24 แต้ม", "report": "จ่าฝูง Real Madrid CF ของกุนซือก้องโชว์ฟอร์มสมราคาเต็งแชมป์ เปิดบ้านไล่ถล่ม Parma (น็อต) 4-1 โดยปิดจ๊อบนำห่าง 3-0 ตั้งแต่ครึ่งแรกจาก Kylian Mbappé (12' ขยับขึ้นนำดาวซัลโวร่วมที่ 15 ประตู), Christian Pulisic (23') และ Jude Bellingham (34') ครึ่งหลังแม้ Parma จะตีไข่แตกจาก Khvicha Kvaratskhelia ในนาทีที่ 85' แต่ตัวสำรอง Mattia Zaccagni ก็มายิงประตูปิดกล่องในนาทีที่ 88' ให้ราชันชุดขาวเก็บเพิ่มเป็น 24 แต้ม (บาดเจ็บ: Giovanni Di Lorenzo 67' | ใบเหลือง: Declan Rice 10', Moisés Caicedo 32', Antonio Rüdiger 57', Josko Gvardiol 67')"},
       {"match": 38, "home": "Werder Bremen (แชมป์)", "away": "Juventus (ฟัยรูซ)", "hs": 1, "as": 4, "goals": [{"player": "Lionel Messi", "team": "Juventus (ฟัยรูซ)", "count": 1, "label": "1 ลูก (18')", "note": "ยิงประตูนาทีที่ 18'"}, {"player": "Rayan Cherki", "team": "Juventus (ฟัยรูซ)", "count": 1, "label": "1 ลูก (31')", "note": "ยิงประตูนาทีที่ 31'"}, {"player": "Kenan Yıldız", "team": "Juventus (ฟัยรูซ)", "count": 2, "label": "2 ลูก (34', 77')", "note": "เหมา 2 ประตู (34', 77')"}, {"player": "Erling Haaland", "team": "Werder Bremen (แชมป์)", "count": 1, "label": "1 ลูก (56')", "note": "ยิงประตูนาทีที่ 56'"}], "yellowCards": [{"player": "Hakan Çalhanoğlu", "team": "Juventus (ฟัยรูซ)", "count": 1, "label": "1 ใบ (13')", "note": "ใบเหลืองนาทีที่ 13'"}], "redCards": [], "timeline": [{"minute": "13'", "half": "1H", "type": "yellow", "side": "away", "team": "Juventus (ฟัยรูซ)", "player": "Hakan Çalhanoğlu", "detail": "ได้รับใบเหลือง"}, {"minute": "18'", "half": "1H", "type": "goal", "side": "away", "team": "Juventus (ฟัยรูซ)", "player": "Lionel Messi", "detail": "ยิงประตูให้ Juventus (ฟัยรูซ) (0 - 1)", "scoreAfter": "0 - 1"}, {"minute": "31'", "half": "1H", "type": "goal", "side": "away", "team": "Juventus (ฟัยรูซ)", "player": "Rayan Cherki", "detail": "ยิงประตูให้ Juventus (ฟัยรูซ) (0 - 2)", "scoreAfter": "0 - 2"}, {"minute": "34'", "half": "1H", "type": "goal", "side": "away", "team": "Juventus (ฟัยรูซ)", "player": "Kenan Yıldız", "detail": "ยิงประตูให้ Juventus (ฟัยรูซ) (0 - 3)", "scoreAfter": "0 - 3"}, {"minute": "45'", "half": "1H", "type": "sub", "side": "home", "team": "Werder Bremen (แชมป์)", "player": "Antoine Griezmann", "subOut": "Bukayo Saka", "detail": "เปลี่ยนตัวสำรอง (Werder Bremen (แชมป์))"}, {"minute": "56'", "half": "2H", "type": "goal", "side": "home", "team": "Werder Bremen (แชมป์)", "player": "Erling Haaland", "detail": "ยิงประตูให้ Werder Bremen (แชมป์) (1 - 3)", "scoreAfter": "1 - 3"}, {"minute": "72'", "half": "2H", "type": "sub", "side": "home", "team": "Werder Bremen (แชมป์)", "player": "Robert Lewandowski", "subOut": "Heung Min Son", "detail": "เปลี่ยนตัวสำรอง (Werder Bremen (แชมป์))"}, {"minute": "77'", "half": "2H", "type": "goal", "side": "away", "team": "Juventus (ฟัยรูซ)", "player": "Kenan Yıldız", "detail": "ยิงประตูให้ Juventus (ฟัยรูซ) (1 - 4)", "scoreAfter": "1 - 4"}, {"minute": "85'", "half": "2H", "type": "sub", "side": "away", "team": "Juventus (ฟัยรูซ)", "player": "Omar Marmoush", "subOut": "Lionel Messi", "detail": "เปลี่ยนตัวสำรอง (Juventus (ฟัยรูซ))"}], "headline": "Yıldız เบิ้ล + Messi-Cherki คนละตุง! Juventus (ฟัยรูซ) บุกถล่ม Werder Bremen (แชมป์) 4-1", "report": "Juventus ของกุนซือฟัยรูซคืนฟอร์มเก่งนอกบ้าน บุกไปถล่ม Werder Bremen (แชมป์) ถึงถิ่น 4-1 โดยทัพม้าลายดาหน้ายิงนำห่าง 3-0 ในครึ่งแรกจาก Lionel Messi (18'), Rayan Cherki (31') และ Kenan Yıldız (34') ครึ่งหลังเจ้าถิ่นตีไข่แตกไล่มาเป็น 1-3 จาก Erling Haaland ในนาทีที่ 56' (ลูกที่ 12 ของเจ้าตัว) แต่ Kenan Yıldız ก็มายิงประตูปิดกล่องในนาทีที่ 77' พา Juventus เก็บ 3 แต้มขยับพ้นบ๊วยได้สำเร็จ (ใบเหลือง: Hakan Çalhanoğlu 13')"},
       {"match": 39, "home": "Liverpool (แดงค์)", "away": "Galatasaray (นัท)", "hs": 3, "as": 3, "goals": [{"player": "Alexander Isak", "team": "Galatasaray (นัท)", "count": 1, "label": "1 ลูก (22')", "note": "ยิงประตูนาทีที่ 22'"}, {"player": "Dominik Szoboszlai", "team": "Liverpool (แดงค์)", "count": 1, "label": "1 ลูก (32')", "note": "ยิงประตูนาทีที่ 32'"}, {"player": "Désiré Doué", "team": "Galatasaray (นัท)", "count": 2, "label": "2 ลูก (44', 82')", "note": "เหมา 2 ประตู (44', 82')"}, {"player": "Ferran Torres", "team": "Liverpool (แดงค์)", "count": 2, "label": "2 ลูก (69', 88')", "note": "เหมา 2 ประตู (69', 88')"}], "yellowCards": [{"player": "Rodri", "team": "Liverpool (แดงค์)", "count": 1, "label": "1 ใบ (10')", "note": "ใบเหลืองนาทีที่ 10'"}, {"player": "Bradley Barcola", "team": "Liverpool (แดงค์)", "count": 1, "label": "1 ใบ (42')", "note": "ใบเหลืองนาทีที่ 42'"}, {"player": "Dávid Hancko", "team": "Galatasaray (นัท)", "count": 1, "label": "1 ใบ (67')", "note": "ใบเหลืองนาทีที่ 67'"}], "redCards": [], "timeline": [{"minute": "10'", "half": "1H", "type": "yellow", "side": "home", "team": "Liverpool (แดงค์)", "player": "Rodri", "detail": "ได้รับใบเหลือง"}, {"minute": "22'", "half": "1H", "type": "goal", "side": "away", "team": "Galatasaray (นัท)", "player": "Alexander Isak", "detail": "ยิงประตูให้ Galatasaray (นัท) (0 - 1)", "scoreAfter": "0 - 1"}, {"minute": "32'", "half": "1H", "type": "goal", "side": "home", "team": "Liverpool (แดงค์)", "player": "Dominik Szoboszlai", "detail": "ยิงประตูให้ Liverpool (แดงค์) (1 - 1)", "scoreAfter": "1 - 1"}, {"minute": "42'", "half": "1H", "type": "yellow", "side": "home", "team": "Liverpool (แดงค์)", "player": "Bradley Barcola", "detail": "ได้รับใบเหลือง"}, {"minute": "44'", "half": "1H", "type": "goal", "side": "away", "team": "Galatasaray (นัท)", "player": "Désiré Doué", "detail": "ยิงประตูให้ Galatasaray (นัท) (1 - 2)", "scoreAfter": "1 - 2"}, {"minute": "45'", "half": "1H", "type": "sub", "side": "home", "team": "Liverpool (แดงค์)", "player": "Yan Diomande", "subOut": "Antoine Semenyo", "detail": "เปลี่ยนตัวสำรอง (Liverpool (แดงค์))"}, {"minute": "61'", "half": "2H", "type": "sub", "side": "home", "team": "Liverpool (แดงค์)", "player": "Ferran Torres", "subOut": "Hugo Ekitiké", "detail": "เปลี่ยนตัวสำรอง (Liverpool (แดงค์))"}, {"minute": "61'", "half": "2H", "type": "sub", "side": "home", "team": "Liverpool (แดงค์)", "player": "Rodrygo", "subOut": "Bradley Barcola", "detail": "เปลี่ยนตัวสำรอง (Liverpool (แดงค์))"}, {"minute": "61'", "half": "2H", "type": "sub", "side": "home", "team": "Liverpool (แดงค์)", "player": "Fabián Ruiz", "subOut": "Rodri", "detail": "เปลี่ยนตัวสำรอง (Liverpool (แดงค์))"}, {"minute": "67'", "half": "2H", "type": "yellow", "side": "away", "team": "Galatasaray (นัท)", "player": "Dávid Hancko", "detail": "ได้รับใบเหลือง"}, {"minute": "67'", "half": "2H", "type": "sub", "side": "away", "team": "Galatasaray (นัท)", "player": "Bruno Guimarães", "subOut": "Scott McTominay", "detail": "เปลี่ยนตัวสำรอง (Galatasaray (นัท))"}, {"minute": "69'", "half": "2H", "type": "goal", "side": "home", "team": "Liverpool (แดงค์)", "player": "Ferran Torres", "detail": "ยิงประตูให้ Liverpool (แดงค์) (2 - 2)", "scoreAfter": "2 - 2"}, {"minute": "82'", "half": "2H", "type": "goal", "side": "away", "team": "Galatasaray (นัท)", "player": "Désiré Doué", "detail": "ยิงประตูให้ Galatasaray (นัท) (2 - 3)", "scoreAfter": "2 - 3"}, {"minute": "88'", "half": "2H", "type": "goal", "side": "home", "team": "Liverpool (แดงค์)", "player": "Ferran Torres", "detail": "ยิงประตูให้ Liverpool (แดงค์) (3 - 3)", "scoreAfter": "3 - 3"}], "headline": "Torres ซูเปอร์ซับเหมาสองช่วยชีวิต! Liverpool (แดงค์) เปิดรังไล่เจ๊าเดือด Galatasaray (นัท) 3-3", "report": "ศึกบิ๊กแมตช์สุดดราม่าประจำนัดที่ 39! Galatasaray ของกุนซือนัทบุกมาสร้างความลำบากให้รองจ่าฝูง Liverpool (แดงค์) ด้วยการยิงออกนำถึง 3 ครั้งจาก Alexander Isak (22') และ Désiré Doué ที่เหมา 2 ประตู (44', 82') ทว่าทัพหงส์แดงไม่ยอมแพ้ ตามตีเสมอ 1-1 จาก Dominik Szoboszlai (32') ก่อนที่กุนซือแดงค์จะส่งซูเปอร์ซับประจำทีม Ferran Torres ลงมาในนาทีที่ 61' และแผลงฤทธิ์เหมาคนเดียว 2 ประตูในนาทีที่ 69' และนาทีที่ 88' ช่วยให้ Liverpool เปิดบ้านแบ่งแต้มสุดระทึก 3-3 เก็บเพิ่มเป็น 22 แต้ม (ใบเหลือง: Rodri 10', Bradley Barcola 42', Dávid Hancko 67')"},
-      { match: 40, home: "Manchester United (เอฟ)", away: "ฺBournemouth (มอส)", hs: null, as: null },
-      { match: 41, home: "Manchester United (เอฟ)", away: "Real Madrid CF (ก้อง)", hs: null, as: null },
-      { match: 42, home: "ฺBournemouth (มอส)", away: "Liverpool (แดงค์)", hs: null, as: null },
-      { match: 43, home: "Galatasaray (นัท)", away: "Werder Bremen (แชมป์)", hs: null, as: null },
-      { match: 44, home: "Juventus (ฟัยรูซ)", away: "Parma (น็อต)", hs: null, as: null },
-      { match: 45, home: "Real Madrid CF (ก้อง)", away: "Juventus (ฟัยรูซ)", hs: null, as: null },
-      { match: 46, home: "Parma (น็อต)", away: "Galatasaray (นัท)", hs: null, as: null },
-      { match: 47, home: "Werder Bremen (แชมป์)", away: "ฺBournemouth (มอส)", hs: null, as: null },
-      { match: 48, home: "Liverpool (แดงค์)", away: "Manchester United (เอฟ)", hs: null, as: null },
-      { match: 49, home: "Liverpool (แดงค์)", away: "Real Madrid CF (ก้อง)", hs: null, as: null },
+      {"match": 40, "home": "Manchester United (เอฟ)", "away": "ฺBournemouth (มอส)", "hs": 0, "as": 0, "goals": [], "yellowCards": [{"player": "Maxence Lacroix", "team": "ฺBournemouth (มอส)", "count": 1, "label": "1 ใบ (45')", "note": "ใบเหลืองนาทีที่ 45'"}, {"player": "Trent Alexander-Arnold", "team": "Manchester United (เอฟ)", "count": 1, "label": "1 ใบ (71')", "note": "ใบเหลืองนาทีที่ 71'"}, {"player": "Enzo Fernández", "team": "Manchester United (เอฟ)", "count": 1, "label": "1 ใบ (90')", "note": "ใบเหลืองนาทีที่ 90'"}], "redCards": [], "timeline": [{"minute": "45'", "half": "1H", "type": "yellow", "side": "away", "team": "ฺBournemouth (มอส)", "player": "Maxence Lacroix", "detail": "ได้รับใบเหลือง"}, {"minute": "56'", "half": "2H", "type": "sub", "side": "home", "team": "Manchester United (เอฟ)", "player": "Phil Foden", "subOut": "Kevin De Bruyne", "detail": "เปลี่ยนตัวสำรอง (Manchester United (เอฟ))"}, {"minute": "56'", "half": "2H", "type": "sub", "side": "home", "team": "Manchester United (เอฟ)", "player": "Tijjani Reijnders", "subOut": "Alexis Mac Allister", "detail": "เปลี่ยนตัวสำรอง (Manchester United (เอฟ))"}, {"minute": "56'", "half": "2H", "type": "sub", "side": "home", "team": "Manchester United (เอฟ)", "player": "Micky van de Ven", "subOut": "Gabriel", "detail": "เปลี่ยนตัวสำรอง (Manchester United (เอฟ))"}, {"minute": "64'", "half": "2H", "type": "sub", "side": "away", "team": "ฺBournemouth (มอส)", "player": "Aleix García", "subOut": "Moussa Diaby", "detail": "เปลี่ยนตัวสำรอง (Bournemouth (มอส))"}, {"minute": "71'", "half": "2H", "type": "yellow", "side": "home", "team": "Manchester United (เอฟ)", "player": "Trent Alexander-Arnold", "detail": "ได้รับใบเหลือง"}, {"minute": "71'", "half": "2H", "type": "sub", "side": "home", "team": "Manchester United (เอฟ)", "player": "Donyell Malen", "subOut": "Marcus Thuram", "detail": "เปลี่ยนตัวสำรอง (Manchester United (เอฟ))"}, {"minute": "71'", "half": "2H", "type": "sub", "side": "home", "team": "Manchester United (เอฟ)", "player": "Warren Zaïre-Emery", "subOut": "Trent Alexander-Arnold", "detail": "เปลี่ยนตัวสำรอง (Manchester United (เอฟ))"}, {"minute": "90'", "half": "2H", "type": "yellow", "side": "home", "team": "Manchester United (เอฟ)", "player": "Enzo Fernández", "detail": "ได้รับใบเหลือง"}, {"minute": "90'", "half": "2H", "type": "sub", "side": "away", "team": "ฺBournemouth (มอส)", "player": "Karim Adeyemi", "subOut": "Dani Olmo", "detail": "เปลี่ยนตัวสำรอง (Bournemouth (มอส))"}], "headline": "แนวรับเหนียวแน่น! Manchester United (เอฟ) เปิดบ้านเจ๊าไร้สกอร์ Bournemouth (มอส) 0-0", "report": "ศึกนัดที่ 40 ที่โอลด์แทรฟฟอร์ด Manchester United ของกุนซือเอฟ เปิดบ้านรับมือ Bournemouth (มอส) โดยทั้งสองทีมเน้นความรัดกุมและพยายามแก้เกมส่งตัวสำรองลงมาเติมความสดในครึ่งหลัง แต่แนวรับและนายทวารทั้งสองฝั่งยังโชว์ฟอร์มเหนียวแน่น จบเกมเสมอกันไปแบบไร้สกอร์ 0-0 แบ่งกันไปทีมละ 1 คะแนน (ใบเหลือง: Maxence Lacroix 45', Trent Alexander-Arnold 71', Enzo Fernández 90')"},
+      {"match": 41, "home": "Manchester United (เอฟ)", "away": "Real Madrid CF (ก้อง)", "hs": 2, "as": 3, "goals": [{"player": "Kylian Mbappé", "team": "Real Madrid CF (ก้อง)", "count": 2, "label": "2 ลูก (14', 36')", "note": "เหมา 2 ประตู (14', 36')"}, {"player": "Marcus Thuram", "team": "Manchester United (เอฟ)", "count": 2, "label": "2 ลูก (17', 59')", "note": "เหมา 2 ประตู (17', 59')"}, {"player": "Christian Pulisic", "team": "Real Madrid CF (ก้อง)", "count": 1, "label": "1 ลูก (71')", "note": "ยิงประตูนาทีที่ 71'"}], "yellowCards": [{"player": "Gabriel", "team": "Manchester United (เอฟ)", "count": 1, "label": "1 ใบ (45')", "note": "ใบเหลืองนาทีที่ 45'"}], "redCards": [], "timeline": [{"minute": "14'", "half": "1H", "type": "goal", "side": "away", "team": "Real Madrid CF (ก้อง)", "player": "Kylian Mbappé", "detail": "ยิงประตูให้ Real Madrid CF (ก้อง) (0 - 1)", "scoreAfter": "0 - 1"}, {"minute": "17'", "half": "1H", "type": "goal", "side": "home", "team": "Manchester United (เอฟ)", "player": "Marcus Thuram", "detail": "ยิงประตูให้ Manchester United (เอฟ) (1 - 1)", "scoreAfter": "1 - 1"}, {"minute": "36'", "half": "1H", "type": "goal", "side": "away", "team": "Real Madrid CF (ก้อง)", "player": "Kylian Mbappé", "detail": "ยิงประตูให้ Real Madrid CF (ก้อง) (1 - 2)", "scoreAfter": "1 - 2"}, {"minute": "45'", "half": "1H", "type": "yellow", "side": "home", "team": "Manchester United (เอฟ)", "player": "Gabriel", "detail": "ได้รับใบเหลือง"}, {"minute": "45'", "half": "1H", "type": "sub", "side": "home", "team": "Manchester United (เอฟ)", "player": "Phil Foden", "subOut": "Kevin De Bruyne", "detail": "เปลี่ยนตัวสำรอง (Manchester United (เอฟ))"}, {"minute": "45'", "half": "1H", "type": "sub", "side": "home", "team": "Manchester United (เอฟ)", "player": "Bernardo Silva", "subOut": "Alexis Mac Allister", "detail": "เปลี่ยนตัวสำรอง (Manchester United (เอฟ))"}, {"minute": "45'", "half": "1H", "type": "sub", "side": "home", "team": "Manchester United (เอฟ)", "player": "Micky van de Ven", "subOut": "Gabriel", "detail": "เปลี่ยนตัวสำรอง (Manchester United (เอฟ))"}, {"minute": "59'", "half": "2H", "type": "goal", "side": "home", "team": "Manchester United (เอฟ)", "player": "Marcus Thuram", "detail": "ยิงประตูให้ Manchester United (เอฟ) (2 - 2)", "scoreAfter": "2 - 2"}, {"minute": "71'", "half": "2H", "type": "goal", "side": "away", "team": "Real Madrid CF (ก้อง)", "player": "Christian Pulisic", "detail": "ยิงประตูให้ Real Madrid CF (ก้อง) (2 - 3)", "scoreAfter": "2 - 3"}, {"minute": "83'", "half": "2H", "type": "sub", "side": "away", "team": "Real Madrid CF (ก้อง)", "player": "Maximilian Mittelstädt", "subOut": "Federico Dimarco", "detail": "เปลี่ยนตัวสำรอง (Real Madrid CF (ก้อง))"}, {"minute": "90'", "half": "2H", "type": "sub", "side": "home", "team": "Manchester United (เอฟ)", "player": "Warren Zaïre-Emery", "subOut": "Trent Alexander-Arnold", "detail": "เปลี่ยนตัวสำรอง (Manchester United (เอฟ))"}, {"minute": "90'", "half": "2H", "type": "sub", "side": "home", "team": "Manchester United (เอฟ)", "player": "Donyell Malen", "subOut": "Marcus Thuram", "detail": "เปลี่ยนตัวสำรอง (Manchester United (เอฟ))"}], "headline": "Mbappé เบิ้ล + Pulisic ซัดชัยนาที 71'! Real Madrid CF (ก้อง) บุกเฉือน Manchester United (เอฟ) 3-2", "report": "เกมบิ๊กแมตช์สุดเข้มข้นประจำนัดที่ 41! จ่าฝูง Real Madrid CF (ก้อง) บุกไปเยือน Manchester United (เอฟ) โดยทีมเยือนออกนำถึงสองครั้งจาก Kylian Mbappé ที่เหมา 2 ประตูในนาทีที่ 14' และ 36' แต่เจ้าถิ่นปีศาจแดงไม่ยอมง่ายๆ ตามตีเสมอได้ทั้งสองครั้งจาก Marcus Thuram ในนาทีที่ 17' และ 59' ทว่าในนาทีที่ 71' Christian Pulisic ก็สวมบทฮีโร่ซัดประตูชัยพา Real Madrid CF บุกเฉือนชนะ 3-2 เก็บเพิ่มเป็น 27 แต้ม (ใบเหลือง: Gabriel 45')"},
+      {"match": 42, "home": "ฺBournemouth (มอส)", "away": "Liverpool (แดงค์)", "hs": 3, "as": 3, "goals": [{"player": "Ferran Torres", "team": "Liverpool (แดงค์)", "count": 2, "label": "2 ลูก (22', 83')", "note": "เหมา 2 ประตู (22', 83')"}, {"player": "Dominik Szoboszlai", "team": "Liverpool (แดงค์)", "count": 1, "label": "1 ลูก (35')", "note": "ยิงประตูนาทีที่ 35'"}, {"player": "Loïs Openda", "team": "ฺBournemouth (มอส)", "count": 2, "label": "2 ลูก (37', 62')", "note": "เหมา 2 ประตู (37', 62')"}, {"player": "Theo Hernández", "team": "ฺBournemouth (มอส)", "count": 1, "label": "1 ลูก (55')", "note": "ยิงประตูนาทีที่ 55'"}], "yellowCards": [{"player": "Pedri", "team": "Liverpool (แดงค์)", "count": 1, "label": "1 ใบ (5')", "note": "ใบเหลืองนาทีที่ 5'"}, {"player": "João Neves", "team": "ฺBournemouth (มอส)", "count": 1, "label": "1 ใบ (33')", "note": "ใบเหลืองนาทีที่ 33'"}, {"player": "Loïs Openda", "team": "ฺBournemouth (มอส)", "count": 1, "label": "1 ใบ (33')", "note": "ใบเหลืองนาทีที่ 33'"}, {"player": "Willian Pacho", "team": "ฺBournemouth (มอส)", "count": 1, "label": "1 ใบ (43')", "note": "ใบเหลืองนาทีที่ 43'"}, {"player": "Konrad Laimer", "team": "Liverpool (แดงค์)", "count": 1, "label": "1 ใบ (45')", "note": "ใบเหลืองนาทีที่ 45'"}, {"player": "Virgil van Dijk", "team": "Liverpool (แดงค์)", "count": 1, "label": "1 ใบ (67')", "note": "ใบเหลืองนาทีที่ 67'"}, {"player": "Rodri", "team": "Liverpool (แดงค์)", "count": 1, "label": "1 ใบ (90')", "note": "ใบเหลืองนาทีที่ 90'"}], "redCards": [], "timeline": [{"minute": "5'", "half": "1H", "type": "yellow", "side": "away", "team": "Liverpool (แดงค์)", "player": "Pedri", "detail": "ได้รับใบเหลือง"}, {"minute": "22'", "half": "1H", "type": "goal", "side": "away", "team": "Liverpool (แดงค์)", "player": "Ferran Torres", "detail": "ยิงประตูให้ Liverpool (แดงค์) (0 - 1)", "scoreAfter": "0 - 1"}, {"minute": "33'", "half": "1H", "type": "yellow", "side": "home", "team": "ฺBournemouth (มอส)", "player": "João Neves", "detail": "ได้รับใบเหลือง"}, {"minute": "33'", "half": "1H", "type": "yellow", "side": "home", "team": "ฺBournemouth (มอส)", "player": "Loïs Openda", "detail": "ได้รับใบเหลือง"}, {"minute": "35'", "half": "1H", "type": "goal", "side": "away", "team": "Liverpool (แดงค์)", "player": "Dominik Szoboszlai", "detail": "ยิงประตูให้ Liverpool (แดงค์) (0 - 2)", "scoreAfter": "0 - 2"}, {"minute": "37'", "half": "1H", "type": "goal", "side": "home", "team": "ฺBournemouth (มอส)", "player": "Loïs Openda", "detail": "ยิงประตูให้ Bournemouth (มอส) (1 - 2)", "scoreAfter": "1 - 2"}, {"minute": "43'", "half": "1H", "type": "yellow", "side": "home", "team": "ฺBournemouth (มอส)", "player": "Willian Pacho", "detail": "ได้รับใบเหลือง"}, {"minute": "45'", "half": "1H", "type": "yellow", "side": "away", "team": "Liverpool (แดงค์)", "player": "Konrad Laimer", "detail": "ได้รับใบเหลือง"}, {"minute": "45'", "half": "1H", "type": "sub", "side": "home", "team": "ฺBournemouth (มอส)", "player": "Alphonso Davies", "subOut": "Jérémy Doku", "detail": "เปลี่ยนตัวสำรอง (Bournemouth (มอส))"}, {"minute": "54'", "half": "2H", "type": "sub", "side": "away", "team": "Liverpool (แดงค์)", "player": "Yan Diomande", "subOut": "Antoine Semenyo", "detail": "เปลี่ยนตัวสำรอง (Liverpool (แดงค์))"}, {"minute": "55'", "half": "2H", "type": "goal", "side": "home", "team": "ฺBournemouth (มอส)", "player": "Theo Hernández", "detail": "ยิงประตูให้ Bournemouth (มอส) (2 - 2)", "scoreAfter": "2 - 2"}, {"minute": "60'", "half": "2H", "type": "sub", "side": "away", "team": "Liverpool (แดงค์)", "player": "Rodrygo", "subOut": "Bradley Barcola", "detail": "เปลี่ยนตัวสำรอง (Liverpool (แดงค์))"}, {"minute": "62'", "half": "2H", "type": "goal", "side": "home", "team": "ฺBournemouth (มอส)", "player": "Loïs Openda", "detail": "ยิงประตูให้ Bournemouth (มอส) (3 - 2)", "scoreAfter": "3 - 2"}, {"minute": "67'", "half": "2H", "type": "yellow", "side": "away", "team": "Liverpool (แดงค์)", "player": "Virgil van Dijk", "detail": "ได้รับใบเหลือง"}, {"minute": "68'", "half": "2H", "type": "sub", "side": "home", "team": "ฺBournemouth (มอส)", "player": "Ademola Lookman", "subOut": "Loïs Openda", "detail": "เปลี่ยนตัวสำรอง (Bournemouth (มอส))"}, {"minute": "68'", "half": "2H", "type": "sub", "side": "home", "team": "ฺBournemouth (มอส)", "player": "Dani Olmo", "subOut": "João Neves", "detail": "เปลี่ยนตัวสำรอง (Bournemouth (มอส))"}, {"minute": "68'", "half": "2H", "type": "sub", "side": "home", "team": "ฺBournemouth (มอส)", "player": "Moussa Diaby", "subOut": "Karim Adeyemi", "detail": "เปลี่ยนตัวสำรอง (Bournemouth (มอส))"}, {"minute": "73'", "half": "2H", "type": "sub", "side": "away", "team": "Liverpool (แดงค์)", "player": "Fabián Ruiz", "subOut": "Dominik Szoboszlai", "detail": "เปลี่ยนตัวสำรอง (Liverpool (แดงค์))"}, {"minute": "83'", "half": "2H", "type": "goal", "side": "away", "team": "Liverpool (แดงค์)", "player": "Ferran Torres", "detail": "ยิงประตูให้ Liverpool (แดงค์) (3 - 3)", "scoreAfter": "3 - 3"}, {"minute": "90'", "half": "2H", "type": "yellow", "side": "away", "team": "Liverpool (แดงค์)", "player": "Rodri", "detail": "ได้รับใบเหลือง"}], "headline": "ดราม่า 6 ตุง! Liverpool (แดงค์) นำก่อนสองลูกโดนแซง ก่อนได้ Torres ยิงกู้ชีพเจ๊า Bournemouth (มอส) 3-3", "report": "เกมสุดดราม่าที่จุดเปลี่ยนสำคัญของการลุ้นแชมป์! Liverpool (แดงค์) บุกมานำห่าง 2-0 จาก Ferran Torres (22') และ Dominik Szoboszlai (35') แต่เจ้าบ้าน Bournemouth (มอส) ฮึดรัวแซง 3 ประตูรวดจาก Loïs Openda ที่เหมา 2 ลูก (37', 62') คั่นด้วยประตูของ Theo Hernández ที่เพิ่งถูกเปลี่ยนลงมาในครึ่งหลัง (55') พลิกนำ 3-2 ทว่าในนาทีที่ 83' Ferran Torres ก็ซัดลูกที่สองของตัวเองช่วยให้หงส์แดงตามตีเสมอ 3-3 แบ่งไปทีมละแต้ม (ใบเหลืองรวม 7 ใบ: Pedri 5', João Neves 33', Loïs Openda 33', Willian Pacho 43', Konrad Laimer 45', Virgil van Dijk 67', Rodri 90')"},
+      {"match": 43, "home": "Galatasaray (นัท)", "away": "Werder Bremen (แชมป์)", "hs": 2, "as": 1, "goals": [{"player": "Alexander Isak", "team": "Galatasaray (นัท)", "count": 2, "label": "2 ลูก (7', 55')", "note": "เหมา 2 ประตู (7', 55')"}, {"player": "Vinicius Junior", "team": "Werder Bremen (แชมป์)", "count": 1, "label": "1 ลูก (15')", "note": "ยิงประตูนาทีที่ 15'"}], "yellowCards": [{"player": "Scott McTominay", "team": "Galatasaray (นัท)", "count": 1, "label": "1 ใบ (31')", "note": "ใบเหลืองนาทีที่ 31'"}, {"player": "Dávid Hancko", "team": "Galatasaray (นัท)", "count": 1, "label": "1 ใบ (35')", "note": "ใบเหลืองนาทีที่ 35'"}, {"player": "Denzel Dumfries", "team": "Werder Bremen (แชมป์)", "count": 1, "label": "1 ใบ (54')", "note": "ใบเหลืองนาทีที่ 54'"}, {"player": "Adrien Rabiot", "team": "Werder Bremen (แชมป์)", "count": 1, "label": "1 ใบ (90')", "note": "ใบเหลืองนาทีที่ 90'"}], "redCards": [], "timeline": [{"minute": "7'", "half": "1H", "type": "goal", "side": "home", "team": "Galatasaray (นัท)", "player": "Alexander Isak", "detail": "ยิงประตูให้ Galatasaray (นัท) (1 - 0)", "scoreAfter": "1 - 0"}, {"minute": "15'", "half": "1H", "type": "goal", "side": "away", "team": "Werder Bremen (แชมป์)", "player": "Vinicius Junior", "detail": "ยิงประตูให้ Werder Bremen (แชมป์) (1 - 1)", "scoreAfter": "1 - 1"}, {"minute": "31'", "half": "1H", "type": "yellow", "side": "home", "team": "Galatasaray (นัท)", "player": "Scott McTominay", "detail": "ได้รับใบเหลือง"}, {"minute": "35'", "half": "1H", "type": "yellow", "side": "home", "team": "Galatasaray (นัท)", "player": "Dávid Hancko", "detail": "ได้รับใบเหลือง"}, {"minute": "45'", "half": "1H", "type": "injury", "side": "home", "team": "Galatasaray (นัท)", "player": "Rafael Leão", "detail": "บาดเจ็บระหว่างการแข่งขัน (Injury)"}, {"minute": "45'", "half": "1H", "type": "sub", "side": "home", "team": "Galatasaray (นัท)", "player": "Kevin Schade", "subOut": "Rafael Leão", "detail": "เปลี่ยนตัวสำรอง (Galatasaray (นัท))"}, {"minute": "54'", "half": "2H", "type": "yellow", "side": "away", "team": "Werder Bremen (แชมป์)", "player": "Denzel Dumfries", "detail": "ได้รับใบเหลือง"}, {"minute": "55'", "half": "2H", "type": "goal", "side": "home", "team": "Galatasaray (นัท)", "player": "Alexander Isak", "detail": "ยิงประตูให้ Galatasaray (นัท) (2 - 1)", "scoreAfter": "2 - 1"}, {"minute": "87'", "half": "2H", "type": "sub", "side": "away", "team": "Werder Bremen (แชมป์)", "player": "Adrien Rabiot", "subOut": "N'Golo Kanté", "detail": "เปลี่ยนตัวสำรอง (Werder Bremen (แชมป์))"}, {"minute": "90'", "half": "2H", "type": "yellow", "side": "away", "team": "Werder Bremen (แชมป์)", "player": "Adrien Rabiot", "detail": "ได้รับใบเหลือง"}, {"minute": "90'", "half": "2H", "type": "sub", "side": "away", "team": "Werder Bremen (แชมป์)", "player": "Antoine Griezmann", "subOut": "Bukayo Saka", "detail": "เปลี่ยนตัวสำรอง (Werder Bremen (แชมป์))"}], "headline": "Isak เหมาสอง! Galatasaray (นัท) เปิดบ้านเฉือนชนะ Werder Bremen (แชมป์) สุดมันส์ 2-1", "report": "Galatasaray ของกุนซือนัทปลดล็อกเก็บชัยชนะสำคัญในบ้าน หลังเฉือนเอาชนะ Werder Bremen (แชมป์) 2-1 โดยดาวยิงตัวเก่ง Alexander Isak ซัดเบิกร่องตั้งแต่นาทีที่ 7' แม้ทีมเยือนจะตามตีเสมอ 1-1 จาก Vinicius Junior ในนาทีที่ 15' และเจ้าถิ่นต้องเสีย Rafael Leão ที่บาดเจ็บในนาทีที่ 45' แต่ครึ่งหลังนาทีที่ 55' Alexander Isak ก็ซัดประตูที่สองของตัวเองเป็นประตูชัยพาทีมคว้า 3 แต้ม (ใบเหลือง: Scott McTominay 31', Dávid Hancko 35', Denzel Dumfries 54', Adrien Rabiot 90')"},
+      {"match": 44, "home": "Juventus (ฟัยรูซ)", "away": "Parma (น็อต)", "hs": 1, "as": 3, "goals": [{"player": "Michael Olise", "team": "Parma (น็อต)", "count": 1, "label": "1 ลูก (29')", "note": "ยิงประตูนาทีที่ 29'"}, {"player": "Ousmane Dembélé", "team": "Parma (น็อต)", "count": 1, "label": "1 ลูก (51')", "note": "ยิงประตูนาทีที่ 51'"}, {"player": "Kenan Yıldız", "team": "Juventus (ฟัยรูซ)", "count": 1, "label": "1 ลูก (59')", "note": "ยิงประตูนาทีที่ 59'"}, {"player": "Khvicha Kvaratskhelia", "team": "Parma (น็อต)", "count": 1, "label": "1 ลูก (70')", "note": "ยิงประตูนาทีที่ 70'"}], "yellowCards": [{"player": "Rayan Cherki", "team": "Juventus (ฟัยรูซ)", "count": 1, "label": "1 ใบ (29')", "note": "ใบเหลืองนาทีที่ 29'"}, {"player": "Joshua Kimmich", "team": "Parma (น็อต)", "count": 1, "label": "1 ใบ (62')", "note": "ใบเหลืองนาทีที่ 62'"}, {"player": "Bremer", "team": "Juventus (ฟัยรูซ)", "count": 1, "label": "1 ใบ (68')", "note": "ใบเหลืองนาทีที่ 68'"}, {"player": "Vitinha", "team": "Juventus (ฟัยรูซ)", "count": 1, "label": "1 ใบ (83')", "note": "ใบเหลืองนาทีที่ 83'"}], "redCards": [], "timeline": [{"minute": "29'", "half": "1H", "type": "yellow", "side": "home", "team": "Juventus (ฟัยรูซ)", "player": "Rayan Cherki", "detail": "ได้รับใบเหลือง"}, {"minute": "29'", "half": "1H", "type": "goal", "side": "away", "team": "Parma (น็อต)", "player": "Michael Olise", "detail": "ยิงประตูให้ Parma (น็อต) (0 - 1)", "scoreAfter": "0 - 1"}, {"minute": "51'", "half": "2H", "type": "goal", "side": "away", "team": "Parma (น็อต)", "player": "Ousmane Dembélé", "detail": "ยิงประตูให้ Parma (น็อต) (0 - 2)", "scoreAfter": "0 - 2"}, {"minute": "59'", "half": "2H", "type": "goal", "side": "home", "team": "Juventus (ฟัยรูซ)", "player": "Kenan Yıldız", "detail": "ยิงประตูให้ Juventus (ฟัยรูซ) (1 - 2)", "scoreAfter": "1 - 2"}, {"minute": "62'", "half": "2H", "type": "yellow", "side": "away", "team": "Parma (น็อต)", "player": "Joshua Kimmich", "detail": "ได้รับใบเหลือง"}, {"minute": "66'", "half": "2H", "type": "sub", "side": "home", "team": "Juventus (ฟัยรูซ)", "player": "Omar Marmoush", "subOut": "Rayan Cherki", "detail": "เปลี่ยนตัวสำรอง (Juventus (ฟัยรูซ))"}, {"minute": "66'", "half": "2H", "type": "sub", "side": "home", "team": "Juventus (ฟัยรูซ)", "player": "Arda Güler", "subOut": "Lionel Messi", "detail": "เปลี่ยนตัวสำรอง (Juventus (ฟัยรูซ))"}, {"minute": "68'", "half": "2H", "type": "yellow", "side": "home", "team": "Juventus (ฟัยรูซ)", "player": "Bremer", "detail": "ได้รับใบเหลือง"}, {"minute": "68'", "half": "2H", "type": "sub", "side": "away", "team": "Parma (น็อต)", "player": "Matty Cash", "subOut": "Pedro Porro", "detail": "เปลี่ยนตัวสำรอง (Parma (น็อต))"}, {"minute": "70'", "half": "2H", "type": "goal", "side": "away", "team": "Parma (น็อต)", "player": "Khvicha Kvaratskhelia", "detail": "ยิงประตูให้ Parma (น็อต) (1 - 3)", "scoreAfter": "1 - 3"}, {"minute": "83'", "half": "2H", "type": "yellow", "side": "home", "team": "Juventus (ฟัยรูซ)", "player": "Vitinha", "detail": "ได้รับใบเหลือง"}, {"minute": "83'", "half": "2H", "type": "sub", "side": "away", "team": "Parma (น็อต)", "player": "Granit Xhaka", "subOut": "Moisés Caicedo", "detail": "เปลี่ยนตัวสำรอง (Parma (น็อต))"}, {"minute": "90'", "half": "2H", "type": "sub", "side": "away", "team": "Parma (น็อต)", "player": "Mikel Merino", "subOut": "Ousmane Dembélé", "detail": "เปลี่ยนตัวสำรอง (Parma (น็อต))"}], "headline": "สามแนวรุกคนละตุง! Parma (น็อต) บุกอัด Juventus (ฟัยรูซ) ถึงถิ่น 3-1", "report": "Parma ของกุนซือน็อตโชว์เกมรุกเฉียบขาด บุกไปเอาชนะ Juventus (ฟัยรูซ) ถึงตูริน 3-1 โดยได้ประตูขึ้นนำจาก Michael Olise ในนาทีที่ 29' และหนีห่าง 2-0 จาก Ousmane Dembélé ในนาทีที่ 51' แม้ทัพม้าลายจะยิงตีไข่แตกไล่มาเป็น 1-2 จาก Kenan Yıldız ในนาทีที่ 59' แต่ Khvicha Kvaratskhelia ก็มายิงประตูปิดกล่องในนาทีที่ 70' พา Parma เก็บเพิ่มเป็น 18 แต้ม (ใบเหลือง: Rayan Cherki 29', Joshua Kimmich 62', Bremer 68', Vitinha 83')"},
+      {"match": 45, "home": "Real Madrid CF (ก้อง)", "away": "Juventus (ฟัยรูซ)", "hs": 3, "as": 2, "goals": [{"player": "Nico Williams", "team": "Real Madrid CF (ก้อง)", "count": 1, "label": "1 ลูก (4')", "note": "ยิงประตูนาทีที่ 4'"}, {"player": "Lionel Messi", "team": "Juventus (ฟัยรูซ)", "count": 1, "label": "1 ลูก (6')", "note": "ยิงประตูนาทีที่ 6'"}, {"player": "Hakan Çalhanoğlu", "team": "Juventus (ฟัยรูซ)", "count": 1, "label": "1 ลูก (20')", "note": "ยิงประตูนาทีที่ 20'"}, {"player": "Kylian Mbappé", "team": "Real Madrid CF (ก้อง)", "count": 2, "label": "2 ลูก (74', 90')", "note": "เหมา 2 ประตู (74', 90')"}], "yellowCards": [{"player": "Nico Schlotterbeck", "team": "Real Madrid CF (ก้อง)", "count": 1, "label": "1 ใบ (20')", "note": "ใบเหลืองนาทีที่ 20'"}, {"player": "Kenan Yıldız", "team": "Juventus (ฟัยรูซ)", "count": 1, "label": "1 ใบ (49')", "note": "ใบเหลืองนาทีที่ 49'"}, {"player": "Hakan Çalhanoğlu", "team": "Juventus (ฟัยรูซ)", "count": 1, "label": "1 ใบ (65')", "note": "ใบเหลืองนาทีที่ 65'"}], "redCards": [], "timeline": [{"minute": "4'", "half": "1H", "type": "goal", "side": "home", "team": "Real Madrid CF (ก้อง)", "player": "Nico Williams", "detail": "ยิงประตูให้ Real Madrid CF (ก้อง) (1 - 0)", "scoreAfter": "1 - 0"}, {"minute": "6'", "half": "1H", "type": "goal", "side": "away", "team": "Juventus (ฟัยรูซ)", "player": "Lionel Messi", "detail": "ยิงประตูให้ Juventus (ฟัยรูซ) (1 - 1)", "scoreAfter": "1 - 1"}, {"minute": "20'", "half": "1H", "type": "yellow", "side": "home", "team": "Real Madrid CF (ก้อง)", "player": "Nico Schlotterbeck", "detail": "ได้รับใบเหลือง"}, {"minute": "20'", "half": "1H", "type": "goal", "side": "away", "team": "Juventus (ฟัยรูซ)", "player": "Hakan Çalhanoğlu", "detail": "ยิงประตูให้ Juventus (ฟัยรูซ) (1 - 2)", "scoreAfter": "1 - 2"}, {"minute": "45'", "half": "1H", "type": "sub", "side": "home", "team": "Real Madrid CF (ก้อง)", "player": "Antony", "subOut": "Christian Pulisic", "detail": "เปลี่ยนตัวสำรอง (Real Madrid CF (ก้อง))"}, {"minute": "49'", "half": "2H", "type": "yellow", "side": "away", "team": "Juventus (ฟัยรูซ)", "player": "Kenan Yıldız", "detail": "ได้รับใบเหลือง"}, {"minute": "61'", "half": "2H", "type": "sub", "side": "home", "team": "Real Madrid CF (ก้อง)", "player": "Mattia Zaccagni", "subOut": "Nico Williams", "detail": "เปลี่ยนตัวสำรอง (Real Madrid CF (ก้อง))"}, {"minute": "61'", "half": "2H", "type": "sub", "side": "home", "team": "Real Madrid CF (ก้อง)", "player": "Dani Vivian", "subOut": "Antonio Rüdiger", "detail": "เปลี่ยนตัวสำรอง (Real Madrid CF (ก้อง))"}, {"minute": "65'", "half": "2H", "type": "yellow", "side": "away", "team": "Juventus (ฟัยรูซ)", "player": "Hakan Çalhanoğlu", "detail": "ได้รับใบเหลือง"}, {"minute": "65'", "half": "2H", "type": "sub", "side": "away", "team": "Juventus (ฟัยรูซ)", "player": "Bryan Mbeumo", "subOut": "Kenan Yıldız", "detail": "เปลี่ยนตัวสำรอง (Juventus (ฟัยรูซ))"}, {"minute": "74'", "half": "2H", "type": "goal", "side": "home", "team": "Real Madrid CF (ก้อง)", "player": "Kylian Mbappé", "detail": "ยิงประตูให้ Real Madrid CF (ก้อง) (2 - 2)", "scoreAfter": "2 - 2"}, {"minute": "90'", "half": "2H", "type": "goal", "side": "home", "team": "Real Madrid CF (ก้อง)", "player": "Kylian Mbappé", "detail": "ยิงประตูให้ Real Madrid CF (ก้อง) (3 - 2)", "scoreAfter": "3 - 2"}, {"minute": "90'", "half": "2H", "type": "sub", "side": "home", "team": "Real Madrid CF (ก้อง)", "player": "Ollie Watkins", "subOut": "Kylian Mbappé", "detail": "เปลี่ยนตัวสำรอง (Real Madrid CF (ก้อง))"}, {"minute": "90'", "half": "2H", "type": "sub", "side": "home", "team": "Real Madrid CF (ก้อง)", "player": "Maximilian Mittelstädt", "subOut": "Federico Dimarco", "detail": "เปลี่ยนตัวสำรอง (Real Madrid CF (ก้อง))"}], "headline": "ฟอร์มหมาแชมป์! Mbappé เหมาสองท้ายเกมพา Real Madrid CF (ก้อง) พลิกแซงชนะ Juventus (ฟัยรูซ) น.90' 3-2", "report": "แมตช์สุดระทึกที่สะท้อนหัวใจแชมป์ของ Real Madrid CF (ก้อง)! ราชันชุดขาวออกนำเร็วตั้งแต่นาทีที่ 4' จาก Nico Williams แต่ Juventus (ฟัยรูซ) ยิงแซง 2 ลูกรวดในครึ่งแรกจาก Lionel Messi (6') และ Hakan Çalhanoğlu (20') ทว่าช่วงท้ายเกม Kylian Mbappé ระเบิดฟอร์มซัดตีเสมอ 2-2 ในนาทีที่ 74' ก่อนจะกดประตูชัยสุดดราม่าในนาทีที่ 90' พา Real Madrid CF พลิกชนะ 3-2 เก็บเพิ่มเป็น 30 แต้มเต็ม จ่อคว้าแชมป์ลีกทันทีหาก Liverpool สะดุดในนัดถัดไป (ใบเหลือง: Nico Schlotterbeck 20', Kenan Yıldız 49', Hakan Çalhanoğlu 65')"},
+      {"match": 46, "home": "Parma (น็อต)", "away": "Galatasaray (นัท)", "hs": 1, "as": 3, "goals": [{"player": "Alexander Isak", "team": "Galatasaray (นัท)", "count": 2, "label": "2 ลูก (6', 80')", "note": "เหมา 2 ประตู (6', 80')"}, {"player": "Ousmane Dembélé", "team": "Parma (น็อต)", "count": 1, "label": "1 ลูก (59')", "note": "ยิงประตูนาทีที่ 59'"}, {"player": "Dávid Hancko", "team": "Galatasaray (นัท)", "count": 1, "label": "1 ลูก (73')", "note": "ยิงประตูนาทีที่ 73'"}], "yellowCards": [{"player": "Ousmane Dembélé", "team": "Parma (น็อต)", "count": 1, "label": "1 ใบ (34')", "note": "ใบเหลืองนาทีที่ 34'"}, {"player": "Sandro Tonali", "team": "Galatasaray (นัท)", "count": 1, "label": "1 ใบ (41')", "note": "ใบเหลืองนาทีที่ 41'"}, {"player": "Dayot Upamecano", "team": "Parma (น็อต)", "count": 1, "label": "1 ใบ (70')", "note": "ใบเหลืองนาทีที่ 70'"}, {"player": "Josko Gvardiol", "team": "Parma (น็อต)", "count": 1, "label": "1 ใบ (73')", "note": "ใบเหลืองนาทีที่ 73'"}], "redCards": [], "timeline": [{"minute": "6'", "half": "1H", "type": "goal", "side": "away", "team": "Galatasaray (นัท)", "player": "Alexander Isak", "detail": "ยิงประตูให้ Galatasaray (นัท) (0 - 1)", "scoreAfter": "0 - 1"}, {"minute": "6'", "half": "1H", "type": "sub", "side": "home", "team": "Parma (น็อต)", "player": "Mikel Merino", "subOut": "Khvicha Kvaratskhelia", "detail": "เปลี่ยนตัวสำรอง (Parma (น็อต))"}, {"minute": "34'", "half": "1H", "type": "yellow", "side": "home", "team": "Parma (น็อต)", "player": "Ousmane Dembélé", "detail": "ได้รับใบเหลือง"}, {"minute": "41'", "half": "1H", "type": "yellow", "side": "away", "team": "Galatasaray (นัท)", "player": "Sandro Tonali", "detail": "ได้รับใบเหลือง"}, {"minute": "59'", "half": "2H", "type": "goal", "side": "home", "team": "Parma (น็อต)", "player": "Ousmane Dembélé", "detail": "ยิงประตูให้ Parma (น็อต) (1 - 1)", "scoreAfter": "1 - 1"}, {"minute": "70'", "half": "2H", "type": "yellow", "side": "home", "team": "Parma (น็อต)", "player": "Dayot Upamecano", "detail": "ได้รับใบเหลือง"}, {"minute": "70'", "half": "2H", "type": "sub", "side": "away", "team": "Galatasaray (นัท)", "player": "Bruno Guimarães", "subOut": "Sandro Tonali", "detail": "เปลี่ยนตัวสำรอง (Galatasaray (นัท))"}, {"minute": "73'", "half": "2H", "type": "yellow", "side": "home", "team": "Parma (น็อต)", "player": "Josko Gvardiol", "detail": "ได้รับใบเหลือง"}, {"minute": "73'", "half": "2H", "type": "sub", "side": "away", "team": "Galatasaray (นัท)", "player": "Frenkie de Jong", "subOut": "Scott McTominay", "detail": "เปลี่ยนตัวสำรอง (Galatasaray (นัท))"}, {"minute": "73'", "half": "2H", "type": "goal", "side": "away", "team": "Galatasaray (นัท)", "player": "Dávid Hancko", "detail": "ยิงประตูให้ Galatasaray (นัท) (1 - 2)", "scoreAfter": "1 - 2"}, {"minute": "80'", "half": "2H", "type": "goal", "side": "away", "team": "Galatasaray (นัท)", "player": "Alexander Isak", "detail": "ยิงประตูให้ Galatasaray (นัท) (1 - 3)", "scoreAfter": "1 - 3"}], "headline": "Isak เบิ้ล + Hancko ซัดนำ! Galatasaray (นัท) บุกอัด Parma (น็อต) 3-1 แซงยึดท็อปทรี", "report": "ศึกชิงพื้นที่ท็อปโฟร์ประจำนัดที่ 46! Galatasaray ของกุนซือนัทบุกมานำเร็วตั้งแต่นาทีที่ 6' จาก Alexander Isak ก่อนที่ครึ่งหลัง Ousmane Dembélé จะยิงตีเสมอ 1-1 ให้ Parma (น็อต) ในนาทีที่ 59' (ลูกที่ 17 ของ Dembélé) แต่ทัพสิงโตเติร์กเร่งเครื่องช่วงท้ายเกม ได้กองหลัง Dávid Hancko เติมมายิงขึ้นนำ 2-1 ในนาทีที่ 73' และ Alexander Isak ซัดลูกที่สองของตัวเองปิดกล่องในนาทีที่ 80' พา Galatasaray บุกชนะ 3-1 เก็บเพิ่มเป็น 18 แต้มขยับขึ้นอันดับ 3 ด้วยผลต่างประตูได้เสียที่ดีกว่า (ใบเหลือง: Ousmane Dembélé 34', Sandro Tonali 41', Dayot Upamecano 70', Josko Gvardiol 73')"},
+      {"match": 47, "home": "Werder Bremen (แชมป์)", "away": "ฺBournemouth (มอส)", "hs": 2, "as": 3, "goals": [{"player": "Karim Adeyemi", "team": "ฺBournemouth (มอส)", "count": 1, "label": "1 ลูก (7')", "note": "ยิงประตูนาทีที่ 7'"}, {"player": "Alphonso Davies", "team": "ฺBournemouth (มอส)", "count": 1, "label": "1 ลูก (11')", "note": "ยิงประตูนาทีที่ 11'"}, {"player": "Erling Haaland", "team": "Werder Bremen (แชมป์)", "count": 1, "label": "1 ลูก (18')", "note": "ยิงประตูนาทีที่ 18'"}, {"player": "Bruno Fernandes", "team": "Werder Bremen (แชมป์)", "count": 1, "label": "1 ลูก (78')", "note": "ยิงประตูนาทีที่ 78'"}, {"player": "Ademola Lookman", "team": "ฺBournemouth (มอส)", "count": 1, "label": "1 ลูก (90')", "note": "ยิงประตูนาทีที่ 90'"}], "yellowCards": [{"player": "Federico Valverde", "team": "ฺBournemouth (มอส)", "count": 1, "label": "1 ใบ (35')", "note": "ใบเหลืองนาทีที่ 35'"}], "redCards": [], "timeline": [{"minute": "7'", "half": "1H", "type": "goal", "side": "away", "team": "ฺBournemouth (มอส)", "player": "Karim Adeyemi", "detail": "ยิงประตูให้ Bournemouth (มอส) (0 - 1)", "scoreAfter": "0 - 1"}, {"minute": "11'", "half": "1H", "type": "goal", "side": "away", "team": "ฺBournemouth (มอส)", "player": "Alphonso Davies", "detail": "ยิงประตูให้ Bournemouth (มอส) (0 - 2)", "scoreAfter": "0 - 2"}, {"minute": "18'", "half": "1H", "type": "goal", "side": "home", "team": "Werder Bremen (แชมป์)", "player": "Erling Haaland", "detail": "ยิงประตูให้ Werder Bremen (แชมป์) (1 - 2)", "scoreAfter": "1 - 2"}, {"minute": "35'", "half": "1H", "type": "yellow", "side": "away", "team": "ฺBournemouth (มอส)", "player": "Federico Valverde", "detail": "ได้รับใบเหลือง"}, {"minute": "63'", "half": "2H", "type": "sub", "side": "home", "team": "Werder Bremen (แชมป์)", "player": "Paulo Dybala", "subOut": "Bukayo Saka", "detail": "เปลี่ยนตัวสำรอง (Werder Bremen (แชมป์))"}, {"minute": "73'", "half": "2H", "type": "sub", "side": "away", "team": "ฺBournemouth (มอส)", "player": "Pedro Neto", "subOut": "Alphonso Davies", "detail": "เปลี่ยนตัวสำรอง (Bournemouth (มอส))"}, {"minute": "73'", "half": "2H", "type": "sub", "side": "home", "team": "Werder Bremen (แชมป์)", "player": "Heung Min Son", "subOut": "Vinicius Junior", "detail": "เปลี่ยนตัวสำรอง (Werder Bremen (แชมป์))"}, {"minute": "78'", "half": "2H", "type": "goal", "side": "home", "team": "Werder Bremen (แชมป์)", "player": "Bruno Fernandes", "detail": "ยิงประตูให้ Werder Bremen (แชมป์) (2 - 2)", "scoreAfter": "2 - 2"}, {"minute": "90'", "half": "2H", "type": "goal", "side": "away", "team": "ฺBournemouth (มอส)", "player": "Ademola Lookman", "detail": "ยิงประตูให้ Bournemouth (มอส) (2 - 3)", "scoreAfter": "2 - 3"}], "headline": "Lookman ซัดชัยนาทีบาป 90'! Bournemouth (มอส) บุกเฉือน Werder Bremen (แชมป์) สุดระทึก 3-2", "report": "เกมสุดมันส์ประจำนัดที่ 47! Bournemouth ของกุนซือมอสบุกไปออกนำเร็วถึง 2-0 ในช่วง 11 นาทีแรกจาก Karim Adeyemi (7') และ Alphonso Davies (11') แต่เจ้าถิ่น Werder Bremen (แชมป์) ฮึดสู้ยิงไล่มาจาก Erling Haaland (18') และตามตีเสมอ 2-2 ได้สำเร็จในนาทีที่ 78' จากกัปตัน Bruno Fernandes ทว่าในนาทีสุดท้าย 90' Ademola Lookman ก็สวมบทฮีโร่ซัดประตูชัยพา Bournemouth บุกเฉือนชนะ 3-2 เก็บเพิ่มเป็น 18 แต้มเท่ากับอันดับ 3 (ใบเหลือง: Federico Valverde 35')"},
+      {"match": 48, "home": "Liverpool (แดงค์)", "away": "Manchester United (เอฟ)", "hs": 5, "as": 6, "goals": [{"player": "Marcus Thuram", "team": "Manchester United (เอฟ)", "count": 2, "label": "2 ลูก (3', 13')", "note": "เหมา 2 ประตู (3', 13')"}, {"player": "Julián Alvarez", "team": "Manchester United (เอฟ)", "count": 2, "label": "2 ลูก (9', 30')", "note": "เหมา 2 ประตู (9', 30')"}, {"player": "Ferran Torres", "team": "Liverpool (แดงค์)", "count": 2, "label": "2 ลูก (24', 32')", "note": "เหมา 2 ประตู (24', 32')"}, {"player": "Dominik Szoboszlai", "team": "Liverpool (แดงค์)", "count": 1, "label": "1 ลูก (45')", "note": "ยิงประตูนาทีที่ 45'"}, {"player": "Hugo Ekitiké", "team": "Liverpool (แดงค์)", "count": 1, "label": "1 ลูก (61')", "note": "ยิงประตูนาทีที่ 61'"}, {"player": "Donyell Malen", "team": "Manchester United (เอฟ)", "count": 2, "label": "2 ลูก (70', 73')", "note": "เหมา 2 ประตู (70', 73')"}, {"player": "Bradley Barcola", "team": "Liverpool (แดงค์)", "count": 1, "label": "1 ลูก (77')", "note": "ยิงประตูนาทีที่ 77'"}], "yellowCards": [{"player": "Pedri", "team": "Liverpool (แดงค์)", "count": 1, "label": "1 ใบ (77')", "note": "ใบเหลืองนาทีที่ 77'"}], "redCards": [], "timeline": [{"minute": "3'", "half": "1H", "type": "goal", "side": "away", "team": "Manchester United (เอฟ)", "player": "Marcus Thuram", "detail": "ยิงประตูให้ Manchester United (เอฟ) (0 - 1)", "scoreAfter": "0 - 1"}, {"minute": "9'", "half": "1H", "type": "goal", "side": "away", "team": "Manchester United (เอฟ)", "player": "Julián Alvarez", "detail": "ยิงประตูให้ Manchester United (เอฟ) (0 - 2)", "scoreAfter": "0 - 2"}, {"minute": "13'", "half": "1H", "type": "goal", "side": "away", "team": "Manchester United (เอฟ)", "player": "Marcus Thuram", "detail": "ยิงประตูให้ Manchester United (เอฟ) (0 - 3)", "scoreAfter": "0 - 3"}, {"minute": "24'", "half": "1H", "type": "goal", "side": "home", "team": "Liverpool (แดงค์)", "player": "Ferran Torres", "detail": "ยิงประตูให้ Liverpool (แดงค์) (1 - 3)", "scoreAfter": "1 - 3"}, {"minute": "30'", "half": "1H", "type": "goal", "side": "away", "team": "Manchester United (เอฟ)", "player": "Julián Alvarez", "detail": "ยิงประตูให้ Manchester United (เอฟ) (1 - 4)", "scoreAfter": "1 - 4"}, {"minute": "32'", "half": "1H", "type": "goal", "side": "home", "team": "Liverpool (แดงค์)", "player": "Ferran Torres", "detail": "ยิงประตูให้ Liverpool (แดงค์) (2 - 4)", "scoreAfter": "2 - 4"}, {"minute": "45'", "half": "1H", "type": "goal", "side": "home", "team": "Liverpool (แดงค์)", "player": "Dominik Szoboszlai", "detail": "ยิงประตูให้ Liverpool (แดงค์) (3 - 4)", "scoreAfter": "3 - 4"}, {"minute": "45'", "half": "1H", "type": "sub", "side": "home", "team": "Liverpool (แดงค์)", "player": "Hugo Ekitiké", "subOut": "Rodri", "detail": "เปลี่ยนตัวสำรอง (Liverpool (แดงค์))"}, {"minute": "45'", "half": "1H", "type": "sub", "side": "home", "team": "Liverpool (แดงค์)", "player": "Rúben Dias", "subOut": "Eric García", "detail": "เปลี่ยนตัวสำรอง (Liverpool (แดงค์))"}, {"minute": "52'", "half": "2H", "type": "sub", "side": "away", "team": "Manchester United (เอฟ)", "player": "Deniz Undav", "subOut": "Kevin De Bruyne", "detail": "เปลี่ยนตัวสำรอง (Manchester United (เอฟ))"}, {"minute": "52'", "half": "2H", "type": "sub", "side": "away", "team": "Manchester United (เอฟ)", "player": "Warren Zaïre-Emery", "subOut": "Tijjani Reijnders", "detail": "เปลี่ยนตัวสำรอง (Manchester United (เอฟ))"}, {"minute": "52'", "half": "2H", "type": "sub", "side": "away", "team": "Manchester United (เอฟ)", "player": "Donyell Malen", "subOut": "Marcus Thuram", "detail": "เปลี่ยนตัวสำรอง (Manchester United (เอฟ))"}, {"minute": "60'", "half": "2H", "type": "sub", "side": "away", "team": "Manchester United (เอฟ)", "player": "Bernardo Silva", "subOut": "Alexis Mac Allister", "detail": "เปลี่ยนตัวสำรอง (Manchester United (เอฟ))"}, {"minute": "61'", "half": "2H", "type": "goal", "side": "home", "team": "Liverpool (แดงค์)", "player": "Hugo Ekitiké", "detail": "ยิงประตูให้ Liverpool (แดงค์) (4 - 4)", "scoreAfter": "4 - 4"}, {"minute": "70'", "half": "2H", "type": "goal", "side": "away", "team": "Manchester United (เอฟ)", "player": "Donyell Malen", "detail": "ยิงประตูให้ Manchester United (เอฟ) (4 - 5)", "scoreAfter": "4 - 5"}, {"minute": "70'", "half": "2H", "type": "sub", "side": "home", "team": "Liverpool (แดงค์)", "player": "Fabián Ruiz", "subOut": "Virgil van Dijk", "detail": "เปลี่ยนตัวสำรอง (Liverpool (แดงค์))"}, {"minute": "73'", "half": "2H", "type": "goal", "side": "away", "team": "Manchester United (เอฟ)", "player": "Donyell Malen", "detail": "ยิงประตูให้ Manchester United (เอฟ) (4 - 6)", "scoreAfter": "4 - 6"}, {"minute": "77'", "half": "2H", "type": "goal", "side": "home", "team": "Liverpool (แดงค์)", "player": "Bradley Barcola", "detail": "ยิงประตูให้ Liverpool (แดงค์) (5 - 6)", "scoreAfter": "5 - 6"}, {"minute": "77'", "half": "2H", "type": "yellow", "side": "home", "team": "Liverpool (แดงค์)", "player": "Pedri", "detail": "ได้รับใบเหลือง"}, {"minute": "84'", "half": "2H", "type": "sub", "side": "home", "team": "Liverpool (แดงค์)", "player": "Rodrygo", "subOut": "Ferran Torres", "detail": "เปลี่ยนตัวสำรอง (Liverpool (แดงค์))"}, {"minute": "84'", "half": "2H", "type": "sub", "side": "away", "team": "Manchester United (เอฟ)", "player": "Micky van de Ven", "subOut": "Trent Alexander-Arnold", "detail": "เปลี่ยนตัวสำรอง (Manchester United (เอฟ))"}, {"minute": "84'", "half": "2H", "type": "sub", "side": "home", "team": "Liverpool (แดงค์)", "player": "Antoine Semenyo", "subOut": "Pedri", "detail": "เปลี่ยนตัวสำรอง (Liverpool (แดงค์))"}], "headline": "แดงเดือด 11 ตุงตัดสินแชมป์! Manchester United (เอฟ) บุกเชือด Liverpool (แดงค์) 6-5 ส่ง Real Madrid CF คว้าแชมป์ลีกทันที!", "report": "ศึกแดงเดือดครั้งประวัติศาสตร์ที่ยิงรวมกันถึง 11 ประตู และเป็นแมตช์ตัดสินแชมป์ FC27 Super League Season 1! Manchester United ของกุนซือเอฟบุกมาช็อกแอนฟิลด์ด้วยการนำห่าง 3-0 ใน 13 นาทีแรกจาก Marcus Thuram (3', 13') และ Julián Alvarez (9') ก่อนที่ Alvarez จะยิงหนีเป็น 4-1 ในนาทีที่ 30' แม้ Liverpool (แดงค์) จะฮึดสู้ยิง 3 ลูกรวดตามตีเสมอ 4-4 จาก Ferran Torres ที่เหมา 2 ลูก (24', 32'), Dominik Szoboszlai (45') และตัวสำรอง Hugo Ekitiké (61') แต่กุนซือเอฟแก้เกมส่ง Donyell Malen ลงมาเป็นซูเปอร์ซับซัด 2 ประตูรวดในนาทีที่ 70' และ 73' หนีเป็น 6-4 แม้ Bradley Barcola จะยิงไล่มาเป็น 5-6 ในนาทีที่ 77' แต่ไล่ไม่ทัน จบเกมผีแดงบุกชนะ 6-5 ส่งผลให้ Liverpool มี 23 แต้มจาก 12 นัด (เหลือโปรแกรมเพียง 2 นัด เก็บเพิ่มได้สูงสุดแค่ 29 แต้ม) ไล่จ่าฝูง Real Madrid CF (ก้อง) ที่มี 30 แต้มไม่ทันแน่นอนแล้ว ส่งให้ Real Madrid CF ผงาดคว้าแชมป์ลีกไปครองอย่างเป็นทางการทันทีหลังจบนัดที่ 48!"},
+      {"match": 49, "home": "Liverpool (แดงค์)", "away": "Real Madrid CF (ก้อง)", "hs": 1, "as": 3, "goals": [{"player": "Jude Bellingham", "team": "Real Madrid CF (ก้อง)", "count": 1, "label": "1 ลูก (51')", "note": "ยิงประตูนาทีที่ 51'"}, {"player": "Ferran Torres", "team": "Liverpool (แดงค์)", "count": 1, "label": "1 ลูก (59')", "note": "ยิงประตูนาทีที่ 59'"}, {"player": "Kylian Mbappé", "team": "Real Madrid CF (ก้อง)", "count": 2, "label": "2 ลูก (69', 79')", "note": "เหมา 2 ประตู (69', 79')"}], "yellowCards": [], "redCards": [], "timeline": [{"minute": "45'", "half": "1H", "type": "sub", "side": "home", "team": "Liverpool (แดงค์)", "player": "Yan Diomande", "subOut": "Jeremie Frimpong", "detail": "เปลี่ยนตัวสำรอง (Liverpool (แดงค์))"}, {"minute": "45'", "half": "1H", "type": "sub", "side": "home", "team": "Liverpool (แดงค์)", "player": "Fabián Ruiz", "subOut": "Rodri", "detail": "เปลี่ยนตัวสำรอง (Liverpool (แดงค์))"}, {"minute": "51'", "half": "2H", "type": "goal", "side": "away", "team": "Real Madrid CF (ก้อง)", "player": "Jude Bellingham", "detail": "ยิงประตูให้ Real Madrid CF (ก้อง) (0 - 1)", "scoreAfter": "0 - 1"}, {"minute": "57'", "half": "2H", "type": "sub", "side": "away", "team": "Real Madrid CF (ก้อง)", "player": "Maximilian Mittelstädt", "subOut": "Jurriën Timber", "detail": "เปลี่ยนตัวสำรอง (Real Madrid CF (ก้อง))"}, {"minute": "59'", "half": "2H", "type": "goal", "side": "home", "team": "Liverpool (แดงค์)", "player": "Ferran Torres", "detail": "ยิงประตูให้ Liverpool (แดงค์) (1 - 1)", "scoreAfter": "1 - 1"}, {"minute": "69'", "half": "2H", "type": "goal", "side": "away", "team": "Real Madrid CF (ก้อง)", "player": "Kylian Mbappé", "detail": "ยิงประตูให้ Real Madrid CF (ก้อง) (1 - 2)", "scoreAfter": "1 - 2"}, {"minute": "69'", "half": "2H", "type": "sub", "side": "home", "team": "Liverpool (แดงค์)", "player": "Rodrygo", "subOut": "Bradley Barcola", "detail": "เปลี่ยนตัวสำรอง (Liverpool (แดงค์))"}, {"minute": "78'", "half": "2H", "type": "sub", "side": "home", "team": "Liverpool (แดงค์)", "player": "Hugo Ekitiké", "subOut": "Rodrigo De Paul", "detail": "เปลี่ยนตัวสำรอง (Liverpool (แดงค์))"}, {"minute": "78'", "half": "2H", "type": "sub", "side": "away", "team": "Real Madrid CF (ก้อง)", "player": "Dani Vivian", "subOut": "Antonio Rüdiger", "detail": "เปลี่ยนตัวสำรอง (Real Madrid CF (ก้อง))"}, {"minute": "79'", "half": "2H", "type": "goal", "side": "away", "team": "Real Madrid CF (ก้อง)", "player": "Kylian Mbappé", "detail": "ยิงประตูให้ Real Madrid CF (ก้อง) (1 - 3)", "scoreAfter": "1 - 3"}], "headline": "ฉลองแชมป์สุดยิ่งใหญ่! Real Madrid CF (ก้อง) บุกถล่มรองจ่าฝูง Liverpool (แดงค์) คาแอนฟิลด์ 3-1", "report": "แชมป์ใหม่ป้ายแดง Real Madrid CF ของกุนซือก้อง ที่เพิ่งการันตีถ้วยแชมป์ FC27 Super League Season 1 ไปหมาดๆ หลังจบนัดที่ 48 ลงสนามนัดที่ 49 บุกเยือนรองจ่าฝูง Liverpool (แดงค์) ถึงถิ่นแอนฟิลด์ด้วยฟอร์มสุดแกร่ง ครึ่งหลังนาทีที่ 51' Jude Bellingham ยิงให้ราชันชุดขาวออกนำ 1-0 แม้เจ้าบ้านจะตีเสมอ 1-1 จาก Ferran Torres ในนาทีที่ 59' (ลูกที่ 16 ของเจ้าตัว) แต่ Kylian Mbappé ก็ระเบิดฟอร์มสมราคาผู้นำดาวซัลโว เหมาคนเดียว 2 ประตูรวดในนาทีที่ 69' และ 79' (รวม 21 ประตูนำโด่งดาวซัลโวเดี่ยว) พา Real Madrid CF บุกถล่ม Liverpool 3-1 เก็บเพิ่มเป็น 33 คะแนน ทิ้งห่างอันดับ 2 ถึง 10 แต้มเต็ม!"},
       { match: 50, home: "Manchester United (เอฟ)", away: "Werder Bremen (แชมป์)", hs: null, as: null },
       { match: 51, home: "ฺBournemouth (มอส)", away: "Parma (น็อต)", hs: null, as: null },
       { match: 52, home: "Galatasaray (นัท)", away: "Juventus (ฟัยรูซ)", hs: null, as: null },
@@ -4581,8 +4631,20 @@
       { match: 56, home: "Werder Bremen (แชมป์)", away: "Liverpool (แดงค์)", hs: null, as: null }
     ];
 
-    // 48 News Items synced with Sheet `News Feed`: 1 Special Scoop (Best XI) + 39 Match Reports + 8 Team Profiles
+    // 59 News Items synced with Sheet `News Feed`: 2 Special Scoops (Champions + Best XI) + 49 Match Reports + 8 Team Profiles
     const NEWS_ARTICLES = [
+      {"id": "news-champions-season1", "category": "Special Scoop", "badge": "👑 OFFICIAL CHAMPIONS • REAL MADRID CF (ก้อง)", "time": "ประกาศแชมป์อย่างเป็นทางการ • การันตีแชมป์หลังจบนัดที่ 48 & ย้ำชัยนัดที่ 49", "title": "👑 แชมป์ไร้เทียมทาน! Real Madrid CF (ก้อง) ผงาดคว้าแชมป์ FC27 Super League Season 1 ทันทีหลังจบเกมแดงเดือดนัดที่ 48 ก่อนบุกอัดหงส์แดงคาแอนฟิลด์ 3-1 ในนัดที่ 49!", "summary": "จุดตัดสินแชมป์เกิดขึ้นในนัดที่ 48 เมื่อ Liverpool พลาดท่าพ่าย Manchester United คาบ้าน 5-6 ทำให้แต้มหยุดอยู่ที่ 23 คะแนนขณะที่เหลือการแข่งขันเพียง 2 นัด ไล่ Real Madrid CF (30 คะแนน) ไม่ทันแน่นอนแล้ว ก่อนที่แชมป์ใหม่อย่างราชันชุดขาวจะบุกไปถล่ม Liverpool ถึงแอนฟิลด์ 3-1 ในนัดที่ 49 ทะยานแตะ 33 แต้ม!", "matchId": 49, "clubId": null, "isChampionsScoop": true},
+      {"id": "news-match-49", "category": "Match Report", "badge": "👑 MATCH 49 • CHAMPIONS STATEMENT", "time": "ผลการแข่งขันนัดที่ 49 • มีไทม์ไลน์รายนาที", "title": "ฉลองแชมป์สุดยิ่งใหญ่! Real Madrid CF (ก้อง) บุกถล่มรองจ่าฝูง Liverpool (แดงค์) คาแอนฟิลด์ 3-1", "summary": "หลังการันตีแชมป์ไปตั้งแต่จบนัดที่ 48 ทัพราชันชุดขาวของกุนซือก้องบุกไปตอกย้ำความยิ่งใหญ่ถึงถิ่นแอนฟิลด์ ได้ Jude Bellingham (51') และ Kylian Mbappé เหมา 2 ลูก (69', 79' นำโด่งดาวซัลโว 21 ประตู) อัด Liverpool ที่ยิงได้จาก Ferran Torres (59') 3-1 ทะยานแตะ 33 แต้ม!", "matchId": 49, "clubId": null},
+      {"id": "news-match-48", "category": "Match Report", "badge": "🏆 MATCH 48 • TITLE DECIDER (11 GOALS!)", "time": "ผลการแข่งขันนัดที่ 48 • มีไทม์ไลน์รายนาที", "title": "แดงเดือด 11 ตุงตัดสินแชมป์! Manchester United (เอฟ) บุกเชือด Liverpool (แดงค์) 6-5 ส่ง Real Madrid CF คว้าแชมป์ลีกทันที!", "summary": "Marcus Thuram (3', 13'), Julián Alvarez (9', 30') และซูเปอร์ซับ Donyell Malen (70', 73') เหมาคนละ 2 ลูกพาผีแดงบุกชนะหงส์แดงที่ยิง 5 ลูกจาก Ferran Torres (24', 32'), Szoboszlai (45'), Ekitiké (61') และ Barcola (77') 6-5 ส่งผลให้แต้มของ Liverpool (23 แต้ม เหลือ 2 นัด) ไล่ Real Madrid CF (30 แต้ม) ไม่ทัน ราชันชุดขาวผงาดคว้าแชมป์ Season 1 ทันที!", "matchId": 48, "clubId": null},
+      {"id": "news-match-47", "category": "Match Report", "badge": "MATCH 47 REPORT • LOOKMAN 90' WINNER", "time": "ผลการแข่งขันนัดที่ 47 • มีไทม์ไลน์รายนาที", "title": "Lookman ซัดชัยนาทีบาป 90'! Bournemouth (มอส) บุกเฉือน Werder Bremen (แชมป์) สุดระทึก 3-2", "summary": "Bournemouth บุกนำเร็ว 2-0 จาก Karim Adeyemi (7') และ Alphonso Davies (11') แม้เบรเมนจะไล่ตีเสมอ 2-2 จาก Erling Haaland (18') และ Bruno Fernandes (78') แต่ Ademola Lookman ก็ซัดประตูชัยนาที 90' พาทีมเยือนชนะ 3-2", "matchId": 47, "clubId": null},
+      {"id": "news-match-46", "category": "Match Report", "badge": "MATCH 46 REPORT • ISAK BRACE", "time": "ผลการแข่งขันนัดที่ 46 • มีไทม์ไลน์รายนาที", "title": "Isak เบิ้ล + Hancko ซัดนำ! Galatasaray (นัท) บุกอัด Parma (น็อต) 3-1 แซงยึดท็อปทรี", "summary": "Alexander Isak ยิงนำตั้งแต่นาที 6' แม้ Ousmane Dembélé จะตีเสมอให้ Parma นาที 59' แต่ Galatasaray มารัว 2 ลูกติดจาก Dávid Hancko (73') และ Isak (80') บุกชนะ 3-1 เก็บ 18 แต้มขึ้นอันดับ 3", "matchId": 46, "clubId": null},
+      {"id": "news-match-45", "category": "Match Report", "badge": "MATCH 45 REPORT • 90' COMEBACK WINNER", "time": "ผลการแข่งขันนัดที่ 45 • มีไทม์ไลน์รายนาที", "title": "ฟอร์มหมาแชมป์! Mbappé เหมาสองท้ายเกมพา Real Madrid CF (ก้อง) พลิกแซงชนะ Juventus (ฟัยรูซ) น.90' 3-2", "summary": "Nico Williams ยิงนำเร็วนาที 4' แต่ Juventus รัวแซงนำ 2-1 จาก Lionel Messi (6') และ Hakan Çalhanoğlu (20') ก่อนที่ Kylian Mbappé จะสวมบทพระเอกเหมา 2 ลูกท้ายเกม (74', 90') พาราชันชุดขาวพลิกชนะ 3-2 เก็บ 30 แต้มจ่อแชมป์เต็มตัว!", "matchId": 45, "clubId": null},
+      {"id": "news-match-44", "category": "Match Report", "badge": "MATCH 44 REPORT • AWAY VICTORY", "time": "ผลการแข่งขันนัดที่ 44 • มีไทม์ไลน์รายนาที", "title": "สามแนวรุกคนละตุง! Parma (น็อต) บุกอัด Juventus (ฟัยรูซ) ถึงถิ่น 3-1", "summary": "Michael Olise (29'), Ousmane Dembélé (51') และ Khvicha Kvaratskhelia (70') ดาหน้ายิงคนละประตูพา Parma บุกชนะ Juventus ที่ตีไข่แตกจาก Kenan Yıldız (59') 3-1", "matchId": 44, "clubId": null},
+      {"id": "news-match-43", "category": "Match Report", "badge": "MATCH 43 REPORT • ISAK BRACE", "time": "ผลการแข่งขันนัดที่ 43 • มีไทม์ไลน์รายนาที", "title": "Isak เหมาสอง! Galatasaray (นัท) เปิดบ้านเฉือนชนะ Werder Bremen (แชมป์) สุดมันส์ 2-1", "summary": "Alexander Isak ยิงนำตั้งแต่นาที 7' ก่อนที่ Vinicius Junior จะตีเสมอให้เบรเมนนาที 15' และครึ่งหลัง Isak ซัดประตูชัยนาที 55' พา Galatasaray เปิดรังเก็บ 3 แต้มสำเร็จ 2-1 (Rafael Leão บาดเจ็บนาที 45')", "matchId": 43, "clubId": null},
+      {"id": "news-match-42", "category": "Match Report", "badge": "MATCH 42 REPORT • 6-GOAL DRAMA", "time": "ผลการแข่งขันนัดที่ 42 • มีไทม์ไลน์รายนาที", "title": "ดราม่า 6 ตุง! Liverpool (แดงค์) นำก่อนสองลูกโดนแซง ก่อนได้ Torres ยิงกู้ชีพเจ๊า Bournemouth (มอส) 3-3", "summary": "Liverpool บุกนำ 2-0 จาก Ferran Torres (22') และ Dominik Szoboszlai (35') แต่ Bournemouth รัวแซง 3 ลูกรวดจาก Loïs Openda (37', 62') และ Theo Hernández (55') ก่อนที่ Torres จะซัดตีเสมอ 3-3 นาที 83' ทำหงส์แดงสะดุดแต้มสำคัญในการลุ้นแชมป์", "matchId": 42, "clubId": null},
+      {"id": "news-match-41", "category": "Match Report", "badge": "MATCH 41 REPORT • PULISIC 71' WINNER", "time": "ผลการแข่งขันนัดที่ 41 • มีไทม์ไลน์รายนาที", "title": "Mbappé เบิ้ล + Pulisic ซัดชัยนาที 71'! Real Madrid CF (ก้อง) บุกเฉือน Manchester United (เอฟ) 3-2", "summary": "Kylian Mbappé เหมา 2 ลูก (14', 36') แม้ Marcus Thuram จะยิงตีเสมอให้ผีแดงถึงสองครั้ง (17', 59') แต่ Christian Pulisic ก็ซัดประตูชัยนาที 71' พาราชันชุดขาวบุกคว้า 3 แต้มสำคัญ 3-2", "matchId": 41, "clubId": null},
+      {"id": "news-match-40", "category": "Match Report", "badge": "MATCH 40 REPORT • CLEAN SHEET DRAW", "time": "ผลการแข่งขันนัดที่ 40 • มีไทม์ไลน์รายนาที", "title": "แนวรับเหนียวแน่น! Manchester United (เอฟ) เปิดบ้านเจ๊าไร้สกอร์ Bournemouth (มอส) 0-0", "summary": "ทั้งสองทีมเปิดเกมสู้กันอย่างสูสีแต่จังหวะสุดท้ายเจาะแนวรับและผู้รักษาประตูไม่เข้า จบเกมเสมอกัน 0-0 แบ่งไปทีมละ 1 แต้ม (ใบเหลือง: Maxence Lacroix 45', Trent Alexander-Arnold 71', Enzo Fernández 90')", "matchId": 40, "clubId": null},
+
       {"id": "news-best-xi-half-season", "category": "Special Scoop", "badge": "🌟 SPECIAL SCOOP • MID-SEASON BEST XI (นัดที่ 1–28)", "time": "สกู๊ปพิเศษครึ่งฤดูกาลแรก • ครบ 1 รอบพบกันหมด (ทีมละ 7 นัด)", "title": "ประกาศผัง 11 ผู้เล่นยอดเยี่ยมครึ่งซีซั่นแรก (Best XI นัดที่ 1–28): Dembélé คว้า MVP 14 ตุง ผนึกกำลัง Mbappé-Bellingham-Williams!", "summary": "เปิดโผทีมยอดเยี่ยมครึ่งฤดูกาลแรก FC27 Super League (ระบบ 4-2-3-1 Wide) จากสถิติจริงนัดที่ 1–28: Ousmane Dembélé (14 ประตู) คว้า MVP ยืนหน้าเป้า ขนาบข้างด้วย Kylian Mbappé (12 ประตู), Nico Williams (7 ประตู) และ Jude Bellingham (5 ประตู) พร้อมเกมรับเหล็กของ Courtois & Schlotterbeck ที่เก็บ 2 คลีนชีต", "matchId": null, "clubId": null, "isBestXI": true},
       {"id": "news-match-39", "category": "Match Report", "badge": "MATCH 39 REPORT • 6-GOAL THRILLER", "time": "ผลการแข่งขันนัดที่ 39 • มีไทม์ไลน์รายนาที", "title": "Torres ซูเปอร์ซับเหมาสองช่วยชีวิต! Liverpool (แดงค์) เปิดรังไล่เจ๊าเดือด Galatasaray (นัท) 3-3", "summary": "Galatasaray บุกมานำถึง 3 ครั้งจาก Alexander Isak (22') และ Désiré Doué เหมา 2 ลูก (44', 82') แต่ Liverpool ตายยากไล่ตีเสมอได้ทุกครั้งจาก Dominik Szoboszlai (32') และซูเปอร์ซับ Ferran Torres ที่เหมา 2 ลูก (69', 88') จบเกม 3-3", "matchId": 39, "clubId": null},
       {"id": "news-match-38", "category": "Match Report", "badge": "MATCH 38 REPORT • YILDIZ BRACE", "time": "ผลการแข่งขันนัดที่ 38 • มีไทม์ไลน์รายนาที", "title": "Yıldız เบิ้ล + Messi-Cherki คนละตุง! Juventus (ฟัยรูซ) บุกถล่ม Werder Bremen (แชมป์) 4-1", "summary": "Juventus ระเบิดฟอร์มรัว 3 ลูกรวดในครึ่งแรกจาก Lionel Messi (18'), Rayan Cherki (31') และ Kenan Yıldız (34') ก่อนที่ Erling Haaland จะยิงตีไข่แตกนาที 56' และ Yıldız ซัดลูกที่สองของตัวเองนาที 77' พาม้าลายบุกชนะ 4-1", "matchId": 38, "clubId": null},
@@ -5076,7 +5138,9 @@
           ? matchObj.redCards.reduce((acc, c) => acc + (c.count || 1), 0)
           : 0;
 
-        const footerMeta = article.isBestXI
+        const footerMeta = article.isChampionsScoop
+          ? `👑 แชมป์ Season 1: Real Madrid CF (ก้อง) • 33 แต้ม (+27) • Mbappé 21⚽`
+          : article.isBestXI
           ? `📐 แผน 4-2-3-1 Wide • ⭐ MVP: Ousmane Dembélé (14⚽)`
           : matchObj
             ? `⚽ ${totalGoalsInMatch} ประตู • 🟨 ${totalYellowInMatch} ใบเหลือง${totalRedInMatch > 0 ? ` • 🟥 ${totalRedInMatch} ใบแดง` : ""}`
@@ -5084,8 +5148,8 @@
               ? `📐 ${clubObj.formation} • 💰 ${clubObj.budget}`
               : "📋 ข้อมูลสโมสร";
 
-        const cardBorderCls = article.isBestXI
-          ? "border-amber-400/50 bg-gradient-to-br from-slate-900/95 via-slate-900/90 to-amber-950/25 md:col-span-2"
+        const cardBorderCls = (article.isChampionsScoop || article.isBestXI)
+          ? "border-amber-400/60 bg-gradient-to-br from-slate-900/95 via-slate-900/90 to-amber-950/30 md:col-span-2 shadow-lg shadow-amber-500/10"
           : "hover:border-emerald-500/50";
 
         return `
@@ -5129,6 +5193,7 @@
               <div class="flex items-center gap-2">
                 ${renderClubLogoBadge(row.team, "w-6 h-6")}
                 <span class="truncate">${formatTeamDisplay(row.team)}</span>
+                ${rank === 1 ? `<span class="px-1.5 py-0.5 rounded bg-amber-400 text-slate-950 font-black text-[9px] shrink-0">👑 แชมป์</span>` : ""}
               </div>
             </td>
             <td class="py-2.5 text-center text-slate-300">${row.P}</td>
@@ -5192,7 +5257,10 @@
               <div class="flex items-center gap-3">
                 ${renderClubLogoBadge(row.team, "w-10 h-10")}
                 <div>
-                  <div class="font-bold text-white whitespace-nowrap">${formatTeamDisplay(row.team)}</div>
+                  <div class="font-bold text-white whitespace-nowrap flex items-center gap-1.5">
+                    <span>${formatTeamDisplay(row.team)}</span>
+                    ${rank === 1 ? `<span class="px-2 py-0.5 rounded-md bg-amber-400 text-slate-950 font-black text-[10px] tracking-wide uppercase shadow-sm">👑 CHAMPIONS S1</span>` : ""}
+                  </div>
                   <div class="text-[11px] text-slate-400 whitespace-nowrap">กุนซือ: ${row.manager}</div>
                 </div>
               </div>
@@ -5552,13 +5620,13 @@
       teamHighlightsEl.innerHTML = `
         <div class="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800 space-y-1">
           <span class="text-[11px] text-emerald-400 font-bold uppercase">⚡ ผู้นำดาวซัลโวสูงสุด (Golden Boot)</span>
-          <div class="text-sm font-extrabold text-white">Ousmane Dembélé &amp; Kylian Mbappé — 15 ลูก</div>
-          <p class="text-xs text-slate-400">นำดาวซัลโวร่วมกันที่ 15 ประตู ตามมาด้วย Erling Haaland (12 ลูก), Ferran Torres (11 ลูก), Alexander Isak (10 ลูก), Ademola Lookman (8 ลูก) และ Kenan Yıldız (8 ลูก)</p>
+          <div class="text-sm font-extrabold text-white">Kylian Mbappé (Real Madrid CF) — 21 ลูก</div>
+          <p class="text-xs text-slate-400">นำโด่งดาวซัลโวเดี่ยวที่ 21 ประตู ตามมาด้วย Ousmane Dembélé (17 ลูก), Ferran Torres (16 ลูก), Alexander Isak (14 ลูก), Erling Haaland (13 ลูก) และ Marcus Thuram (11 ลูก)</p>
         </div>
         <div class="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800 space-y-1">
-          <span class="text-[11px] text-sky-400 font-bold uppercase">🏆 ขับเคี่ยวลุ้นแชมป์หลังผ่าน 39 นัด</span>
-          <div class="text-sm font-extrabold text-white">Real Madrid CF (24 แต้ม, +23) &amp; Liverpool (22 แต้ม, +8)</div>
-          <p class="text-xs text-slate-400">Real Madrid CF ชนะ 8 จาก 10 นัดนำจ่าฝูง 24 แต้ม โดยมี Liverpool ตามติดที่ 22 แต้ม (ห่าง 2 แต้ม) ตามมาด้วย Parma (15 แต้ม) และ Bournemouth (13 แต้ม)</p>
+          <span class="text-[11px] text-sky-400 font-bold uppercase">👑 แชมป์ FC27 Super League Season 1</span>
+          <div class="text-sm font-extrabold text-white">Real Madrid CF (ก้อง) — การันตีแชมป์ที่นัด #48 (ล่าสุด 33 แต้ม, +27)</div>
+          <p class="text-xs text-slate-400">การันตีแชมป์ทันทีหลังจบนัดที่ 48 ที่ Liverpool พ่าย Man Utd 5-6 (เหลือ 2 นัดแต้มไล่ไม่ทัน) ก่อนบุกชนะ Liverpool 3-1 ในนัดที่ 49 ทิ้งห่างเป็น 33 ต่อ 23 แต้ม!</p>
         </div>
         <div class="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800 space-y-1">
           <span class="text-[11px] text-rose-400 font-bold uppercase">⏱️ อัปเดตระบบใหม่: Match Timeline รายนาที</span>
@@ -5919,9 +5987,100 @@
       openModal("🌟 SPECIAL SCOOP • MID-SEASON BEST XI (MATCHES 1–28)", html);
     }
 
+    function showChampionsModal() {
+      const rmLogo = renderClubLogoBadge("Real Madrid CF (ก้อง)", "w-16 h-16");
+      const scorers = [
+        { name: "Kylian Mbappé ★", pos: "FW", goals: 21, note: "ผู้นำดาวซัลโวสูงสุดของลีก (กด 4 ลูกนัด #9, แฮตทริกนัด #13, #25 และเบิ้ลในนัดฉลองแชมป์ #49)" },
+        { name: "Christian Pulisic", pos: "FW", goals: 8, note: "แฮตทริกนัด #21 และยิงประตูชัยสำคัญในนัด #41 บุกชนะ Man Utd 3-2" },
+        { name: "Nico Williams", pos: "FW", goals: 8, note: "แฮตทริกนัด #5 บุกถล่ม Juventus 4-1 และเบิ้ลในนัด #25 ชนะ Galatasaray 5-4" },
+        { name: "Jude Bellingham ★", pos: "MF", goals: 7, note: "จอมทัพแดนกลาง ยิงเบิกร่องนัดเปิดสนาม #1 และยิงเบิกร่องนัดบุกชนะ Liverpool 3-1 (#49)" },
+        { name: "Mattia Zaccagni", pos: "FW", goals: 3, note: "ซูเปอร์ซับทีเด็ด ยิงในนัด #9, #17 และ #37" },
+        { name: "Antony, Declan Rice & Ollie Watkins", pos: "FW/MF", goals: 3, note: "Antony & Declan Rice ยิงท้ายเกมนัด #33 (ชนะ Bournemouth 4-2) • Ollie Watkins ยิงนัด #21" }
+      ];
+      const scorersHtml = scorers.map(s => `
+        <div class="p-3 rounded-xl bg-slate-900/90 border border-slate-800 flex items-center justify-between gap-3">
+          <div>
+            <div class="text-xs sm:text-sm font-extrabold text-white">${s.name} <span class="text-xs text-slate-400 font-normal">(${s.pos})</span></div>
+            <p class="text-[11px] text-slate-400 mt-0.5">${s.note}</p>
+          </div>
+          <span class="px-3 py-1 rounded-lg bg-amber-400/20 text-amber-300 border border-amber-400/40 font-black text-xs shrink-0">⚽ ${s.goals} ลูก</span>
+        </div>
+      `).join("");
+
+      const html = `
+        <div class="p-5 rounded-2xl bg-gradient-to-br from-amber-500/25 via-slate-900 to-slate-950 border-2 border-amber-400/60 space-y-4 shadow-xl">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div class="flex items-center gap-4">
+              ${rmLogo}
+              <div>
+                <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md bg-amber-400 text-slate-950 font-black text-[11px] uppercase tracking-wider mb-1">
+                  👑 OFFICIAL SEASON 1 CHAMPIONS
+                </div>
+                <h3 class="text-xl sm:text-2xl font-black text-white">Real Madrid CF (ก้อง)</h3>
+                <p class="text-xs text-amber-300 font-semibold">แชมป์ FC27 Super League Season 1 อย่างเป็นทางการ!</p>
+              </div>
+            </div>
+            <div class="grid grid-cols-3 gap-2 text-center bg-slate-950/80 p-3 rounded-xl border border-amber-500/30">
+              <div>
+                <span class="block text-[10px] text-slate-400 uppercase">คะแนนสุทธิ</span>
+                <span class="text-lg font-black text-amber-300">33 แต้ม</span>
+              </div>
+              <div>
+                <span class="block text-[10px] text-slate-400 uppercase">สถิติ (13 นัด)</span>
+                <span class="text-sm font-extrabold text-emerald-400">ชนะ 11 แพ้ 2</span>
+              </div>
+              <div>
+                <span class="block text-[10px] text-slate-400 uppercase">ได้-เสีย (GD)</span>
+                <span class="text-sm font-extrabold text-white">50-23 (+27)</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3 pt-2">
+            <div class="p-3.5 rounded-xl bg-slate-950/90 border border-rose-500/40 space-y-1.5">
+              <div class="flex items-center justify-between">
+                <span class="px-2 py-0.5 rounded bg-rose-500/20 text-rose-300 font-black text-[11px]">🔥 จุดตัดสินแชมป์ • นัดที่ #48</span>
+                <span class="text-xs font-extrabold text-white">Liverpool 5 - 6 Man Utd</span>
+              </div>
+              <p class="text-xs text-slate-300 leading-relaxed">
+                รองจ่าฝูง <strong>Liverpool (แดงค์)</strong> พลาดท่าพ่าย <strong>Manchester United (เอฟ)</strong> คาบ้าน 5-6 ทำให้แต้มหยุดอยู่ที่ <strong>23 คะแนนจาก 12 นัด</strong> ขณะที่เหลือการแข่งขันอีกเพียง <strong>2 นัด</strong> (เก็บแต้มเพิ่มได้สูงสุดแค่ 29 คะแนน) ไล่ <strong>Real Madrid CF (30 คะแนน)</strong> ไม่ทันแน่นอนแล้ว ส่งให้ราชันชุดขาวผงาดคว้าแชมป์ทันที!
+              </p>
+              <button type="button" data-match-modal="48" class="mt-1 inline-flex items-center gap-1 text-xs font-bold text-rose-300 hover:text-rose-200">
+                ดูไทม์ไลน์นัดที่ #48 (11 ประตู) →
+              </button>
+            </div>
+
+            <div class="p-3.5 rounded-xl bg-slate-950/90 border border-emerald-500/40 space-y-1.5">
+              <div class="flex items-center justify-between">
+                <span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-black text-[11px]">👑 นัดตอกย้ำแชมป์ • นัดที่ #49</span>
+                <span class="text-xs font-extrabold text-white">Liverpool 1 - 3 Real Madrid CF</span>
+              </div>
+              <p class="text-xs text-slate-300 leading-relaxed">
+                หลังการันตีแชมป์แล้ว <strong>Real Madrid CF (ก้อง)</strong> บุกไปเยือนแอนฟิลด์และถล่มรองจ่าฝูง <strong>Liverpool</strong> คาบ้านอีก <strong>3-1</strong> จากประตูของ <strong>Jude Bellingham (51')</strong> และ <strong>Kylian Mbappé เหมา 2 ลูก (69', 79')</strong> เก็บเพิ่มเป็น 33 คะแนน ทิ้งห่างอันดับ 2 ถึง 10 แต้ม!
+              </p>
+              <button type="button" data-match-modal="49" class="mt-1 inline-flex items-center gap-1 text-xs font-bold text-emerald-400 hover:text-emerald-300">
+                ดูไทม์ไลน์นัดฉลองแชมป์ #49 →
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="space-y-2.5">
+          <h4 class="text-xs font-extrabold uppercase tracking-wider text-amber-400">⚽ ทำเนียบผู้ทำประตูทั้ง 50 ลูกของทัพแชมป์ Real Madrid CF (ก้อง)</h4>
+          <div class="space-y-2">${scorersHtml}</div>
+        </div>
+      `;
+
+      openModal("👑 OFFICIAL CHAMPIONS • REAL MADRID CF (SEASON 1)", html);
+    }
+
     function showNewsModal(newsId) {
       const article = NEWS_ARTICLES.find(n => n.id === newsId);
       if (!article) return;
+      if (article.isChampionsScoop) {
+        showChampionsModal();
+        return;
+      }
       if (article.isBestXI) {
         showBestXIModal();
         return;
@@ -6071,6 +6230,221 @@
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
 
+    // =========================================================================
+    // CHAMPIONSHIP CELEBRATION BACKGROUND ENGINE (FIREWORKS + CONFETTI + CRESTS)
+    // =========================================================================
+    let champBgMode = "combo"; // "combo" | "fireworks" | "emblems" | "off"
+    let champAnimFrameId = null;
+    let launchSalvoFn = null;
+
+    function renderFloatingChampionEmblems() {
+      const layer = document.getElementById("champEmblemsLayer");
+      if (!layer) return;
+      const rmLogo = getTeamLogo("Real Madrid CF (ก้อง)");
+      const items = [
+        { left: "6%", size: 68, dur: 26, delay: -4, drift: "35px", opacity: 0.10, type: "crest" },
+        { left: "18%", size: 44, dur: 22, delay: -14, drift: "-25px", opacity: 0.08, type: "crown" },
+        { left: "31%", size: 84, dur: 30, delay: -9, drift: "45px", opacity: 0.09, type: "crest" },
+        { left: "48%", size: 52, dur: 25, delay: -19, drift: "-30px", opacity: 0.08, type: "trophy" },
+        { left: "64%", size: 76, dur: 28, delay: -6, drift: "30px", opacity: 0.10, type: "crest" },
+        { left: "79%", size: 48, dur: 23, delay: -16, drift: "-40px", opacity: 0.08, type: "crown" },
+        { left: "91%", size: 70, dur: 27, delay: -11, drift: "-25px", opacity: 0.10, type: "crest" }
+      ];
+
+      layer.innerHTML = items.map(it => {
+        const inner = it.type === "crest"
+          ? `<div class="rounded-full bg-white/90 p-2 shadow-lg border-2 border-amber-300/80 flex items-center justify-center" style="width:${it.size}px;height:${it.size}px;">
+               <img src="${rmLogo}" data-club-logo="Real Madrid CF" alt="" class="w-full h-full object-contain" />
+             </div>`
+          : `<div class="flex items-center justify-center text-amber-300 font-black" style="font-size:${it.size * 0.75}px;">
+               ${it.type === "crown" ? "👑" : "🏆"}
+             </div>`;
+        return `<div class="champ-crest-item" style="left:${it.left}; --crest-dur:${it.dur}s; --crest-delay:${it.delay}s; --crest-drift-x:${it.drift}; --crest-opacity:${it.opacity};">${inner}</div>`;
+      }).join("");
+    }
+
+    function initChampionshipCanvasFX() {
+      const canvas = document.getElementById("champFireworksCanvas");
+      if (!canvas) return;
+      const ctx = canvas.getContext("2d");
+
+      function resizeCanvas() {
+        canvas.width = window.innerWidth || 1280;
+        canvas.height = window.innerHeight || 800;
+      }
+      resizeCanvas();
+      window.addEventListener("resize", resizeCanvas);
+
+      const colors = ["#fbbf24", "#fde047", "#ffffff", "#38bdf8", "#34d399", "#f59e0b"];
+      const rockets = [];
+      const particles = [];
+      const confetti = [];
+
+      for (let i = 0; i < 36; i++) {
+        confetti.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          w: 5 + Math.random() * 5,
+          h: 3 + Math.random() * 4,
+          vy: 0.45 + Math.random() * 0.75,
+          vx: (Math.random() - 0.5) * 0.6,
+          angle: Math.random() * Math.PI * 2,
+          spin: (Math.random() - 0.5) * 0.06,
+          color: colors[i % colors.length]
+        });
+      }
+
+      function spawnRocket(customX, customTargetY) {
+        const x = customX !== undefined ? customX : (0.12 + Math.random() * 0.76) * canvas.width;
+        const targetY = customTargetY !== undefined ? customTargetY : (0.12 + Math.random() * 0.38) * canvas.height;
+        rockets.push({
+          x: x,
+          y: canvas.height + 10,
+          vx: (Math.random() - 0.5) * 1.4,
+          vy: -(7.5 + Math.random() * 3.2),
+          targetY: targetY,
+          color: colors[Math.floor(Math.random() * colors.length)]
+        });
+      }
+
+      function explodeRocket(r) {
+        const count = 38 + Math.floor(Math.random() * 20);
+        const baseColor = r.color;
+        for (let i = 0; i < count; i++) {
+          const angle = (Math.PI * 2 * i) / count + (Math.random() - 0.5) * 0.15;
+          const speed = 1.2 + Math.random() * 4.2;
+          particles.push({
+            x: r.x,
+            y: r.y,
+            vx: Math.cos(angle) * speed,
+            vy: Math.sin(angle) * speed,
+            alpha: 0.95,
+            decay: 0.012 + Math.random() * 0.012,
+            size: 1.8 + Math.random() * 2.0,
+            color: i % 3 === 0 ? "#ffffff" : baseColor
+          });
+        }
+      }
+
+      launchSalvoFn = function() {
+        if (champBgMode === "off" || champBgMode === "emblems") {
+          setChampBgMode("combo");
+        }
+        for (let i = 0; i < 6; i++) {
+          const rx = (0.15 + (i / 5) * 0.7) * canvas.width;
+          const ry = (0.14 + Math.random() * 0.25) * canvas.height;
+          spawnRocket(rx, ry);
+        }
+      };
+
+      // Launch initial celebratory salvo
+      for (let i = 0; i < 3; i++) {
+        spawnRocket((0.2 + i * 0.3) * canvas.width, (0.18 + (i % 2) * 0.12) * canvas.height);
+      }
+
+      let frameCount = 0;
+      if (champAnimFrameId) cancelAnimationFrame(champAnimFrameId);
+
+      function step() {
+        champAnimFrameId = requestAnimationFrame(step);
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        if (champBgMode === "off" || champBgMode === "emblems") {
+          return;
+        }
+
+        frameCount++;
+        if (frameCount % 75 === 0 && rockets.length < 4) {
+          spawnRocket();
+        }
+
+        // Draw & update confetti
+        for (let i = 0; i < confetti.length; i++) {
+          const c = confetti[i];
+          c.y += c.vy;
+          c.x += c.vx + Math.sin(frameCount * 0.02 + i) * 0.25;
+          c.angle += c.spin;
+          if (c.y > canvas.height + 12) {
+            c.y = -10;
+            c.x = Math.random() * canvas.width;
+          }
+          ctx.save();
+          ctx.translate(c.x, c.y);
+          ctx.rotate(c.angle);
+          ctx.globalAlpha = 0.32;
+          ctx.fillStyle = c.color;
+          ctx.fillRect(-c.w / 2, -c.h / 2, c.w, c.h);
+          ctx.restore();
+        }
+
+        // Draw & update rockets
+        for (let i = rockets.length - 1; i >= 0; i--) {
+          const r = rockets[i];
+          r.x += r.vx;
+          r.y += r.vy;
+          r.vy += 0.06;
+
+          ctx.save();
+          ctx.globalAlpha = 0.75;
+          ctx.fillStyle = r.color;
+          ctx.beginPath();
+          ctx.arc(r.x, r.y, 2.3, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.restore();
+
+          if (r.y <= r.targetY || r.vy >= -0.5) {
+            explodeRocket(r);
+            rockets.splice(i, 1);
+          }
+        }
+
+        // Draw & update explosion particles
+        for (let i = particles.length - 1; i >= 0; i--) {
+          const p = particles[i];
+          p.x += p.vx;
+          p.y += p.vy;
+          p.vx *= 0.97;
+          p.vy = p.vy * 0.97 + 0.035;
+          p.alpha -= p.decay;
+
+          if (p.alpha <= 0.02) {
+            particles.splice(i, 1);
+            continue;
+          }
+
+          ctx.save();
+          ctx.globalAlpha = p.alpha * 0.75;
+          ctx.fillStyle = p.color;
+          ctx.shadowColor = p.color;
+          ctx.shadowBlur = 8;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.restore();
+        }
+      }
+
+      step();
+    }
+
+    function setChampBgMode(mode) {
+      champBgMode = mode;
+      const ambient = document.getElementById("champAmbientLayer");
+      const emblems = document.getElementById("champEmblemsLayer");
+      const canvas = document.getElementById("champFireworksCanvas");
+
+      if (ambient) ambient.style.display = mode === "off" ? "none" : "block";
+      if (emblems) emblems.style.display = (mode === "combo" || mode === "emblems") ? "block" : "none";
+      if (canvas) canvas.style.display = (mode === "combo" || mode === "fireworks") ? "block" : "none";
+
+      document.querySelectorAll(".champ-bg-btn").forEach(btn => {
+        const bMode = btn.getAttribute("data-bg-mode");
+        btn.className = bMode === mode
+          ? "champ-bg-btn px-2.5 py-1 rounded-lg font-bold text-[11px] transition bg-amber-400 text-slate-950 shadow-sm"
+          : "champ-bg-btn px-2.5 py-1 rounded-lg font-semibold text-[11px] transition bg-slate-900/90 text-slate-300 hover:text-white border border-slate-700";
+      });
+    }
+
     function initApp() {
       populateTeamFilterDropdown();
       renderTopTicker();
@@ -6080,7 +6454,11 @@
       renderFixturesList();
       renderClubsGrid();
       renderPlayerStatsAndEvents();
+      renderFloatingChampionEmblems();
+      initChampionshipCanvasFX();
       upgradeClubLogosOnline();
+
+
 
       // Main tab switching
       document.querySelectorAll(".nav-tab-btn").forEach(btn => {
@@ -6090,7 +6468,7 @@
       });
 
       // Quick jump buttons
-      document.getElementById("heroReadArticleBtn").addEventListener("click", () => showMatchModal(39));
+      document.getElementById("heroReadArticleBtn").addEventListener("click", () => showChampionsModal());
       document.getElementById("heroBestXIBtn").addEventListener("click", () => showBestXIModal());
       document.getElementById("heroJumpStandingsBtn").addEventListener("click", () => switchTab("standings"));
       document.getElementById("miniTableFullBtn").addEventListener("click", () => switchTab("standings"));
