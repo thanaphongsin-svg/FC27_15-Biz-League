@@ -503,10 +503,10 @@
         <div class="lg:col-span-7 glass-card rounded-2xl p-5 space-y-3.5">
           <div class="flex items-center justify-between border-b border-slate-800 pb-2.5">
             <div>
-              <h3 class="text-sm sm:text-base font-extrabold text-white">🔒 2. กฎแพ็กเกจนักเตะติดทีม XI (Club XI Lock)</h3>
-              <p class="text-[11px] text-slate-400">หากต้องการใช้นักเตะ XI ของทีมใด ต้องเลือกเล่นสโมสรนั้นและเหมาผู้เล่น XI ยกชุด</p>
+              <h3 class="text-sm sm:text-base font-extrabold text-white">🔒 2. กฎนักเตะติดทีม XI (เลือกได้ 2 แบบ: เหมาชุด หรือ ดึงเดี่ยว 1 คน)</h3>
+              <p class="text-[11px] text-slate-400"><strong>แบบที่ 1 (สิทธิ์ก่อน):</strong> กดการ์ดด้านล่างเพื่อ <strong>เหมาชุด XI</strong> (ต้องเล่นทีมนั้น) • <strong>แบบที่ 2:</strong> กดเลือกในตารางด้านล่างเพื่อ <strong>ดึงเดี่ยวได้ทีมละ 1 คน</strong> (ห้ามเล่นทีมนั้น &amp; ต้องไม่มีใครใช้ทีมนั้น)</p>
             </div>
-            <span class="px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 font-bold text-[11px]">5 สโมสร</span>
+            <span class="px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 font-bold text-[11px]">เหมาชุด / ดึงเดี่ยว</span>
           </div>
           <div id="s2ClubXIPackagesGrid" class="grid grid-cols-1 sm:grid-cols-2 gap-2.5"></div>
         </div>
@@ -600,7 +600,7 @@
 
         <div class="flex items-center justify-between text-xs text-slate-400">
           <span id="tlResultCounter">แสดงนักเตะ 120 คนแรกจาก 870 คน</span>
-          <span>💡 นักเตะที่มีป้าย 🔒 ติดทีม XI จะถูกเลือกอัตโนมัติเมื่อเลือกแพ็กเกจสโมสรนั้น</span>
+          <span>💡 นักเตะติด XI กด <strong>+ เลือกเดี่ยว (1 คน)</strong> ในตารางได้เลย (ดึงได้สโมสรละ 1 คนเมื่อไม่มีใครคุมทีมนั้น) หรือกดการ์ดด้านบนเพื่อ <strong>เหมาทั้งชุด</strong></span>
         </div>
 
         <div class="overflow-x-auto max-h-[540px] custom-scrollbar border border-slate-800 rounded-xl">
@@ -6697,6 +6697,14 @@
       return "bg-rose-500/20 text-rose-300 border-rose-500/40";
     }
 
+    function showDraftNotice(msg) {
+      const toast = document.getElementById("draftCopyToast");
+      if (!toast) return;
+      toast.textContent = msg;
+      toast.classList.remove("hidden");
+      setTimeout(() => toast.classList.add("hidden"), 4500);
+    }
+
     function renderS2TransferHub() {
       const standings = computeStandings();
       const rankListEl = document.getElementById("s2BudgetRankList");
@@ -6729,12 +6737,30 @@
         `;
       }).join("");
 
+      const draftedPlayers = s2DraftedOrder
+        .map(code => TRANSFER_LIST_DATA.find(p => p.code === code))
+        .filter(Boolean);
+
       const xiGridEl = document.getElementById("s2ClubXIPackagesGrid");
       xiGridEl.innerHTML = CLUB_XI_PACKAGES.map(pkg => {
-        const isSel = pkg.id === s2SelectedXIClub;
-        const cls = isSel
-          ? "border-amber-400 bg-amber-500/15 shadow-md shadow-amber-500/10"
-          : "border-slate-800 bg-slate-900/70 hover:border-slate-700";
+        const isFullSel = pkg.id === s2SelectedXIClub;
+        const singlePickedFromClub = pkg.id !== "NONE"
+          ? draftedPlayers.filter(p => p.xiClub === pkg.id)
+          : [];
+        const isSingleModeHere = !isFullSel && singlePickedFromClub.length === 1;
+
+        let cls = "border-slate-800 bg-slate-900/70 hover:border-slate-700";
+        let statusTag = "";
+        if (isFullSel) {
+          cls = "border-amber-400 bg-amber-500/15 shadow-md shadow-amber-500/10";
+          statusTag = pkg.id === "NONE"
+            ? `<span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 font-bold text-[10px]">โหมดอิสระ / ดึงเดี่ยว</span>`
+            : `<span class="px-2 py-0.5 rounded bg-amber-400 text-slate-950 font-black text-[10px]">📦 เหมาชุดแล้ว (ต้องเล่นทีมนี้)</span>`;
+        } else if (isSingleModeHere) {
+          cls = "border-sky-400/60 bg-sky-500/10";
+          statusTag = `<span class="px-2 py-0.5 rounded bg-sky-500/20 text-sky-300 border border-sky-400/40 font-bold text-[10px]">🔓 ดึงเดี่ยว 1 คน: ${singlePickedFromClub[0].name}</span>`;
+        }
+
         return `
           <button type="button" data-s2-xi="${pkg.id}" class="p-3 rounded-xl border transition text-left flex flex-col justify-between gap-1.5 ${cls}">
             <div class="flex items-center justify-between gap-2 w-full">
@@ -6742,6 +6768,7 @@
               <span class="px-2 py-0.5 rounded bg-slate-950 text-amber-300 border border-amber-500/30 font-black text-[10px] shrink-0">${pkg.badge}</span>
             </div>
             <p class="text-[11px] text-slate-400 leading-snug">${pkg.desc}</p>
+            ${statusTag ? `<div class="pt-0.5">${statusTag}</div>` : ""}
           </button>
         `;
       }).join("");
@@ -6751,39 +6778,99 @@
     }
 
     function applyClubXIPackage(xiClubId) {
-      // Remove any previously locked XI players from s2DraftedOrder
-      const xiCodes = new Set(TRANSFER_LIST_DATA.filter(p => p.xiClub).map(p => p.code));
-      s2DraftedOrder = s2DraftedOrder.filter(c => !xiCodes.has(c));
-      s2SelectedXIClub = xiClubId;
-      if (xiClubId !== "NONE") {
-        // Add the package players in GK -> DF -> MF -> FW order at the front
-        const pkgPlayers = TRANSFER_LIST_DATA.filter(p => p.xiClub === xiClubId);
-        const posOrder = { GK: 1, DF: 2, MF: 3, FW: 4 };
-        pkgPlayers.sort((a, b) => (posOrder[a.grp] || 9) - (posOrder[b.grp] || 9));
-        pkgPlayers.forEach(p => {
-          if (!s2DraftedOrder.includes(p.code)) s2DraftedOrder.push(p.code);
-        });
+      if (xiClubId === "NONE") {
+        // If clicking "ไม่ใช้ทีม XI", clear only the full-package lock (or any full package players if previously locked)
+        if (s2SelectedXIClub !== "NONE") {
+          const prevPkgCodes = new Set(TRANSFER_LIST_DATA.filter(p => p.xiClub === s2SelectedXIClub).map(p => p.code));
+          s2DraftedOrder = s2DraftedOrder.filter(c => !prevPkgCodes.has(c));
+        }
+        s2SelectedXIClub = "NONE";
+        renderS2TransferHub();
+        return;
       }
+
+      // If clicking the already-selected full package card again, toggle it off
+      if (s2SelectedXIClub === xiClubId) {
+        const pkgCodes = new Set(TRANSFER_LIST_DATA.filter(p => p.xiClub === xiClubId).map(p => p.code));
+        s2DraftedOrder = s2DraftedOrder.filter(c => !pkgCodes.has(c));
+        s2SelectedXIClub = "NONE";
+        renderS2TransferHub();
+        return;
+      }
+
+      // Remove any previous full-package XI players from the old full-package club
+      if (s2SelectedXIClub !== "NONE") {
+        const prevPkgCodes = new Set(TRANSFER_LIST_DATA.filter(p => p.xiClub === s2SelectedXIClub).map(p => p.code));
+        s2DraftedOrder = s2DraftedOrder.filter(c => !prevPkgCodes.has(c));
+      }
+      // Also remove any single-picked player from this new xiClubId so we can add the clean full package
+      const targetClubCodes = new Set(TRANSFER_LIST_DATA.filter(p => p.xiClub === xiClubId).map(p => p.code));
+      s2DraftedOrder = s2DraftedOrder.filter(c => !targetClubCodes.has(c));
+
+      s2SelectedXIClub = xiClubId;
+      const pkgPlayers = TRANSFER_LIST_DATA.filter(p => p.xiClub === xiClubId);
+      const posOrder = { GK: 1, DF: 2, MF: 3, FW: 4 };
+      pkgPlayers.sort((a, b) => (posOrder[a.grp] || 9) - (posOrder[b.grp] || 9));
+      pkgPlayers.forEach(p => {
+        if (!s2DraftedOrder.includes(p.code)) s2DraftedOrder.push(p.code);
+      });
+      showDraftNotice(`📦 เหมาชุด ${xiClubId} XI ครบ ${pkgPlayers.length} คนเรียบร้อย (เงื่อนไข: ต้องเลือกเล่นสโมสร ${xiClubId} และได้สิทธิ์ก่อนคนดึงเดี่ยว)`);
       renderS2TransferHub();
     }
 
     function toggleDraftPlayer(code) {
       const p = TRANSFER_LIST_DATA.find(x => x.code === code);
       if (!p) return;
-      if (p.xiClub && p.xiClub !== s2SelectedXIClub) {
-        applyClubXIPackage(p.xiClub);
-        return;
-      }
-      if (p.xiClub && p.xiClub === s2SelectedXIClub) {
-        applyClubXIPackage("NONE");
-        return;
-      }
+
       const idx = s2DraftedOrder.indexOf(code);
+
+      // Case 1: Player is already in the cart -> remove this single player!
       if (idx !== -1) {
         s2DraftedOrder.splice(idx, 1);
-      } else {
-        s2DraftedOrder.push(code);
+        // If this player belonged to the currently locked Full XI package, downgrade from Full Package to Single/Custom mode
+        if (p.xiClub && s2SelectedXIClub === p.xiClub) {
+          s2SelectedXIClub = "NONE";
+          // Also remove the remaining players of that full package if more than 1 remain, so rule (1 single pick max if not full package) stays valid!
+          const remainingSameClub = s2DraftedOrder.filter(c => {
+            const item = TRANSFER_LIST_DATA.find(x => x.code === c);
+            return item && item.xiClub === p.xiClub;
+          });
+          if (remainingSameClub.length > 1) {
+            // Keep only the first one or clear the package
+            s2DraftedOrder = s2DraftedOrder.filter(c => !remainingSameClub.includes(c));
+            showDraftNotice(`ยกเลิกการเหมาชุด ${p.xiClub} XI แล้ว (หากต้องการดึงเดี่ยว 1 คน กดเลือกนักเตะคนนั้นในตารางได้เลย)`);
+          }
+        }
+        renderS2TransferHub();
+        return;
       }
+
+      // Case 2: Adding a player who is an XI player (Single Pick mode!)
+      if (p.xiClub) {
+        // Check if another player from the SAME xiClub is already in the cart (when not full package)
+        const existingSameClubCode = s2DraftedOrder.find(c => {
+          const item = TRANSFER_LIST_DATA.find(x => x.code === c);
+          return item && item.xiClub === p.xiClub;
+        });
+
+        if (existingSameClubCode && s2SelectedXIClub !== p.xiClub) {
+          const oldP = TRANSFER_LIST_DATA.find(x => x.code === existingSameClubCode);
+          // Replace the previous single pick from that XI club with the new one!
+          const oldIdx = s2DraftedOrder.indexOf(existingSameClubCode);
+          s2DraftedOrder.splice(oldIdx, 1, p.code);
+          showDraftNotice(`🔓 สลับตัวดึงเดี่ยวของ ${p.xiClub} XI จาก ${oldP ? oldP.name : ''} เป็น ${p.name} (กฎดึงเดี่ยวเลือกได้สโมสรละ 1 คน หากต้องการเหมาชุดให้กดการ์ด ${p.xiClub} XI ด้านบน)`);
+          renderS2TransferHub();
+          return;
+        }
+
+        s2DraftedOrder.push(p.code);
+        showDraftNotice(`🔓 ดึงเดี่ยว ${p.name} (${p.xiClub} XI • €${p.mv}M) เข้าทีมเรียบร้อย! (เงื่อนไข: ห้ามเล่นทีม ${p.xiClub} และต้องไม่มีใครเลือกคุม ${p.xiClub})`);
+        renderS2TransferHub();
+        return;
+      }
+
+      // Case 3: Normal non-XI player
+      s2DraftedOrder.push(code);
       updateS2DraftSummary();
       renderTransferListTable();
     }
@@ -6808,8 +6895,20 @@
 
       document.getElementById("draftCoachLabel").textContent =
         `โค้ช${row.manager} (อันดับ ${s2SelectedRankIdx + 1} • งบ €${budgetCap.toLocaleString()}M)`;
+
+      // Build clear XI status summary badge
+      const singleXiPlayers = draftedPlayers.filter(p => p.xiClub && p.xiClub !== s2SelectedXIClub);
       const pkg = CLUB_XI_PACKAGES.find(x => x.id === s2SelectedXIClub) || CLUB_XI_PACKAGES[0];
-      document.getElementById("draftXILabel").textContent = pkg.name;
+      const xiLabelEl = document.getElementById("draftXILabel");
+      if (s2SelectedXIClub !== "NONE" && singleXiPlayers.length > 0) {
+        xiLabelEl.textContent = `📦 เหมา ${pkg.name} + 🔓 ดึงเดี่ยว: ${singleXiPlayers.map(p => `${p.name} (${p.xiClub})`).join(", ")}`;
+      } else if (s2SelectedXIClub !== "NONE") {
+        xiLabelEl.textContent = `📦 เหมาชุด ${pkg.name} (ต้องคุมทีม ${s2SelectedXIClub})`;
+      } else if (singleXiPlayers.length > 0) {
+        xiLabelEl.textContent = `🔓 ดึงเดี่ยว XI: ${singleXiPlayers.map(p => `${p.name} (${p.xiClub} • ห้ามคุม ${p.xiClub})`).join(", ")}`;
+      } else {
+        xiLabelEl.textContent = "ไม่ใช้ตัว XI (เลือกอิสระ)";
+      }
 
       document.getElementById("draftCountSummary").textContent =
         `${draftedPlayers.length} / 22 คน (GK ${byGrp.GK.length} • DF ${byGrp.DF.length} • MF ${byGrp.MF.length} • FW ${byGrp.FW.length})`;
@@ -6837,13 +6936,25 @@
           ? `<div class="py-5 px-3 text-center text-[11px] text-slate-500 border border-dashed border-slate-800 rounded-xl">ยังไม่ได้เลือก ${col.key}</div>`
           : list.map((p, idx) => {
               const badgeCls = getSubPosBadgeStyle(p.posShort);
-              const rowBorder = p.xiClub ? "border-amber-400/50 bg-amber-950/20" : "border-slate-800 bg-slate-950/90";
+              const isFullXi = p.xiClub && p.xiClub === s2SelectedXIClub;
+              const isSingleXi = p.xiClub && p.xiClub !== s2SelectedXIClub;
+              const rowBorder = isFullXi
+                ? "border-amber-400/50 bg-amber-950/25"
+                : isSingleXi
+                  ? "border-sky-400/50 bg-sky-950/25"
+                  : "border-slate-800 bg-slate-950/90";
+              const xiMiniTag = isFullXi
+                ? `<span class="text-[9px] px-1 py-0.2 rounded bg-amber-400/20 text-amber-300 font-bold shrink-0" title="เหมาชุด ${p.xiClub} XI">📦XI</span>`
+                : isSingleXi
+                  ? `<span class="text-[9px] px-1 py-0.2 rounded bg-sky-400/20 text-sky-300 font-bold shrink-0" title="ดึงเดี่ยว 1 คนจาก ${p.xiClub} XI (ต้องไม่มีใครคุม ${p.xiClub})">🔓1-XI</span>`
+                  : "";
               return `
                 <div class="px-2.5 py-2 rounded-xl border ${rowBorder} flex items-center justify-between gap-2 text-xs shadow-sm">
                   <div class="flex items-center gap-1.5 min-w-0">
                     <span class="text-[10px] font-bold text-slate-500 w-3.5 shrink-0">${idx + 1}.</span>
                     <span class="px-1.5 py-0.5 rounded border text-[10px] font-black tracking-tight shrink-0 ${badgeCls}" title="${p.pos} (รหัส ${p.code})">${p.posShort}</span>
                     <span class="font-bold text-white truncate" title="${p.name} (${p.code})">${p.name}</span>
+                    ${xiMiniTag}
                   </div>
                   <div class="flex items-center gap-1.5 shrink-0">
                     <span class="text-amber-300 font-extrabold text-[11px]">(€${p.mv}M)</span>
@@ -6903,12 +7014,13 @@
         const subBadgeCls = getSubPosBadgeStyle(p.posShort);
 
         const xiBadge = p.xiClub
-          ? `<span class="px-2 py-0.5 rounded bg-amber-400/20 text-amber-300 border border-amber-400/40 font-bold text-[11px] whitespace-nowrap">🔒 ${p.xiClub} XI</span>`
+          ? `<span class="px-2 py-0.5 rounded bg-amber-400/20 text-amber-300 border border-amber-400/40 font-bold text-[11px] whitespace-nowrap" title="ดึงเดี่ยวได้ 1 คน (หากไม่มีใครคุม ${p.xiClub}) หรือกดการ์ดด้านบนเพื่อเหมาชุด">🔒 ${p.xiClub} XI</span>`
           : `<span class="text-slate-500 text-xs">อิสระ</span>`;
 
+        const addLabel = p.xiClub ? "+ เลือกเดี่ยว (1 คน)" : "+ เลือกเข้าทีม";
         const btnHtml = isDrafted
           ? `<button type="button" data-draft-toggle="${p.code}" class="px-2.5 py-1 rounded-lg bg-emerald-500 text-slate-950 font-black text-xs">✓ เลือกแล้ว</button>`
-          : `<button type="button" data-draft-toggle="${p.code}" class="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold text-xs border border-slate-700">+ เลือกเข้าทีม</button>`;
+          : `<button type="button" data-draft-toggle="${p.code}" class="px-2.5 py-1 rounded-lg ${p.xiClub ? 'bg-amber-500/20 hover:bg-amber-500/30 text-amber-200 border border-amber-500/40' : 'bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700'} font-semibold text-xs">${addLabel}</button>`;
 
         return `
           <tr class="hover:bg-slate-800/40 transition ${isDrafted ? 'bg-emerald-950/20' : ''}">
