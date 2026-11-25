@@ -151,7 +151,7 @@
                 <button type="button" data-season-switch="S1" class="season-switch-btn px-2.5 py-0.5 text-[11px] font-bold rounded-md text-slate-300 hover:text-white transition">🏆 SEASON 1</button>
               </div>
             </div>
-            <p id="headerSubtitle" class="text-xs text-slate-400">Season 2 Pre-Season • ขุมกำลัง 176 คนนิ่งแล้ว (แผนการเล่นเป็นแผนเบื้องต้น อาจปรับเปลี่ยนก่อนเปิดลีก)</p>
+            <p id="headerSubtitle" class="text-xs text-slate-400">Season 2 • แข่งแล้ว 6 / 56 นัด (จ่าฝูง: 1. FC Köln 6 แต้ม • ดาวซัลโว: Osimhen 4 ประตู)</p>
           </div>
         </div>
         <span class="md:hidden text-xs px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 text-slate-300 font-medium">
@@ -228,8 +228,8 @@
             </div>
             <div class="rounded-xl bg-slate-950/80 border border-slate-800 p-3 text-center">
               <span class="block text-[10px] text-slate-400 font-bold uppercase">📅 สถานะตารางแข่ง</span>
-              <span class="block text-sm font-black text-amber-300 mt-0.5">Pre-Season</span>
-              <span class="block text-[11px] text-slate-400">รอตั้ง Tournament</span>
+              <span class="block text-sm font-black text-emerald-300 mt-0.5">6 / 56 นัด</span>
+              <span class="block text-[11px] text-slate-400">Köln นำฝูง 6 แต้ม</span>
             </div>
           </div>
         </div>
@@ -5418,37 +5418,49 @@
 
     function renderMiniStandingsAndUpcoming() {
       if (activeSeason === "S2") {
+        const s2St = computeS2Standings();
         const miniBody = document.getElementById("miniStandingsBody");
         if (miniBody) {
-          miniBody.innerHTML = S2_TEAMS_DATA.map((t, idx) => `
+          miniBody.innerHTML = s2St.map((r, idx) => `
             <tr class="hover:bg-slate-800/40 transition">
               <td class="py-2 px-2 text-slate-400 font-bold">${idx + 1}</td>
               <td class="py-2 px-2">
                 <div class="flex items-center gap-2">
-                  ${renderS2ClubLogoBadge(t.club, "w-6 h-6")}
+                  ${renderS2ClubLogoBadge(r.club, "w-6 h-6")}
                   <div class="min-w-0">
-                    <span class="block font-bold text-white text-xs truncate">${t.club}</span>
-                    <span class="block text-[10px] text-slate-400">โค้ช${t.manager} • ${t.formation}</span>
+                    <span class="block font-bold text-white text-xs truncate">${r.club}</span>
+                    <span class="block text-[10px] text-slate-400">โค้ช${r.manager} • ${r.formation}</span>
                   </div>
                 </div>
               </td>
-              <td class="py-2 px-2 text-center text-slate-300">0</td>
-              <td class="py-2 px-2 text-center text-slate-400">0</td>
-              <td class="py-2 px-2 text-right font-black text-emerald-400">0</td>
+              <td class="py-2 px-2 text-center text-slate-300">${r.P}</td>
+              <td class="py-2 px-2 text-center ${r.GD > 0 ? 'text-emerald-400' : r.GD < 0 ? 'text-rose-400' : 'text-slate-400'} font-bold">${r.GD > 0 ? '+' + r.GD : r.GD}</td>
+              <td class="py-2 px-2 text-right font-black text-emerald-400">${r.Pts}</td>
             </tr>
           `).join("");
         }
         const upBox = document.getElementById("upcomingWidgetList");
         if (upBox) {
+          const nextMatches = S2_FIXTURES_DATA.filter(m => m.status !== "FT").slice(0, 4);
           upBox.innerHTML = `
-            <div class="p-4 rounded-xl bg-amber-500/10 border border-amber-500/30 text-center space-y-2">
-              <div class="text-sm font-black text-amber-300">⏳ ช่วง Pre-Season กระชับมิตร</div>
-              <p class="text-xs text-slate-300 leading-relaxed">
-                ยังไม่ได้ตั้ง Tournament ในเกม (กำลังเตะอุ่นเครื่องทดสอบแผน) ช่องโปรแกรมแข่ง 56 นัดถูกเตรียมว่างไว้พร้อมอัปเดตทันทีหลังตั้งทัวร์นาเมนต์
-              </p>
-              <button type="button" onclick="switchTab('clubs')" class="mt-1 px-3 py-1.5 rounded-lg bg-emerald-500 text-slate-950 font-extrabold text-xs">
-                🛡️ ดูแผนการเล่น &amp; Tactic Code ทั้ง 8 ทีม
-              </button>
+            <div class="space-y-2">
+              <div class="flex items-center justify-between text-[11px] text-emerald-300 font-bold px-1">
+                <span>⏭️ โปรแกรมคู่ถัดไปที่รอแข่ง</span>
+                <span class="text-slate-400">แข่งแล้ว ${S2_FIXTURES_DATA.filter(x => x.status === 'FT').length} / 56 นัด</span>
+              </div>
+              ${nextMatches.map(m => `
+                <div class="px-3 py-2 rounded-xl bg-slate-900/80 border border-slate-800 flex items-center justify-between gap-2 text-xs">
+                  <div class="flex items-center gap-1.5 min-w-0 flex-1">
+                    ${renderS2ClubLogoBadge(m.home, "w-5 h-5 text-[8px]")}
+                    <span class="font-bold text-white truncate">${m.home}</span>
+                  </div>
+                  <span class="px-2 py-0.5 rounded bg-slate-950 text-amber-300 font-mono text-[10px] font-bold shrink-0">MD${m.md} • ${m.time}</span>
+                  <div class="flex items-center justify-end gap-1.5 min-w-0 flex-1 text-right">
+                    <span class="font-bold text-white truncate">${m.away}</span>
+                    ${renderS2ClubLogoBadge(m.away, "w-5 h-5 text-[8px]")}
+                  </div>
+                </div>
+              `).join("")}
             </div>
           `;
         }
@@ -5522,31 +5534,37 @@
     // =========================================================================
     function renderFullStandings() {
       if (activeSeason === "S2") {
+        const s2St = computeS2Standings();
         const tbody = document.getElementById("fullStandingsBody");
         if (tbody) {
-          tbody.innerHTML = S2_TEAMS_DATA.map((t, idx) => `
-            <tr class="hover:bg-slate-800/40 transition border-b border-slate-800/60">
-              <td class="py-3 px-3 font-black text-slate-400">${idx + 1}</td>
-              <td class="py-3 px-3">
-                <div class="flex items-center gap-2.5">
-                  ${renderS2ClubLogoBadge(t.club, "w-8 h-8")}
-                  <div>
-                    <div class="font-extrabold text-white text-sm">${t.club}</div>
-                    <div class="text-[11px] text-slate-400">โค้ช${t.manager} • ${t.formation} (ATT ${t.att} / MID ${t.mid} / DEF ${t.def})</div>
+          tbody.innerHTML = s2St.map((r, idx) => {
+            const formHtml = r.form.length
+              ? r.form.slice(-5).map(f => `<span class="inline-flex w-5 h-5 rounded items-center justify-center text-[10px] font-black ${f === 'W' ? 'bg-emerald-500 text-slate-950' : f === 'D' ? 'bg-amber-400 text-slate-950' : 'bg-rose-500 text-white'}">${f}</span>`).join(" ")
+              : `<span class="px-2 py-0.5 rounded bg-slate-800 text-slate-400 text-[10px] font-bold">รอแข่ง</span>`;
+            return `
+              <tr class="hover:bg-slate-800/40 transition border-b border-slate-800/60">
+                <td class="py-3 px-3 font-black ${idx === 0 ? 'text-amber-300' : 'text-slate-400'}">${idx + 1}</td>
+                <td class="py-3 px-3">
+                  <div class="flex items-center gap-2.5">
+                    ${renderS2ClubLogoBadge(r.club, "w-8 h-8")}
+                    <div>
+                      <div class="font-extrabold text-white text-sm">${r.club}</div>
+                      <div class="text-[11px] text-slate-400">โค้ช${r.manager} • ${r.formation} (ATT ${r.att} / MID ${r.mid} / DEF ${r.def})</div>
+                    </div>
                   </div>
-                </div>
-              </td>
-              <td class="py-3 px-2 text-center text-slate-300">0</td>
-              <td class="py-3 px-2 text-center text-slate-300">0</td>
-              <td class="py-3 px-2 text-center text-slate-300">0</td>
-              <td class="py-3 px-2 text-center text-slate-300">0</td>
-              <td class="py-3 px-2 text-center text-slate-300">0</td>
-              <td class="py-3 px-2 text-center text-slate-300">0</td>
-              <td class="py-3 px-2 text-center text-slate-400">0</td>
-              <td class="py-3 px-3 text-center font-black text-emerald-400 text-base">0</td>
-              <td class="py-3 px-3 text-center"><span class="px-2 py-0.5 rounded bg-amber-500/15 text-amber-300 border border-amber-500/30 text-[11px] font-bold whitespace-nowrap">Pre-Season</span></td>
-            </tr>
-          `).join("");
+                </td>
+                <td class="py-3 px-2 text-center text-slate-300">${r.P}</td>
+                <td class="py-3 px-2 text-center text-emerald-400 font-bold">${r.W}</td>
+                <td class="py-3 px-2 text-center text-amber-300 font-bold">${r.D}</td>
+                <td class="py-3 px-2 text-center text-rose-400 font-bold">${r.L}</td>
+                <td class="py-3 px-2 text-center text-slate-300">${r.GF}</td>
+                <td class="py-3 px-2 text-center text-slate-300">${r.GA}</td>
+                <td class="py-3 px-2 text-center font-bold ${r.GD > 0 ? 'text-emerald-400' : r.GD < 0 ? 'text-rose-400' : 'text-slate-400'}">${r.GD > 0 ? '+' + r.GD : r.GD}</td>
+                <td class="py-3 px-3 text-center font-black text-emerald-400 text-base">${r.Pts}</td>
+                <td class="py-3 px-3 text-center whitespace-nowrap"><div class="inline-flex items-center gap-1 whitespace-nowrap">${formHtml}</div></td>
+              </tr>
+            `;
+          }).join("");
         }
         return;
       }
@@ -5619,26 +5637,66 @@
     function renderFixturesList() {
       const container = document.getElementById("fixturesListContainer");
       if (activeSeason === "S2") {
-        const emptySlots = Array.from({ length: 56 }, (_, i) => {
-          const matchNo = i + 1;
-          const roundNo = Math.floor(i / 4) + 1;
-          return `
-            <div class="px-4 py-2.5 rounded-xl bg-slate-900/70 border border-slate-800/80 flex items-center justify-between gap-3 text-xs">
-              <div class="flex items-center gap-2.5">
-                <span class="px-2 py-0.5 rounded bg-slate-800 text-slate-300 font-bold">M${matchNo}</span>
-                <span class="text-slate-400">รอบที่ ${roundNo}</span>
+        const mds = Array.from({ length: 14 }, (_, i) => i + 1);
+        const cardsHtml = mds.map(md => {
+          const matches = S2_FIXTURES_DATA.filter(m => m.md === md);
+          const dateLabel = matches[0] ? matches[0].date : "";
+          const timeCounts = {};
+          matches.forEach(m => { timeCounts[m.time] = (timeCounts[m.time] || 0) + 1; });
+
+          const rows = matches.map(m => {
+            const isSimulcast = timeCounts[m.time] > 1;
+            const timeBadge = isSimulcast
+              ? `<span class="px-2 py-0.5 rounded bg-amber-500/15 text-amber-300 border border-amber-500/30 text-[10px] font-bold whitespace-nowrap">🕒 ${m.time} • เตะพร้อมกัน</span>`
+              : `<span class="px-2 py-0.5 rounded bg-sky-500/15 text-sky-300 border border-sky-500/30 text-[10px] font-bold whitespace-nowrap">🕒 ${m.time}</span>`;
+            const isFT = m.status === "FT" && m.hg !== null && m.ag !== null;
+            const scoreStr = isFT
+              ? `<span class="px-2.5 py-0.5 rounded-lg bg-emerald-500 text-slate-950 font-black text-xs">${m.hg} - ${m.ag}</span>`
+              : `<span class="px-2.5 py-0.5 rounded-lg bg-slate-950 text-slate-400 border border-slate-800 font-bold text-[11px]">VS</span>`;
+            const ftBadge = isFT ? `<span class="px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-[10px] font-black">FT</span>` : timeBadge;
+            const clickAttr = isFT ? `data-s2-match-modal="${m.no}" style="cursor:pointer;"` : "";
+
+            return `
+              <div ${clickAttr} class="px-3.5 py-2.5 rounded-xl ${isFT ? 'bg-emerald-950/20 border-emerald-500/30 hover:border-emerald-400' : 'bg-slate-900/85 border-slate-800'} border flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs transition">
+                <div class="flex items-center gap-2 shrink-0">
+                  <span class="px-1.5 py-0.5 rounded bg-slate-800 text-slate-400 font-mono text-[10px]">#${m.no}</span>
+                  ${ftBadge}
+                </div>
+                <div class="flex items-center justify-between sm:justify-center gap-2.5 flex-1 min-w-0">
+                  <div class="flex items-center justify-end gap-2 flex-1 min-w-0 text-right">
+                    <span class="font-extrabold text-white truncate">${m.home}</span>
+                    ${renderS2ClubLogoBadge(m.home, "w-6 h-6 text-[9px]")}
+                  </div>
+                  ${scoreStr}
+                  <div class="flex items-center gap-2 flex-1 min-w-0">
+                    ${renderS2ClubLogoBadge(m.away, "w-6 h-6 text-[9px]")}
+                    <span class="font-extrabold text-white truncate">${m.away}</span>
+                  </div>
+                </div>
               </div>
-              <div class="font-bold text-slate-300">ทีมเหย้า (TBD) <span class="text-slate-500 mx-1.5">vs</span> ทีมเยือน (TBD)</div>
-              <span class="px-2 py-0.5 rounded bg-amber-500/15 text-amber-300 border border-amber-500/30 text-[10px] font-bold">รอตั้ง Tournament</span>
+            `;
+          }).join("");
+
+          return `
+            <div class="glass-card rounded-2xl p-4 space-y-2.5 border border-slate-800">
+              <div class="flex items-center justify-between border-b border-slate-800 pb-2">
+                <div class="flex items-center gap-2">
+                  <span class="px-2.5 py-0.5 rounded-lg bg-emerald-500 text-slate-950 font-black text-xs">Matchday ${md}</span>
+                  <span class="text-xs font-bold text-white">${dateLabel} 2026</span>
+                </div>
+                <span class="text-[11px] text-slate-400">4 คู่</span>
+              </div>
+              <div class="space-y-2">${rows}</div>
             </div>
           `;
         }).join("");
+
         container.innerHTML = `
-          <div class="p-4 rounded-2xl bg-amber-500/10 border border-amber-500/30 space-y-1.5 mb-4">
-            <h3 class="text-sm font-black text-amber-300">⏳ โปรแกรมแข่งขัน Season 2 (ช่องว่าง 56 นัด — ช่วง Pre-Season)</h3>
-            <p class="text-xs text-slate-300">ยังไม่ได้ตั้ง Tournament ในเกม ขณะนี้อยู่ในช่วงเตะกระชับมิตรอุ่นเครื่อง ช่องโปรแกรมทั้ง 56 นัดเตรียมไว้พร้อมอัปเดตทันทีเมื่อตั้งทัวร์นาเมนต์เรียบร้อย (สามารถกดปุ่ม <strong>🏆 SEASON 1</strong> ด้านบนเพื่อดูผลแข่ง 56 นัดของซีซั่นแรกได้)</p>
+          <div class="p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 space-y-1 mb-4">
+            <h3 class="text-sm font-black text-emerald-300">📅 โปรแกรมแข่งขัน Season 2 ครบ 56 นัด (จัดกลุ่มตาม 14 Matchdays + เวลาเตะในเกม)</h3>
+            <p class="text-xs text-slate-300">คู่ที่มีป้าย <span class="text-amber-300 font-bold">🕒 เตะพร้อมกัน</span> คือคู่ที่เกมตั้งเวลา Kick-off ตรงกัน (เช่น 4:00 AM) จึงจัดเรียงตาม Matchday และเวลาแทนการบังคับเรียง M1–M56 — เตะคู่ไหนจบก็อัปเดตสกอร์เข้าคู่นั้นได้ทันที</p>
           </div>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-2.5">${emptySlots}</div>
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">${cardsHtml}</div>
         `;
         return;
       }
@@ -5857,22 +5915,87 @@
     // =========================================================================
     function renderPlayerStatsAndEvents() {
       if (activeSeason === "S2") {
+        const scorersMap = {};
+        const cardsMap = {};
+        const allLogs = [];
+        S2_FIXTURES_DATA.filter(m => m.status === "FT").forEach(m => {
+          (m.goals || []).forEach(g => {
+            const k = `${g.player}|${g.team}`;
+            if (!scorersMap[k]) scorersMap[k] = { player: g.player, team: g.team, goals: 0 };
+            scorersMap[k].goals++;
+            allLogs.push({ match: m.no, md: m.md, team: g.team, player: g.player, type: "⚽ Goal", min: g.min, vs: g.team === m.home ? m.away : m.home });
+          });
+          (m.cards || []).forEach(c => {
+            const k = `${c.player}|${c.team}`;
+            if (!cardsMap[k]) cardsMap[k] = { player: c.player, team: c.team, yc: 0, rc: 0 };
+            if (c.type.includes("Red")) cardsMap[k].rc++; else cardsMap[k].yc++;
+            allLogs.push({ match: m.no, md: m.md, team: c.team, player: c.player, type: "🟨 Yellow", min: c.min, vs: c.team === m.home ? m.away : m.home });
+          });
+        });
+
+        const topScorers = Object.values(scorersMap).sort((a, b) => b.goals - a.goals || a.player.localeCompare(b.player));
         const scorersList = document.getElementById("topScorersList");
         if (scorersList) {
-          scorersList.innerHTML = `
-            <div class="p-6 rounded-xl bg-slate-900/80 border border-amber-500/30 text-center space-y-2">
-              <div class="text-sm font-black text-amber-300">⏳ Season 2 Pre-Season — ยังไม่มีสถิติการทำประตูอย่างเป็นทางการ</div>
-              <p class="text-xs text-slate-400">ดาวซัลโว Season 1: <strong class="text-white">Ousmane Dembélé (23 ประตู)</strong> • Kylian Mbappé (21) • Ferran Torres (17)</p>
-              <button type="button" data-season-switch="S1" class="season-switch-btn mt-1 px-3 py-1.5 rounded-lg bg-amber-400 text-slate-950 font-black text-xs">🏆 ดูสถิติจบ Season 1 ทั้งหมด</button>
+          scorersList.innerHTML = topScorers.map((s, i) => `
+            <div class="px-3.5 py-2.5 rounded-xl bg-slate-900/80 border ${i === 0 ? 'border-amber-400/50 bg-amber-500/10' : 'border-slate-800'} flex items-center justify-between text-xs">
+              <div class="flex items-center gap-2.5">
+                <span class="w-5 text-center font-black ${i === 0 ? 'text-amber-300' : 'text-slate-400'}">#${i + 1}</span>
+                ${renderS2ClubLogoBadge(s.team, "w-6 h-6 text-[8px]")}
+                <div>
+                  <div class="font-extrabold text-white">${s.player}</div>
+                  <div class="text-[10px] text-slate-400">${s.team}</div>
+                </div>
+              </div>
+              <span class="px-2.5 py-0.5 rounded-lg bg-emerald-500/20 text-emerald-300 font-black">${s.goals} ประตู</span>
+            </div>
+          `).join("");
+        }
+
+        const cardsArr = Object.values(cardsMap).sort((a, b) => (b.rc * 3 + b.yc) - (a.rc * 3 + a.yc));
+        const cardsList = document.getElementById("cardsStatsList");
+        if (cardsList) {
+          cardsList.innerHTML = cardsArr.map(c => `
+            <div class="px-3 py-2 rounded-xl bg-slate-900/80 border border-slate-800 flex items-center justify-between text-xs">
+              <div class="flex items-center gap-2">
+                ${renderS2ClubLogoBadge(c.team, "w-5 h-5 text-[8px]")}
+                <span class="font-bold text-white">${c.player}</span>
+                <span class="text-[10px] text-slate-400">(${c.team})</span>
+              </div>
+              <span class="px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 font-black">🟨 ${c.yc}</span>
+            </div>
+          `).join("");
+        }
+
+        const teamHi = document.getElementById("teamHighlightsStats");
+        if (teamHi) {
+          const st = computeS2Standings();
+          const leader = st[0];
+          teamHi.innerHTML = `
+            <div class="space-y-2 text-xs">
+              <div class="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex justify-between items-center">
+                <span class="text-slate-300">จ่าฝูงปัจจุบัน: <strong class="text-white">${leader.club}</strong></span>
+                <span class="font-black text-emerald-400">${leader.Pts} แต้ม (GD +${leader.GD})</span>
+              </div>
+              <div class="p-3 rounded-xl bg-slate-900 border border-slate-800 flex justify-between items-center">
+                <span class="text-slate-300">จำนวนนัดที่แข่งแล้ว:</span>
+                <span class="font-black text-white">6 / 56 นัด (${allLogs.filter(x => x.type.includes('Goal')).length} ประตู • ${allLogs.filter(x => x.type.includes('Yellow')).length} ใบเหลือง)</span>
+              </div>
             </div>
           `;
         }
-        const cardsList = document.getElementById("cardsStatsList");
-        if (cardsList) cardsList.innerHTML = `<div class="p-4 text-center text-xs text-slate-400">รอเปิดฤดูกาล Season 2 (0 ใบเหลือง / 0 ใบแดง)</div>`;
-        const teamHi = document.getElementById("teamHighlightsStats");
-        if (teamHi) teamHi.innerHTML = `<div class="p-4 text-center text-xs text-slate-400">รอเปิดฤดูกาล Season 2 (กำลังเตะกระชับมิตร Pre-Season)</div>`;
+
         const logBody = document.getElementById("matchEventsLogBody");
-        if (logBody) logBody.innerHTML = `<tr><td colspan="5" class="py-6 px-4 text-center text-xs text-slate-400">ยังไม่มีบันทึกเหตุการณ์แข่ง Season 2</td></tr>`;
+        if (logBody) {
+          logBody.innerHTML = allLogs.map(ev => `
+            <tr class="border-b border-slate-800/60 hover:bg-slate-800/30 text-xs">
+              <td class="py-2 px-3 font-mono text-slate-400">M${ev.match} (MD${ev.md})</td>
+              <td class="py-2 px-3 font-bold text-white">${ev.team}</td>
+              <td class="py-2 px-3 font-bold text-emerald-300">${ev.player}</td>
+              <td class="py-2 px-3">${ev.type}</td>
+              <td class="py-2 px-3 text-slate-400">${ev.min} (vs ${ev.vs})</td>
+            </tr>
+          `).join("");
+        }
         return;
       }
       const scorerMap = {};
@@ -6623,7 +6746,8 @@
 
     let activeSeason = "S2";
     const S2_TEAMS_DATA = [{"coachKey": "Kong", "manager": "ก้อง", "club": "Venezia FC", "s1Rank": 1, "budget": 1170, "formation": "4-2-3-1 WIDE", "att": 86, "mid": 84, "def": 83, "buildup": "Short Passing", "defApproach": "Balanced", "tacticCode": "EZc&TWePgE#k", "xi": ["Donnarumma", "Robinson", "Cubarsí", "Bremer", "Dumfries", "Locatelli", "Rice", "Zaccagni", "Yıldız", "Pulisic", "Dembélé"], "subs": ["Cambiaso", "Di Lorenzo", "Lookman", "Félix"], "replace": {"Andrew Robertson": ["Antonee Robinson", "LB", 29, 25]}, "players": [{"code": "GK2", "pos": "GK", "cat": "GK", "name": "Gianluigi Donnarumma", "age": 27, "mv": 45, "role": "Starting XI"}, {"code": "GK98", "pos": "GK", "cat": "GK", "name": "Rui Silva", "age": 32, "mv": 7, "role": "Reserves"}, {"code": "DF79", "pos": "CB", "cat": "DF", "name": "Bremer", "age": 29, "mv": 35, "role": "Starting XI"}, {"code": "DF185", "pos": "LB", "cat": "DF", "name": "Andrea Cambiaso", "age": 26, "mv": 20, "role": "Substitutes"}, {"code": "DF1", "pos": "CB", "cat": "DF", "name": "Pau Cubarsí", "age": 19, "mv": 100, "role": "Starting XI"}, {"code": "DF159", "pos": "LB", "cat": "DF", "name": "Antonee Robinson", "age": 29, "mv": 25, "role": "Starting XI"}, {"code": "DF134", "pos": "RB", "cat": "DF", "name": "Denzel Dumfries", "age": 30, "mv": 25, "role": "Starting XI"}, {"code": "DF213", "pos": "RB", "cat": "DF", "name": "Giovanni Di Lorenzo", "age": 31, "mv": 30, "role": "Substitutes"}, {"code": "DF182", "pos": "CB", "cat": "DF", "name": "Mohamed Simakan", "age": 26, "mv": 20, "role": "Reserves"}, {"code": "MF162", "pos": "CDM", "cat": "MF", "name": "Manuel Locatelli", "age": 28, "mv": 25, "role": "Starting XI"}, {"code": "MF5", "pos": "CM", "cat": "MF", "name": "Declan Rice", "age": 27, "mv": 151, "role": "Starting XI"}, {"code": "MF214", "pos": "CDM", "cat": "MF", "name": "Aleix García", "age": 29, "mv": 20, "role": "Reserves"}, {"code": "MF245", "pos": "CDM", "cat": "MF", "name": "Leon Goretzka", "age": 30, "mv": 25, "role": "Reserves"}, {"code": "MF40", "pos": "CM", "cat": "MF", "name": "Felix Nmecha", "age": 25, "mv": 55, "role": "Reserves"}, {"code": "FW20", "pos": "LW", "cat": "FW", "name": "Kenan Yıldız", "age": 21, "mv": 75, "role": "Starting XI"}, {"code": "FW79", "pos": "RW", "cat": "FW", "name": "Christian Pulisic", "age": 28, "mv": 65, "role": "Starting XI"}, {"code": "FW248", "pos": "LW", "cat": "FW", "name": "Mattia Zaccagni", "age": 30, "mv": 30, "role": "Starting XI"}, {"code": "FW10", "pos": "ST", "cat": "FW", "name": "Ousmane Dembélé", "age": 29, "mv": 280, "role": "Starting XI"}, {"code": "FW140", "pos": "SS", "cat": "FW", "name": "João Félix", "age": 26, "mv": 28, "role": "Substitutes"}, {"code": "FW81", "pos": "LW", "cat": "FW", "name": "Ademola Lookman", "age": 28, "mv": 40, "role": "Substitutes"}, {"code": "FW258", "pos": "LW", "cat": "FW", "name": "Yannick Carrasco", "age": 31, "mv": 25, "role": "Reserves"}, {"code": "FW76", "pos": "RW", "cat": "FW", "name": "Antony", "age": 26, "mv": 40, "role": "Reserves"}], "totalMV": 1166, "abbr": "VEN", "bg": "#111827", "accent": "#f97316", "accent2": "#10b981"}, {"coachKey": "Not", "manager": "น็อต", "club": "FC Barcelona", "s1Rank": 2, "budget": 1180, "formation": "4-2-1-3", "att": 86, "mid": 86, "def": 85, "buildup": "Short Passing", "defApproach": "High", "tacticCode": "eZ6e@oQoKezA", "xi": ["Carnesecchi", "Raum", "van Dijk", "Upamecano", "Laimer", "Pedri", "Neves", "Palmer", "Baena", "Kane", "Doué"], "subs": ["Thuram", "Zieliński", "Ryerson", "Svensson", "Stiller", "Greenwood", "Coman"], "replace": {"Deniz Undav": ["Harry Kane", "ST", 33, 60]}, "players": [{"code": "GK101", "pos": "GK", "cat": "GK", "name": "Radek Vítek", "age": 22, "mv": 7, "role": "Reserves"}, {"code": "GK100", "pos": "GK", "cat": "GK", "name": "Rome-Jayden Owusu-Oduro", "age": 22, "mv": 7, "role": "Reserves"}, {"code": "GK10", "pos": "GK", "cat": "GK", "name": "Marco Carnesecchi", "age": 26, "mv": 30, "role": "Starting XI"}, {"code": "DF6", "pos": "CB", "cat": "DF", "name": "Dayot Upamecano", "age": 27, "mv": 75, "role": "Starting XI"}, {"code": "DF202", "pos": "CB", "cat": "DF", "name": "Virgil van Dijk", "age": 34, "mv": 50, "role": "Starting XI"}, {"code": "DF131", "pos": "LB", "cat": "DF", "name": "David Raum", "age": 28, "mv": 30, "role": "Starting XI"}, {"code": "DF132", "pos": "RB", "cat": "DF", "name": "Julian Ryerson", "age": 28, "mv": 29, "role": "Substitutes"}, {"code": "DF216", "pos": "CB", "cat": "DF", "name": "Waldemar Anton", "age": 28, "mv": 30, "role": "Reserves"}, {"code": "DF83", "pos": "RB", "cat": "DF", "name": "Konrad Laimer", "age": 29, "mv": 32, "role": "Starting XI"}, {"code": "DF147", "pos": "LB", "cat": "DF", "name": "Daniel Svensson", "age": 24, "mv": 22, "role": "Substitutes"}, {"code": "MF2", "pos": "CM", "cat": "MF", "name": "Pedri", "age": 23, "mv": 150, "role": "Starting XI"}, {"code": "MF246", "pos": "CM", "cat": "MF", "name": "Piotr Zieliński", "age": 31, "mv": 25, "role": "Substitutes"}, {"code": "MF11", "pos": "CAM", "cat": "MF", "name": "Cole Palmer", "age": 24, "mv": 100, "role": "Starting XI"}, {"code": "MF224", "pos": "CAM", "cat": "MF", "name": "Paulo Dybala", "age": 31, "mv": 50, "role": "Reserves"}, {"code": "MF56", "pos": "CDM", "cat": "MF", "name": "Angelo Stiller", "age": 25, "mv": 45, "role": "Substitutes"}, {"code": "MF3", "pos": "CM", "cat": "MF", "name": "João Neves", "age": 21, "mv": 140, "role": "Starting XI"}, {"code": "FW231", "pos": "LW", "cat": "FW", "name": "Kingsley Coman", "age": 30, "mv": 20, "role": "Substitutes"}, {"code": "FW50", "pos": "ST", "cat": "FW", "name": "Marcus Thuram", "age": 29, "mv": 61, "role": "Substitutes"}, {"code": "FW73", "pos": "LW", "cat": "FW", "name": "Álex Baena", "age": 25, "mv": 40, "role": "Starting XI"}, {"code": "FW37", "pos": "RW", "cat": "FW", "name": "Mason Greenwood", "age": 24, "mv": 55, "role": "Substitutes"}, {"code": "FW193", "pos": "ST", "cat": "FW", "name": "Harry Kane", "age": 33, "mv": 60, "role": "Starting XI"}, {"code": "FW7", "pos": "RW", "cat": "FW", "name": "Désiré Doué", "age": 21, "mv": 120, "role": "Starting XI"}], "totalMV": 1178, "abbr": "FCB", "bg": "#1e1b4b", "accent": "#3b82f6", "accent2": "#ef4444"}, {"coachKey": "Dank", "manager": "แด้งค์", "club": "Adelaide United", "s1Rank": 3, "budget": 1190, "formation": "4-2-1-3", "att": 85, "mid": 84, "def": 85, "buildup": "Balanced", "defApproach": "Balanced", "tacticCode": "QZs%pUCiaY8R", "xi": ["Milinković-Savić", "Mendes", "Bastoni", "Dias", "Nunes", "Barella", "Anderson", "Rogers", "Torres", "Ekitiké", "Raphinha"], "subs": ["Araujo", "Isak", "Muñoz", "De Cuyper", "Brandt", "Tzolis"], "replace": {}, "players": [{"code": "GK25", "pos": "GK", "cat": "GK", "name": "Vanja Milinković-Savić", "age": 29, "mv": 20, "role": "Starting XI"}, {"code": "GK67", "pos": "GK", "cat": "GK", "name": "Ederson", "age": 33, "mv": 10, "role": "Reserves"}, {"code": "DF3", "pos": "LB", "cat": "DF", "name": "Nuno Mendes", "age": 24, "mv": 80, "role": "Starting XI"}, {"code": "DF12", "pos": "CB", "cat": "DF", "name": "Alessandro Bastoni", "age": 27, "mv": 65, "role": "Starting XI"}, {"code": "DF23", "pos": "CB", "cat": "DF", "name": "Rúben Dias", "age": 29, "mv": 55, "role": "Starting XI"}, {"code": "DF36", "pos": "RB", "cat": "DF", "name": "Matheus Nunes", "age": 28, "mv": 50, "role": "Starting XI"}, {"code": "DF190", "pos": "CB", "cat": "DF", "name": "Ronald Araujo", "age": 27, "mv": 20, "role": "Substitutes"}, {"code": "DF161", "pos": "RB", "cat": "DF", "name": "Daniel Muñoz", "age": 30, "mv": 22, "role": "Substitutes"}, {"code": "DF149", "pos": "LB", "cat": "DF", "name": "Maxim De Cuyper", "age": 25, "mv": 22, "role": "Substitutes"}, {"code": "DF197", "pos": "CB", "cat": "DF", "name": "Min-jae Kim", "age": 29, "mv": 20, "role": "Reserves"}, {"code": "MF49", "pos": "CM", "cat": "MF", "name": "Nicolò Barella", "age": 29, "mv": 50, "role": "Starting XI"}, {"code": "MF6", "pos": "CDM", "cat": "MF", "name": "Elliot Anderson", "age": 23, "mv": 110, "role": "Starting XI"}, {"code": "MF238", "pos": "CAM", "cat": "MF", "name": "Julian Brandt", "age": 29, "mv": 30, "role": "Substitutes"}, {"code": "MF164", "pos": "CDM", "cat": "MF", "name": "Denis Zakaria", "age": 29, "mv": 25, "role": "Reserves"}, {"code": "MF7", "pos": "CAM", "cat": "MF", "name": "Morgan Rogers", "age": 24, "mv": 110, "role": "Starting XI"}, {"code": "MF75", "pos": "CM", "cat": "MF", "name": "Scott McTominay", "age": 29, "mv": 40, "role": "Reserves"}, {"code": "FW16", "pos": "ST", "cat": "FW", "name": "Hugo Ekitiké", "age": 24, "mv": 80, "role": "Starting XI"}, {"code": "FW28", "pos": "ST", "cat": "FW", "name": "Raphinha", "age": 29, "mv": 120, "role": "Starting XI"}, {"code": "FW39", "pos": "ST", "cat": "FW", "name": "Ferran Torres", "age": 26, "mv": 55, "role": "Starting XI"}, {"code": "FW165", "pos": "RW", "cat": "FW", "name": "Moussa Diaby", "age": 27, "mv": 25, "role": "Reserves"}, {"code": "FW70", "pos": "LW", "cat": "FW", "name": "Christos Tzolis", "age": 24, "mv": 40, "role": "Substitutes"}, {"code": "FW13", "pos": "ST", "cat": "FW", "name": "Alexander Isak", "age": 27, "mv": 85, "role": "Substitutes"}], "totalMV": 1134, "abbr": "ADL", "bg": "#7f1d1d", "accent": "#ef4444", "accent2": "#fbbf24"}, {"coachKey": "Nat", "manager": "นัท", "club": "Athletic Club", "s1Rank": 4, "budget": 1200, "formation": "4-2-3-1 WIDE", "att": 91, "mid": 86, "def": 84, "buildup": "Balanced", "defApproach": "Balanced", "tacticCode": "KZi8Z8kd&S%K", "xi": ["Oblak", "Dimarco", "Tah", "García", "Cancelo", "Rodri", "Valverde", "Díaz", "Musiala", "Salah", "Haaland"], "subs": ["Torres", "Éderson", "Gakpo", "Simons", "Mittelstädt", "De Gea", "Kamara"], "replace": {}, "players": [{"code": "GK40", "pos": "GK", "cat": "GK", "name": "Jan Oblak", "age": 33, "mv": 15, "role": "Starting XI"}, {"code": "GK115", "pos": "GK", "cat": "GK", "name": "David De Gea", "age": 34, "mv": 10, "role": "Substitutes"}, {"code": "DF38", "pos": "LB", "cat": "DF", "name": "Federico Dimarco", "age": 28, "mv": 50, "role": "Starting XI"}, {"code": "DF111", "pos": "CB", "cat": "DF", "name": "Jonathan Tah", "age": 30, "mv": 30, "role": "Starting XI"}, {"code": "DF214", "pos": "LB", "cat": "DF", "name": "Maximilian Mittelstädt", "age": 29, "mv": 30, "role": "Substitutes"}, {"code": "DF196", "pos": "CB", "cat": "DF", "name": "Pau Torres", "age": 29, "mv": 20, "role": "Substitutes"}, {"code": "DF215", "pos": "CB", "cat": "DF", "name": "Manuel Akanji", "age": 29, "mv": 30, "role": "Reserves"}, {"code": "DF57", "pos": "CB", "cat": "DF", "name": "Eric García", "age": 25, "mv": 40, "role": "Starting XI"}, {"code": "DF188", "pos": "CB", "cat": "DF", "name": "Dani Vivian", "age": 27, "mv": 20, "role": "Reserves"}, {"code": "DF206", "pos": "RB", "cat": "DF", "name": "João Cancelo", "age": 31, "mv": 50, "role": "Starting XI"}, {"code": "MF41", "pos": "CDM", "cat": "MF", "name": "Rodri", "age": 30, "mv": 95, "role": "Starting XI"}, {"code": "MF71", "pos": "CDM", "cat": "MF", "name": "Boubacar Kamara", "age": 26, "mv": 40, "role": "Substitutes"}, {"code": "MF18", "pos": "CM", "cat": "MF", "name": "Federico Valverde", "age": 28, "mv": 90, "role": "Starting XI"}, {"code": "MF58", "pos": "CM", "cat": "MF", "name": "Éderson", "age": 27, "mv": 45, "role": "Substitutes"}, {"code": "MF10", "pos": "CAM", "cat": "MF", "name": "Jamal Musiala", "age": 23, "mv": 100, "role": "Starting XI"}, {"code": "MF67", "pos": "CAM", "cat": "MF", "name": "Xavi Simons", "age": 23, "mv": 40, "role": "Substitutes"}, {"code": "FW174", "pos": "ST", "cat": "FW", "name": "Ollie Watkins", "age": 30, "mv": 25, "role": "Reserves"}, {"code": "FW59", "pos": "RW", "cat": "FW", "name": "Rodrygo", "age": 25, "mv": 45, "role": "Reserves"}, {"code": "FW2", "pos": "ST", "cat": "FW", "name": "Erling Haaland", "age": 26, "mv": 220, "role": "Starting XI"}, {"code": "FW34", "pos": "LW", "cat": "FW", "name": "Cody Gakpo", "age": 27, "mv": 60, "role": "Substitutes"}, {"code": "FW194", "pos": "RW", "cat": "FW", "name": "Mohamed Salah", "age": 34, "mv": 75, "role": "Starting XI"}, {"code": "FW27", "pos": "LW", "cat": "FW", "name": "Luis Díaz", "age": 29, "mv": 70, "role": "Starting XI"}], "totalMV": 1200, "abbr": "ATH", "bg": "#991b1b", "accent": "#ffffff", "accent2": "#ef4444"}, {"coachKey": "Mos", "manager": "มอส", "club": "AFC Bournemouth", "s1Rank": 5, "budget": 1200, "formation": "4-2-1-3", "att": 84, "mid": 85, "def": 84, "buildup": "Short Passing", "defApproach": "High", "tacticCode": "NZpNuTFVXLLu", "xi": ["García", "Hernández", "Schlotterbeck", "Marquinhos", "Llorente", "Vitinha", "Çalhanoğlu", "Olmo", "Leão", "Osimhen", "Semenyo"], "subs": ["Lacroix", "Openda", "Weiser", "Carreras", "Sano", "Fermín", "Szczęsny"], "replace": {"Mats Wieffer": ["Mitchell Weiser", "RB", 32, 25]}, "players": [{"code": "GK1", "pos": "GK", "cat": "GK", "name": "Joan García", "age": 25, "mv": 46, "role": "Starting XI"}, {"code": "GK117", "pos": "GK", "cat": "GK", "name": "Wojciech Szczęsny", "age": 35, "mv": 10, "role": "Substitutes"}, {"code": "DF201", "pos": "RB", "cat": "DF", "name": "Marcos Llorente", "age": 31, "mv": 30, "role": "Starting XI"}, {"code": "DF112", "pos": "CB", "cat": "DF", "name": "Marquinhos", "age": 32, "mv": 67, "role": "Starting XI"}, {"code": "DF22", "pos": "CB", "cat": "DF", "name": "Nico Schlotterbeck", "age": 26, "mv": 100, "role": "Starting XI"}, {"code": "DF195", "pos": "LB", "cat": "DF", "name": "Theo Hernández", "age": 28, "mv": 21, "role": "Starting XI"}, {"code": "DF219", "pos": "CB", "cat": "DF", "name": "Kalidou Koulibaly", "age": 34, "mv": 30, "role": "Reserves"}, {"code": "DF28", "pos": "LB", "cat": "DF", "name": "Álvaro Carreras", "age": 23, "mv": 50, "role": "Substitutes"}, {"code": "DF128", "pos": "RB", "cat": "DF", "name": "Mitchell Weiser", "age": 32, "mv": 25, "role": "Substitutes"}, {"code": "DF35", "pos": "CB", "cat": "DF", "name": "Maxence Lacroix", "age": 26, "mv": 50, "role": "Substitutes"}, {"code": "MF47", "pos": "CDM", "cat": "MF", "name": "Kaishu Sano", "age": 25, "mv": 50, "role": "Substitutes"}, {"code": "MF4", "pos": "CDM", "cat": "MF", "name": "Vitinha", "age": 26, "mv": 140, "role": "Starting XI"}, {"code": "MF48", "pos": "CM", "cat": "MF", "name": "Tijjani Reijnders", "age": 28, "mv": 50, "role": "Reserves"}, {"code": "MF8", "pos": "CAM", "cat": "MF", "name": "Fermín López", "age": 23, "mv": 100, "role": "Substitutes"}, {"code": "MF220", "pos": "CM", "cat": "MF", "name": "Hakan Çalhanoğlu", "age": 31, "mv": 50, "role": "Starting XI"}, {"code": "MF36", "pos": "CAM", "cat": "MF", "name": "Dani Olmo", "age": 28, "mv": 60, "role": "Starting XI"}, {"code": "FW48", "pos": "LW", "cat": "FW", "name": "Rafael Leão", "age": 27, "mv": 50, "role": "Starting XI"}, {"code": "FW19", "pos": "RW", "cat": "FW", "name": "Antoine Semenyo", "age": 26, "mv": 80, "role": "Starting XI"}, {"code": "FW25", "pos": "ST", "cat": "FW", "name": "Victor Osimhen", "age": 27, "mv": 75, "role": "Starting XI"}, {"code": "FW125", "pos": "LW", "cat": "FW", "name": "Barış Alper Yılmaz", "age": 26, "mv": 30, "role": "Reserves"}, {"code": "FW163", "pos": "ST", "cat": "FW", "name": "Loïs Openda", "age": 26, "mv": 25, "role": "Substitutes"}, {"code": "FW160", "pos": "RW", "cat": "FW", "name": "Geny Catamo", "age": 25, "mv": 25, "role": "Reserves"}], "totalMV": 1164, "abbr": "BOU", "bg": "#18181b", "accent": "#dc2626", "accent2": "#facc15"}, {"coachKey": "Eff", "manager": "เอฟ", "club": "1. FC Köln", "s1Rank": 6, "budget": 1210, "formation": "4-2-3-1 WIDE", "att": 86, "mid": 84, "def": 84, "buildup": "Balanced", "defApproach": "Balanced", "tacticCode": "%Zm4dAqgK26P", "xi": ["Raya", "O'Reilly", "Gabriel", "Saliba", "Hakimi", "Gravenberch", "Tchouaméni", "Barcola", "Fernandes", "Mbeumo", "Alvarez"], "subs": ["Gusto", "Khusanov", "Militão", "Williams", "Samba", "Casemiro", "David"], "replace": {}, "players": [{"code": "GK12", "pos": "GK", "cat": "GK", "name": "David Raya", "age": 31, "mv": 30, "role": "Starting XI"}, {"code": "GK97", "pos": "GK", "cat": "GK", "name": "Brice Samba", "age": 32, "mv": 7, "role": "Substitutes"}, {"code": "DF5", "pos": "RB", "cat": "DF", "name": "Achraf Hakimi", "age": 27, "mv": 100, "role": "Starting XI"}, {"code": "DF8", "pos": "LB", "cat": "DF", "name": "Nico O'Reilly", "age": 21, "mv": 70, "role": "Starting XI"}, {"code": "DF7", "pos": "CB", "cat": "DF", "name": "Gabriel", "age": 28, "mv": 75, "role": "Starting XI"}, {"code": "DF2", "pos": "CB", "cat": "DF", "name": "William Saliba", "age": 25, "mv": 110, "role": "Starting XI"}, {"code": "DF25", "pos": "CB", "cat": "DF", "name": "Abdukodir Khusanov", "age": 22, "mv": 50, "role": "Substitutes"}, {"code": "DF194", "pos": "CB", "cat": "DF", "name": "Éder Militão", "age": 28, "mv": 20, "role": "Substitutes"}, {"code": "DF106", "pos": "LB", "cat": "DF", "name": "Neco Williams", "age": 25, "mv": 28, "role": "Substitutes"}, {"code": "DF69", "pos": "RB", "cat": "DF", "name": "Malo Gusto", "age": 23, "mv": 35, "role": "Substitutes"}, {"code": "MF91", "pos": "CAM", "cat": "MF", "name": "Bruno Fernandes", "age": 32, "mv": 45, "role": "Starting XI"}, {"code": "MF28", "pos": "CDM", "cat": "MF", "name": "Aurélien Tchouaméni", "age": 26, "mv": 80, "role": "Starting XI"}, {"code": "MF163", "pos": "CDM", "cat": "MF", "name": "Rúben Neves", "age": 29, "mv": 25, "role": "Reserves"}, {"code": "MF22", "pos": "CDM", "cat": "MF", "name": "Ryan Gravenberch", "age": 24, "mv": 80, "role": "Starting XI"}, {"code": "MF233", "pos": "CDM", "cat": "MF", "name": "Casemiro", "age": 33, "mv": 30, "role": "Substitutes"}, {"code": "MF141", "pos": "CAM", "cat": "MF", "name": "Georgiy Sudakov", "age": 24, "mv": 25, "role": "Reserves"}, {"code": "FW259", "pos": "RW", "cat": "FW", "name": "Iñaki Williams", "age": 31, "mv": 25, "role": "Substitutes"}, {"code": "FW227", "pos": "LW", "cat": "FW", "name": "Kerem Aktürkoğlu", "age": 27, "mv": 20, "role": "Reserves"}, {"code": "FW127", "pos": "ST", "cat": "FW", "name": "Jonathan David", "age": 26, "mv": 30, "role": "Substitutes"}, {"code": "FW8", "pos": "ST", "cat": "FW", "name": "Julián Alvarez", "age": 26, "mv": 120, "role": "Starting XI"}, {"code": "FW23", "pos": "RW", "cat": "FW", "name": "Bryan Mbeumo", "age": 27, "mv": 75, "role": "Starting XI"}, {"code": "FW12", "pos": "LW", "cat": "FW", "name": "Bradley Barcola", "age": 24, "mv": 90, "role": "Starting XI"}], "totalMV": 1170, "abbr": "KOE", "bg": "#7f1d1d", "accent": "#f8fafc", "accent2": "#dc2626"}, {"coachKey": "FR", "manager": "ฟัยรูซ", "club": "Real Madrid", "s1Rank": 7, "budget": 1220, "formation": "4-2-1-3", "att": 85, "mid": 85, "def": 85, "buildup": "Short Passing", "defApproach": "High", "tacticCode": "KZm#jQ8SU#?r", "xi": ["Courtois", "Grimaldo", "Hancko", "Pacho", "Kimmich", "Xhaka", "Hjulmand", "Bellingham", "Williams", "Mbappé", "Messi"], "subs": ["Hincapié", "Rashford", "Adeyemi", "Silva", "Paz", "Alexander-Arnold", "Veiga", "Kanté"], "replace": {"Léo Jardim": ["Gill", "GK", 25, 7]}, "players": [{"code": "GK42", "pos": "GK", "cat": "GK", "name": "Thibaut Courtois", "age": 34, "mv": 15, "role": "Starting XI"}, {"code": "GK99", "pos": "GK", "cat": "GK", "name": "James Beadle", "age": 22, "mv": 6, "role": "Reserves"}, {"code": "GK96", "pos": "GK", "cat": "GK", "name": "Gill", "age": 25, "mv": 7, "role": "Reserves"}, {"code": "DF4", "pos": "CB", "cat": "DF", "name": "Willian Pacho", "age": 24, "mv": 80, "role": "Starting XI"}, {"code": "DF32", "pos": "CB", "cat": "DF", "name": "Piero Hincapié", "age": 24, "mv": 50, "role": "Substitutes"}, {"code": "DF78", "pos": "CB", "cat": "DF", "name": "Dávid Hancko", "age": 28, "mv": 35, "role": "Starting XI"}, {"code": "DF18", "pos": "RB", "cat": "DF", "name": "Trent Alexander-Arnold", "age": 27, "mv": 60, "role": "Substitutes"}, {"code": "DF88", "pos": "CB", "cat": "DF", "name": "Renato Veiga", "age": 23, "mv": 30, "role": "Substitutes"}, {"code": "DF200", "pos": "LB", "cat": "DF", "name": "Alejandro Grimaldo", "age": 31, "mv": 25, "role": "Starting XI"}, {"code": "DF212", "pos": "CB", "cat": "DF", "name": "José María Giménez", "age": 30, "mv": 30, "role": "Reserves"}, {"code": "MF1", "pos": "CAM", "cat": "MF", "name": "Jude Bellingham", "age": 23, "mv": 160, "role": "Starting XI"}, {"code": "MF222", "pos": "CDM", "cat": "MF", "name": "Granit Xhaka", "age": 32, "mv": 50, "role": "Starting XI"}, {"code": "MF59", "pos": "CDM", "cat": "MF", "name": "Morten Hjulmand", "age": 27, "mv": 45, "role": "Starting XI"}, {"code": "MF90", "pos": "CDM", "cat": "MF", "name": "Joshua Kimmich", "age": 31, "mv": 80, "role": "Starting XI"}, {"code": "MF21", "pos": "CAM", "cat": "MF", "name": "Nico Paz", "age": 22, "mv": 80, "role": "Substitutes"}, {"code": "MF227", "pos": "CDM", "cat": "MF", "name": "N'Golo Kanté", "age": 34, "mv": 50, "role": "Substitutes"}, {"code": "FW3", "pos": "ST", "cat": "FW", "name": "Kylian Mbappé", "age": 27, "mv": 200, "role": "Starting XI"}, {"code": "FW235", "pos": "RW", "cat": "FW", "name": "Lionel Messi", "age": 38, "mv": 50, "role": "Starting XI"}, {"code": "FW68", "pos": "LW", "cat": "FW", "name": "Nico Williams", "age": 24, "mv": 41, "role": "Starting XI"}, {"code": "FW80", "pos": "LW", "cat": "FW", "name": "Marcus Rashford", "age": 28, "mv": 40, "role": "Substitutes"}, {"code": "FW71", "pos": "RW", "cat": "FW", "name": "Karim Adeyemi", "age": 24, "mv": 41, "role": "Substitutes"}, {"code": "FW184", "pos": "ST", "cat": "FW", "name": "Fábio Silva", "age": 24, "mv": 22, "role": "Substitutes"}], "totalMV": 1197, "abbr": "RMA", "bg": "#1e293b", "accent": "#fbbf24", "accent2": "#f8fafc"}, {"coachKey": "Champ", "manager": "แชมป์", "club": "Villarreal CF", "s1Rank": 8, "budget": 1230, "formation": "4-3-3 ATTACK", "att": 84, "mid": 84, "def": 83, "buildup": "Short Passing", "defApproach": "Balanced", "tacticCode": "yQLwL4dM8&%S", "xi": ["Sommer", "Cucurella", "van de Ven", "Rüdiger", "Koundé", "de Jong", "Tonali", "Griezmann", "Cunha", "Lewandowski", "Lamine Yamal"], "subs": ["White", "Gibbs-White", "Lee Kang In", "Udogie", "Scott", "Guirassy", "Svilar"], "replace": {}, "players": [{"code": "GK112", "pos": "GK", "cat": "GK", "name": "Yann Sommer", "age": 36, "mv": 10, "role": "Starting XI"}, {"code": "GK65", "pos": "GK", "cat": "GK", "name": "André Onana", "age": 30, "mv": 10, "role": "Reserves"}, {"code": "GK7", "pos": "GK", "cat": "GK", "name": "Mile Svilar", "age": 27, "mv": 35, "role": "Substitutes"}, {"code": "DF19", "pos": "LB", "cat": "DF", "name": "Marc Cucurella", "age": 28, "mv": 60, "role": "Starting XI"}, {"code": "DF33", "pos": "CB", "cat": "DF", "name": "Micky van de Ven", "age": 25, "mv": 50, "role": "Starting XI"}, {"code": "DF205", "pos": "CB", "cat": "DF", "name": "Antonio Rüdiger", "age": 32, "mv": 50, "role": "Starting XI"}, {"code": "DF17", "pos": "RB", "cat": "DF", "name": "Jules Koundé", "age": 27, "mv": 60, "role": "Starting XI"}, {"code": "DF98", "pos": "RB", "cat": "DF", "name": "Ben White", "age": 28, "mv": 30, "role": "Substitutes"}, {"code": "DF89", "pos": "LB", "cat": "DF", "name": "Destiny Udogie", "age": 23, "mv": 30, "role": "Substitutes"}, {"code": "DF217", "pos": "CB", "cat": "DF", "name": "Nathan Aké", "age": 30, "mv": 30, "role": "Reserves"}, {"code": "MF23", "pos": "CDM", "cat": "MF", "name": "Sandro Tonali", "age": 26, "mv": 80, "role": "Starting XI"}, {"code": "MF89", "pos": "CM", "cat": "MF", "name": "Frenkie de Jong", "age": 29, "mv": 35, "role": "Starting XI"}, {"code": "MF120", "pos": "CAM", "cat": "MF", "name": "Kang-in Lee", "age": 25, "mv": 28, "role": "Reserves"}, {"code": "FW1", "pos": "RW", "cat": "FW", "name": "Lamine Yamal", "age": 19, "mv": 220, "role": "Starting XI"}, {"code": "MF29", "pos": "CAM", "cat": "MF", "name": "Morgan Gibbs-White", "age": 26, "mv": 70, "role": "Substitutes"}, {"code": "MF44", "pos": "CM", "cat": "MF", "name": "Alex Scott", "age": 23, "mv": 50, "role": "Substitutes"}, {"code": "MF45", "pos": "CM", "cat": "MF", "name": "Eduardo Camavinga", "age": 23, "mv": 50, "role": "Reserves"}, {"code": "FW236", "pos": "ST", "cat": "FW", "name": "Robert Lewandowski", "age": 36, "mv": 50, "role": "Starting XI"}, {"code": "FW237", "pos": "ST", "cat": "FW", "name": "Cristiano Ronaldo", "age": 40, "mv": 50, "role": "Reserves"}, {"code": "FW24", "pos": "ST", "cat": "FW", "name": "Matheus Cunha", "age": 27, "mv": 75, "role": "Starting XI"}, {"code": "FW240", "pos": "ST", "cat": "FW", "name": "Antoine Griezmann", "age": 34, "mv": 50, "role": "Starting XI"}, {"code": "FW104", "pos": "ST", "cat": "FW", "name": "Serhou Guirassy", "age": 30, "mv": 32, "role": "Substitutes"}], "totalMV": 1155, "abbr": "VIL", "bg": "#713f12", "accent": "#facc15", "accent2": "#2563eb"}];
-    const S2_NEWS_DATA = [{"id": "s2-n1", "category": "ประกาศลีก S2", "tagColor": "emerald", "date": "22 พ.ย. 2026", "title": "เปิดโผ 8 สโมสรใหม่ & รหัสแทคติก Season 2 ครบทุกทีม", "summary": "ก้องแชมป์เก่าโยกคุม Venezia FC, น็อตจับ FC Barcelona, นัทจัด Athletic Club (ATT 91 สูงสุดในลีก), ฟัยรูซคุม Real Madrid, เอฟลุย 1. FC Köln, แด้งค์คุม Adelaide United, มอสคุม AFC Bournemouth และแชมป์คุม Villarreal CF", "body": "ทั้ง 8 โค้ชล็อกขุมกำลัง 22 คนนิ่งเรียบร้อยแล้ว ส่วนแผนการเล่นชุดนี้เป็นแผนเบื้องต้นระหว่างทดสอบ Pre-Season (อาจปรับเปลี่ยนได้ก่อนเปิดลีก) โดย 4 ทีมเลือกใช้ระบบ 4-2-1-3 (Barcelona, Adelaide, Bournemouth, Real Madrid), 3 ทีมใช้ระบบ 4-2-3-1 WIDE (Venezia, Athletic Club, FC Köln) และ Villarreal CF เลือกใช้ 4-3-3 ATTACK ทีมเดียวในลีก"}, {"id": "s2-n2", "category": "ตลาดซื้อขาย S2", "tagColor": "amber", "date": "19 พ.ย. 2026", "title": "ปิดตลาดดราฟต์ 176 นักเตะสมบูรณ์ — อัปเดตไลน์อัพล่าสุดตามภาพในเกม", "summary": "สรุปยอดใช้จ่ายรวมทั้ง 8 ทีม €9,364M ไม่มีนักเตะซ้ำกันแม้แต่คนเดียว พร้อมอัปเดตตัวผู้เล่นล่าสุดตามภาพในเกมจริง (Harry Kane ลงเล่นให้ Barcelona, Antonee Robinson ยืนแบ็กซ้าย Venezia, Mitchell Weiser เสริม Bournemouth และ Gill ร่วมทัพ Real Madrid)", "body": "ดีลประมูลรอบแรกจบลงด้วยสถิติโลก Ousmane Dembélé ย้ายซบทีมของก้องด้วยค่าตัว €280M ขณะที่ Nat คว้า Erling Haaland ไปในราคาตั้งต้น €220M และ Champ ปิดดีล Lamine Yamal €220M ในรอบที่สอง"}, {"id": "s2-n3", "category": "Pre-Season", "tagColor": "sky", "date": "22 พ.ย. 2026", "title": "เข้าสู่ช่วง Pre-Season กระชับมิตร — รอตั้ง Tournament 56 นัด", "summary": "ช่วงนี้ทุกทีมกำลังทดสอบแผนการเล่นและแทคติกผ่านแมตช์กระชับมิตรนอกทัวร์นาเมนต์ ตารางคะแนน Season 2 เริ่มต้นที่ 0 แต้มเท่ากัน และช่องโปรแกรม 56 นัดเตรียมพร้อมรออัปเดตทันทีหลังตั้ง Tournament ในเกม", "body": "เมื่อตั้ง Tournament ในเกมครบ 8 ทีมเรียบร้อยแล้ว ระบบจะนำตารางแข่งขัน 56 นัด (14 รอบ) มาลงแทนช่องว่าง Pre-Season ทันที โดยทุกคนยังสามารถกดสลับดูประวัติและตารางคะแนน Season 1 ได้ตลอดเวลาจากปุ่มด้านบน"}];
+    const S2_FIXTURES_DATA = [{"id": "S2-M1", "no": 1, "md": 1, "date": "Sun, Aug 09", "time": "4:00 AM", "home": "1. FC Köln", "away": "FC Barcelona", "hg": 3, "ag": 1, "status": "FT", "goals": [{"team": "1. FC Köln", "player": "B. Mbeumo", "min": "13'"}, {"team": "FC Barcelona", "player": "C. Palmer", "min": "63'"}, {"team": "1. FC Köln", "player": "J. Alvarez", "min": "72'"}, {"team": "1. FC Köln", "player": "B. Mbeumo", "min": "86'"}], "cards": [{"team": "1. FC Köln", "player": "A. Tchouaméni", "type": "Yellow Card", "min": "57'"}, {"team": "FC Barcelona", "player": "M. Greenwood", "type": "Yellow Card", "min": "73'"}], "subs": [], "notes": ""}, {"id": "S2-M2", "no": 2, "md": 1, "date": "Sun, Aug 09", "time": "4:00 AM", "home": "Venezia FC", "away": "Real Madrid", "hg": 1, "ag": 4, "status": "FT", "goals": [{"team": "Real Madrid", "player": "K. Mbappé", "min": "2'"}, {"team": "Venezia FC", "player": "M. Zaccagni", "min": "5'"}, {"team": "Real Madrid", "player": "K. Mbappé", "min": "9'"}, {"team": "Real Madrid", "player": "L. Messi", "min": "35'"}, {"team": "Real Madrid", "player": "K. Mbappé", "min": "74'"}], "cards": [{"team": "Venezia FC", "player": "Bremer", "type": "Yellow Card", "min": "30'"}, {"team": "Real Madrid", "player": "J. Kimmich", "type": "Yellow Card", "min": "60'"}, {"team": "Venezia FC", "player": "M. Locatelli", "type": "Yellow Card", "min": "63'"}], "subs": [], "notes": ""}, {"id": "S2-M3", "no": 3, "md": 1, "date": "Sun, Aug 09", "time": "4:00 AM", "home": "Villarreal CF", "away": "Athletic Club", "hg": 1, "ag": 3, "status": "FT", "goals": [{"team": "Villarreal CF", "player": "R. Lewandowski", "min": "32'"}, {"team": "Athletic Club", "player": "M. Salah", "min": "35'"}, {"team": "Athletic Club", "player": "E. Haaland", "min": "61'"}, {"team": "Athletic Club", "player": "E. Haaland", "min": "69'"}], "cards": [{"team": "Villarreal CF", "player": "Lee Kang In", "type": "Yellow Card", "min": "19'"}, {"team": "Villarreal CF", "player": "F. de Jong", "type": "Yellow Card", "min": "22'"}, {"team": "Athletic Club", "player": "F. Valverde", "type": "Yellow Card", "min": "63'"}, {"team": "Villarreal CF", "player": "M. Cucurella", "type": "Yellow Card", "min": "75'"}, {"team": "Athletic Club", "player": "X. Simons", "type": "Yellow Card", "min": "90'"}], "subs": [], "notes": "73' C. Ronaldo (Villarreal CF) บาดเจ็บ"}, {"id": "S2-M4", "no": 4, "md": 1, "date": "Sun, Aug 09", "time": "8:00 PM", "home": "Adelaide United", "away": "AFC Bournemouth", "hg": 2, "ag": 3, "status": "FT", "goals": [{"team": "AFC Bournemouth", "player": "V. Osimhen", "min": "24'"}, {"team": "AFC Bournemouth", "player": "V. Osimhen", "min": "32'"}, {"team": "AFC Bournemouth", "player": "V. Osimhen", "min": "55'"}, {"team": "Adelaide United", "player": "H. Ekitiké", "min": "57'"}, {"team": "Adelaide United", "player": "Raphinha", "min": "71'"}], "cards": [{"team": "AFC Bournemouth", "player": "H. Çalhanoğlu", "type": "Yellow Card", "min": "18'"}, {"team": "Adelaide United", "player": "S. McTominay", "type": "Yellow Card", "min": "90'"}, {"team": "Adelaide United", "player": "N. Mendes", "type": "Yellow Card", "min": "90'"}], "subs": [], "notes": ""}, {"id": "S2-M5", "no": 5, "md": 2, "date": "Wed, Aug 12", "time": "4:00 AM", "home": "Villarreal CF", "away": "Adelaide United", "hg": null, "ag": null, "status": "Scheduled"}, {"id": "S2-M6", "no": 6, "md": 2, "date": "Wed, Aug 12", "time": "4:00 AM", "home": "Athletic Club", "away": "Venezia FC", "hg": null, "ag": null, "status": "Scheduled"}, {"id": "S2-M7", "no": 7, "md": 2, "date": "Wed, Aug 12", "time": "4:00 AM", "home": "Real Madrid", "away": "1. FC Köln", "hg": 2, "ag": 3, "status": "FT", "goals": [{"team": "1. FC Köln", "player": "J. Alvarez", "min": "13'"}, {"team": "Real Madrid", "player": "L. Messi", "min": "30'"}, {"team": "1. FC Köln", "player": "B. Barcola", "min": "40'"}, {"team": "1. FC Köln", "player": "J. Alvarez", "min": "64'"}, {"team": "Real Madrid", "player": "Fábio Silva", "min": "69'"}], "cards": [{"team": "Real Madrid", "player": "Piero Hincapié", "type": "Yellow Card", "min": "88'"}], "subs": ["45' Real Madrid: K. Adeyemi เข้า / L. Messi ออก", "60' Real Madrid: M. Rashford เข้า / Nico Williams ออก", "60' Real Madrid: Fábio Silva เข้า / K. Mbappé ออก", "60' Real Madrid: N. Paz เข้า / J. Bellingham ออก", "88' 1. FC Köln: Casemiro เข้า / R. Gravenberch ออก"], "notes": ""}, {"id": "S2-M8", "no": 8, "md": 2, "date": "Wed, Aug 12", "time": "4:00 AM", "home": "FC Barcelona", "away": "AFC Bournemouth", "hg": 2, "ag": 2, "status": "FT", "goals": [{"team": "FC Barcelona", "player": "D. Doué", "min": "9'"}, {"team": "AFC Bournemouth", "player": "V. Osimhen", "min": "47'"}, {"team": "FC Barcelona", "player": "Á. Baena", "min": "76'"}, {"team": "AFC Bournemouth", "player": "G. Catamo", "min": "86'"}], "cards": [{"team": "AFC Bournemouth", "player": "T. Hernández", "type": "Yellow Card", "min": "8'"}, {"team": "AFC Bournemouth", "player": "N. Schlotterbeck", "type": "Yellow Card", "min": "45'"}, {"team": "AFC Bournemouth", "player": "H. Çalhanoğlu", "type": "Yellow Card", "min": "90'"}], "subs": ["75' FC Barcelona: Á. Baena เข้า / M. Greenwood ออก", "75' FC Barcelona: M. Thuram เข้า / H. Kane ออก", "77' AFC Bournemouth: G. Catamo เข้า / R. Leão ออก", "82' FC Barcelona: P. Dybala เข้า / D. Doué ออก", "87' FC Barcelona: A. Stiller เข้า / Pedri ออก", "87' AFC Bournemouth: B. Yılmaz เข้า / D. Olmo ออก"], "notes": ""}, {"id": "S2-M9", "no": 9, "md": 3, "date": "Sun, Aug 16", "time": "4:00 AM", "home": "1. FC Köln", "away": "Athletic Club", "hg": null, "ag": null, "status": "Scheduled"}, {"id": "S2-M10", "no": 10, "md": 3, "date": "Sun, Aug 16", "time": "4:00 AM", "home": "Venezia FC", "away": "Villarreal CF", "hg": null, "ag": null, "status": "Scheduled"}, {"id": "S2-M11", "no": 11, "md": 3, "date": "Sun, Aug 16", "time": "5:00 AM", "home": "AFC Bournemouth", "away": "Real Madrid", "hg": null, "ag": null, "status": "Scheduled"}, {"id": "S2-M12", "no": 12, "md": 3, "date": "Sun, Aug 16", "time": "8:00 PM", "home": "Adelaide United", "away": "FC Barcelona", "hg": null, "ag": null, "status": "Scheduled"}, {"id": "S2-M13", "no": 13, "md": 4, "date": "Wed, Aug 19", "time": "4:00 AM", "home": "Venezia FC", "away": "Adelaide United", "hg": null, "ag": null, "status": "Scheduled"}, {"id": "S2-M14", "no": 14, "md": 4, "date": "Wed, Aug 19", "time": "4:00 AM", "home": "Villarreal CF", "away": "1. FC Köln", "hg": null, "ag": null, "status": "Scheduled"}, {"id": "S2-M15", "no": 15, "md": 4, "date": "Wed, Aug 19", "time": "4:00 AM", "home": "Athletic Club", "away": "AFC Bournemouth", "hg": null, "ag": null, "status": "Scheduled"}, {"id": "S2-M16", "no": 16, "md": 4, "date": "Wed, Aug 19", "time": "4:00 AM", "home": "Real Madrid", "away": "FC Barcelona", "hg": null, "ag": null, "status": "Scheduled"}, {"id": "S2-M17", "no": 17, "md": 5, "date": "Sun, Aug 23", "time": "4:00 AM", "home": "FC Barcelona", "away": "Athletic Club", "hg": null, "ag": null, "status": "Scheduled"}, {"id": "S2-M18", "no": 18, "md": 5, "date": "Sun, Aug 23", "time": "4:00 AM", "home": "1. FC Köln", "away": "Venezia FC", "hg": null, "ag": null, "status": "Scheduled"}, {"id": "S2-M19", "no": 19, "md": 5, "date": "Sun, Aug 23", "time": "5:00 AM", "home": "AFC Bournemouth", "away": "Villarreal CF", "hg": null, "ag": null, "status": "Scheduled"}, {"id": "S2-M20", "no": 20, "md": 5, "date": "Sun, Aug 23", "time": "8:00 PM", "home": "Adelaide United", "away": "Real Madrid", "hg": null, "ag": null, "status": "Scheduled"}, {"id": "S2-M21", "no": 21, "md": 6, "date": "Wed, Aug 26", "time": "4:00 AM", "home": "1. FC Köln", "away": "Adelaide United", "hg": null, "ag": null, "status": "Scheduled"}, {"id": "S2-M22", "no": 22, "md": 6, "date": "Wed, Aug 26", "time": "4:00 AM", "home": "Venezia FC", "away": "AFC Bournemouth", "hg": null, "ag": null, "status": "Scheduled"}, {"id": "S2-M23", "no": 23, "md": 6, "date": "Wed, Aug 26", "time": "4:00 AM", "home": "Villarreal CF", "away": "FC Barcelona", "hg": null, "ag": null, "status": "Scheduled"}, {"id": "S2-M24", "no": 24, "md": 6, "date": "Wed, Aug 26", "time": "4:00 AM", "home": "Athletic Club", "away": "Real Madrid", "hg": null, "ag": null, "status": "Scheduled"}, {"id": "S2-M25", "no": 25, "md": 7, "date": "Sun, Aug 30", "time": "4:00 AM", "home": "Real Madrid", "away": "Villarreal CF", "hg": null, "ag": null, "status": "Scheduled"}, {"id": "S2-M26", "no": 26, "md": 7, "date": "Sun, Aug 30", "time": "4:00 AM", "home": "FC Barcelona", "away": "Venezia FC", "hg": null, "ag": null, "status": "Scheduled"}, {"id": "S2-M27", "no": 27, "md": 7, "date": "Sun, Aug 30", "time": "5:00 AM", "home": "AFC Bournemouth", "away": "1. FC Köln", "hg": null, "ag": null, "status": "Scheduled"}, {"id": "S2-M28", "no": 28, "md": 7, "date": "Sun, Aug 30", "time": "8:00 PM", "home": "Adelaide United", "away": "Athletic Club", "hg": null, "ag": null, "status": "Scheduled"}, {"id": "S2-M29", "no": 29, "md": 8, "date": "Wed, Sep 02", "time": "4:00 AM", "home": "1. FC Köln", "away": "Villarreal CF", "hg": null, "ag": null, "status": "Scheduled"}, {"id": "S2-M30", "no": 30, "md": 8, "date": "Wed, Sep 02", "time": "4:00 AM", "home": "FC Barcelona", "away": "Real Madrid", "hg": null, "ag": null, "status": "Scheduled"}, {"id": "S2-M31", "no": 31, "md": 8, "date": "Wed, Sep 02", "time": "5:00 AM", "home": "AFC Bournemouth", "away": "Athletic Club", "hg": null, "ag": null, "status": "Scheduled"}, {"id": "S2-M32", "no": 32, "md": 8, "date": "Wed, Sep 02", "time": "8:00 PM", "home": "Adelaide United", "away": "Venezia FC", "hg": null, "ag": null, "status": "Scheduled"}, {"id": "S2-M33", "no": 33, "md": 9, "date": "Sun, Sep 06", "time": "4:00 AM", "home": "FC Barcelona", "away": "Adelaide United", "hg": null, "ag": null, "status": "Scheduled"}, {"id": "S2-M34", "no": 34, "md": 9, "date": "Sun, Sep 06", "time": "4:00 AM", "home": "Real Madrid", "away": "AFC Bournemouth", "hg": null, "ag": null, "status": "Scheduled"}, {"id": "S2-M35", "no": 35, "md": 9, "date": "Sun, Sep 06", "time": "4:00 AM", "home": "Athletic Club", "away": "1. FC Köln", "hg": null, "ag": null, "status": "Scheduled"}, {"id": "S2-M36", "no": 36, "md": 9, "date": "Sun, Sep 06", "time": "4:00 AM", "home": "Villarreal CF", "away": "Venezia FC", "hg": null, "ag": null, "status": "Scheduled"}, {"id": "S2-M37", "no": 37, "md": 10, "date": "Wed, Sep 09", "time": "4:00 AM", "home": "Athletic Club", "away": "Adelaide United", "hg": null, "ag": null, "status": "Scheduled"}, {"id": "S2-M38", "no": 38, "md": 10, "date": "Wed, Sep 09", "time": "4:00 AM", "home": "Villarreal CF", "away": "Real Madrid", "hg": null, "ag": null, "status": "Scheduled"}, {"id": "S2-M39", "no": 39, "md": 10, "date": "Wed, Sep 09", "time": "4:00 AM", "home": "Venezia FC", "away": "FC Barcelona", "hg": null, "ag": null, "status": "Scheduled"}, {"id": "S2-M40", "no": 40, "md": 10, "date": "Wed, Sep 09", "time": "4:00 AM", "home": "1. FC Köln", "away": "AFC Bournemouth", "hg": null, "ag": null, "status": "Scheduled"}, {"id": "S2-M41", "no": 41, "md": 11, "date": "Sun, Sep 13", "time": "4:00 AM", "home": "FC Barcelona", "away": "Villarreal CF", "hg": null, "ag": null, "status": "Scheduled"}, {"id": "S2-M42", "no": 42, "md": 11, "date": "Sun, Sep 13", "time": "4:00 AM", "home": "Real Madrid", "away": "Athletic Club", "hg": null, "ag": null, "status": "Scheduled"}, {"id": "S2-M43", "no": 43, "md": 11, "date": "Sun, Sep 13", "time": "5:00 AM", "home": "AFC Bournemouth", "away": "Venezia FC", "hg": null, "ag": null, "status": "Scheduled"}, {"id": "S2-M44", "no": 44, "md": 11, "date": "Sun, Sep 13", "time": "8:00 PM", "home": "Adelaide United", "away": "1. FC Köln", "hg": null, "ag": null, "status": "Scheduled"}, {"id": "S2-M45", "no": 45, "md": 12, "date": "Wed, Sep 16", "time": "4:00 AM", "home": "Real Madrid", "away": "Adelaide United", "hg": null, "ag": null, "status": "Scheduled"}, {"id": "S2-M46", "no": 46, "md": 12, "date": "Wed, Sep 16", "time": "4:00 AM", "home": "Athletic Club", "away": "FC Barcelona", "hg": null, "ag": null, "status": "Scheduled"}, {"id": "S2-M47", "no": 47, "md": 12, "date": "Wed, Sep 16", "time": "4:00 AM", "home": "Villarreal CF", "away": "AFC Bournemouth", "hg": null, "ag": null, "status": "Scheduled"}, {"id": "S2-M48", "no": 48, "md": 12, "date": "Wed, Sep 16", "time": "4:00 AM", "home": "Venezia FC", "away": "1. FC Köln", "hg": null, "ag": null, "status": "Scheduled"}, {"id": "S2-M49", "no": 49, "md": 13, "date": "Sun, Sep 20", "time": "4:00 AM", "home": "Venezia FC", "away": "Athletic Club", "hg": null, "ag": null, "status": "Scheduled"}, {"id": "S2-M50", "no": 50, "md": 13, "date": "Sun, Sep 20", "time": "4:00 AM", "home": "1. FC Köln", "away": "Real Madrid", "hg": null, "ag": null, "status": "Scheduled"}, {"id": "S2-M51", "no": 51, "md": 13, "date": "Sun, Sep 20", "time": "5:00 AM", "home": "AFC Bournemouth", "away": "FC Barcelona", "hg": null, "ag": null, "status": "Scheduled"}, {"id": "S2-M52", "no": 52, "md": 13, "date": "Sun, Sep 20", "time": "8:00 PM", "home": "Adelaide United", "away": "Villarreal CF", "hg": null, "ag": null, "status": "Scheduled"}, {"id": "S2-M53", "no": 53, "md": 14, "date": "Wed, Sep 23", "time": "4:00 AM", "home": "FC Barcelona", "away": "1. FC Köln", "hg": null, "ag": null, "status": "Scheduled"}, {"id": "S2-M54", "no": 54, "md": 14, "date": "Wed, Sep 23", "time": "4:00 AM", "home": "Real Madrid", "away": "Venezia FC", "hg": null, "ag": null, "status": "Scheduled"}, {"id": "S2-M55", "no": 55, "md": 14, "date": "Wed, Sep 23", "time": "4:00 AM", "home": "Athletic Club", "away": "Villarreal CF", "hg": null, "ag": null, "status": "Scheduled"}, {"id": "S2-M56", "no": 56, "md": 14, "date": "Wed, Sep 23", "time": "5:00 AM", "home": "AFC Bournemouth", "away": "Adelaide United", "hg": null, "ag": null, "status": "Scheduled"}];
+    const S2_NEWS_DATA = [{"id": "s2-n1", "category": "สรุปผล 6 นัดแรก", "tagColor": "emerald", "date": "24 พ.ย. 2026", "title": "1. FC Köln แรงไม่หยุด! บุกเฉือน Real Madrid 3-2 นำจ่าฝูง 6 แต้มเต็ม", "summary": "เอฟพา 1. FC Köln คว้าชัย 2 นัดรวดทั้งชนะ FC Barcelona 3-1 และบุกปราบ Real Madrid 3-2 จากการเหมาสองของ Julián Alvarez ด้าน AFC Bournemouth เก็บเพิ่มเป็น 4 แต้มหลังเสมอ Barcelona สุดมันส์ 2-2", "body": "สรุปผล MD 1 ครบ 4 คู่: Köln 3-1 Barcelona, Venezia 1-4 Real Madrid, Villarreal 1-3 Athletic Club, Adelaide 2-3 Bournemouth และเปิดหัว MD 2 ไปแล้ว 2 คู่ (Real Madrid 2-3 Köln, Barcelona 2-2 Bournemouth)"}, {"id": "s2-n2", "category": "ดาวซัลโว S2", "tagColor": "amber", "date": "24 พ.ย. 2026", "title": "Osimhen ซัด 4 เม็ดนำดาวซัลโว — Mbappé กับ Alvarez ไล่จี้ 3 ประตู", "summary": "Victor Osimhen เปิดตัวกับ AFC Bournemouth อย่างร้อนแรงด้วยแฮตทริกใส่อเดเลดและยิงเพิ่มอีก 1 ประตูในเกมเสมอบาร์ซ่า รวม 4 ประตู นำหน้า Kylian Mbappé (3 ประตู) และ Julián Alvarez (3 ประตู)", "body": "ส่วนฝั่งเกมรับและวินัย: H. Çalhanoğlu (AFC Bournemouth) โดนใบเหลืองไปแล้ว 2 ใบจาก 2 นัดแรก"}, {"id": "s2-n3", "category": "โปรแกรมแข่ง S2", "tagColor": "sky", "date": "24 พ.ย. 2026", "title": "อัปเดตผลแล้ว 6 / 56 นัด — เหลืออีก 2 คู่ใน Matchday 2", "summary": "อีก 2 คู่ที่รอลงสนามใน Matchday 2 (Wed, Aug 12 4:00 AM): Villarreal CF พบ Adelaide United และ Athletic Club พบ Venezia FC", "body": "สามารถคลิกที่การ์ดการแข่งขันในแท็บ โปรแกรม & ผลแข่ง เพื่อดูรายชื่อผู้ทำประตู ใบเหลือง และการเปลี่ยนตัวของทุกนัดที่แข่งจบแล้วได้ทันที"}];
 
     function renderS2ClubLogoBadge(clubName, sizeClass = "w-9 h-9") {
       const t = S2_TEAMS_DATA.find(x => x.club === clubName) || { abbr: "FC", bg: "#0f172a", accent: "#10b981" };
@@ -6709,6 +6833,73 @@
           ${renderGroup("⚡ Starting XI (11 ตัวจริง)", "text-emerald-400", xiPlayers)}
           ${renderGroup("🔄 Substitutes (ตัวสำรอง)", "text-sky-400", subPlayers)}
           ${renderGroup("📋 Reserves (ขุมกำลังเพิ่มเติม)", "text-slate-400", resPlayers)}
+        </div>
+      `;
+      modal.classList.remove("hidden");
+      modal.classList.add("flex");
+    }
+
+    function computeS2Standings() {
+      const map = {};
+      S2_TEAMS_DATA.forEach(t => {
+        map[t.club] = {
+          club: t.club, manager: t.manager, coachKey: t.coachKey,
+          formation: t.formation, att: t.att, mid: t.mid, def: t.def,
+          P: 0, W: 0, D: 0, L: 0, GF: 0, GA: 0, GD: 0, Pts: 0, form: []
+        };
+      });
+      S2_FIXTURES_DATA.forEach(m => {
+        if (m.status !== "FT" || m.hg === null || m.ag === null) return;
+        const h = map[m.home], a = map[m.away];
+        if (!h || !a) return;
+        h.P++; a.P++;
+        h.GF += m.hg; h.GA += m.ag;
+        a.GF += m.ag; a.GA += m.hg;
+        if (m.hg > m.ag) {
+          h.W++; h.Pts += 3; h.form.push("W");
+          a.L++; a.form.push("L");
+        } else if (m.hg < m.ag) {
+          a.W++; a.Pts += 3; a.form.push("W");
+          h.L++; h.form.push("L");
+        } else {
+          h.D++; h.Pts += 1; h.form.push("D");
+          a.D++; a.Pts += 1; a.form.push("D");
+        }
+      });
+      return Object.values(map).map(r => {
+        r.GD = r.GF - r.GA;
+        return r;
+      }).sort((a, b) => b.Pts - a.Pts || b.GD - a.GD || b.GF - a.GF || a.club.localeCompare(b.club));
+    }
+
+    function showS2MatchModal(matchNo) {
+      const m = S2_FIXTURES_DATA.find(x => x.no === parseInt(matchNo, 10));
+      if (!m) return;
+      const modal = document.getElementById("detailModal");
+      const content = document.getElementById("modalBodyContent");
+      const goals = m.goals || [];
+      const cards = m.cards || [];
+      const subs = m.subs || [];
+      content.innerHTML = `
+        <div class="space-y-4">
+          <div class="text-center space-y-2 border-b border-slate-800 pb-4">
+            <div class="text-xs font-bold text-amber-300">Match #${m.no} • Matchday ${m.md} (${m.date} • ${m.time})</div>
+            <div class="flex items-center justify-center gap-4">
+              <div class="flex items-center gap-2 font-black text-white text-base sm:text-lg">${renderS2ClubLogoBadge(m.home, "w-9 h-9")}<span>${m.home}</span></div>
+              <div class="px-4 py-1.5 rounded-xl bg-emerald-500 text-slate-950 font-black text-xl">${m.hg} : ${m.ag}</div>
+              <div class="flex items-center gap-2 font-black text-white text-base sm:text-lg"><span>${m.away}</span>${renderS2ClubLogoBadge(m.away, "w-9 h-9")}</div>
+            </div>
+          </div>
+          <div class="space-y-2">
+            <h4 class="text-xs font-black text-emerald-400 uppercase">⚽ ผู้ทำประตู (${goals.length})</h4>
+            ${goals.length ? goals.map(g => `<div class="px-3 py-1.5 rounded-lg bg-slate-900 border border-slate-800 text-xs flex justify-between"><span class="font-bold text-white">${g.min} • ${g.player}</span><span class="text-emerald-300 font-semibold">${g.team}</span></div>`).join("") : '<p class="text-xs text-slate-500">ไม่มีประตู</p>'}
+          </div>
+          <div class="space-y-2">
+            <h4 class="text-xs font-black text-amber-400 uppercase">🟨 ใบเหลือง / เหตุการณ์ (${cards.length})</h4>
+            ${cards.length ? cards.map(c => `<div class="px-3 py-1.5 rounded-lg bg-slate-900 border border-slate-800 text-xs flex justify-between"><span class="font-bold text-white">${c.min} • ${c.player} (${c.type})</span><span class="text-amber-300 font-semibold">${c.team}</span></div>`).join("") : '<p class="text-xs text-slate-500">ไม่มีใบเหลือง/แดง</p>'}
+            ${m.notes ? `<div class="px-3 py-1.5 rounded-lg bg-rose-500/10 border border-rose-500/30 text-xs text-rose-300">🏥 ${m.notes}</div>` : ''}
+          </div>
+          ${subs.length ? `<div class="space-y-1.5"><h4 class="text-xs font-black text-sky-400 uppercase">🔄 การเปลี่ยนตัว</h4>${subs.map(s => `<div class="text-xs text-slate-300 px-2">• ${s}</div>`).join("")}</div>` : ''}
         </div>
       `;
       modal.classList.remove("hidden");
